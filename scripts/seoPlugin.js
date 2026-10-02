@@ -2,7 +2,7 @@
  * Plugin de Vite: toma los datos de `src/config/site.js` y `src/data/pricing.js` (única fuente
  * de verdad) para completar index.html, generar el JSON-LD y emitir sitemap.xml y robots.txt.
  */
-import { site, isPlaceholder } from '../src/config/site.js'
+import { site, WHATSAPP_NUMBER, isPlaceholder } from '../src/config/site.js'
 import { plans, corporateEmail } from '../src/data/pricing.js'
 
 const escapeAttr = (value) =>
@@ -25,6 +25,17 @@ function buildJsonLd() {
         description: site.seo.description,
         areaServed: { '@type': 'Country', name: site.country },
         ...(sameAs.length ? { sameAs } : {}),
+        ...(isPlaceholder(WHATSAPP_NUMBER)
+          ? {}
+          : {
+              contactPoint: {
+                '@type': 'ContactPoint',
+                telephone: `+${WHATSAPP_NUMBER}`,
+                contactType: 'customer service',
+                areaServed: site.countryCode,
+                availableLanguage: 'es',
+              },
+            }),
       },
       {
         '@type': 'WebSite',

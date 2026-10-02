@@ -21,11 +21,11 @@ Todo está centralizado en [`src/config/site.js`](src/config/site.js):
 
 | Dato | Constante | Estado |
 | --- | --- | --- |
-| Número de WhatsApp | `WHATSAPP_NUMBER` (`519XXXXXXXX`) | **Placeholder** — los enlaces `wa.me` no funcionarán hasta cambiarlo |
+| Número de WhatsApp | `WHATSAPP_NUMBER` (`51987317731`) | Configurado; también se publica como `contactPoint` en el JSON-LD |
 | Email | `site.email` (`contacto@cdjdigital.pe`) | Por confirmar |
 | Facebook / Instagram / TikTok | `site.social.*` (`…REEMPLAZAR…`) | **Placeholders** (se muestran en el footer; no se publican en el JSON-LD) |
 
-En desarrollo, la consola avisa mientras `WHATSAPP_NUMBER` siga siendo un placeholder.
+Si `WHATSAPP_NUMBER` volviera a ser un placeholder, la consola avisa en desarrollo y el JSON-LD omite el teléfono.
 
 Los mensajes de WhatsApp están en `whatsappMessages` (`site.js`) y en cada plan (`src/data/pricing.js`).
 Los enlaces se generan **solo** con `getWhatsAppUrl(message)` de [`src/lib/whatsapp.js`](src/lib/whatsapp.js).

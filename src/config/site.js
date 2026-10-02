@@ -7,8 +7,8 @@
  * ⚠️ REEMPLAZAR ANTES DE PUBLICAR: todo lo marcado con "TODO".
  */
 
-/** TODO: número real de WhatsApp en formato internacional, sin "+" ni espacios (Perú = 51). */
-export const WHATSAPP_NUMBER = '519XXXXXXXX'
+/** Número de WhatsApp en formato internacional, sin "+" ni espacios (Perú = 51). */
+export const WHATSAPP_NUMBER = '51987317731'
 
 export const site = {
   name: 'CDJ Digital',
