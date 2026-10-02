@@ -1,0 +1,261 @@
+@import 'tailwindcss';
+
+/* ------------------------------------------------------------------ */
+/*  Tokens de diseño                                                   */
+/* ------------------------------------------------------------------ */
+@theme {
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+
+  /* Fondos oscuros (navy casi negro) */
+  --color-ink-950: #050816;
+  --color-ink-900: #080d1f;
+  --color-ink-800: #0f172a;
+  --color-ink-700: #172036;
+
+  /* Azul eléctrico (acción principal) */
+  --color-brand-50: #eef1ff;
+  --color-brand-100: #e1e6ff;
+  --color-brand-200: #c8d1ff;
+  --color-brand-300: #a5b2ff;
+  --color-brand-400: #7a8aff;
+  --color-brand-500: #4c5cff;
+  --color-brand-600: #3b49e8;
+  --color-brand-700: #2f3bc4;
+
+  /* Violeta (secundario) */
+  --color-violet-brand: #7c3aed;
+
+  /* Superficies claras */
+  --color-mist: #f5f7ff;
+  --color-line: #e2e7f5;
+
+  --shadow-card: 0 1px 2px rgb(15 23 42 / 0.04), 0 8px 24px -12px rgb(15 23 42 / 0.12);
+  --shadow-card-hover: 0 1px 2px rgb(15 23 42 / 0.04), 0 18px 40px -16px rgb(76 92 255 / 0.35);
+  --shadow-glow: 0 0 0 1px rgb(76 92 255 / 0.3), 0 24px 64px -20px rgb(76 92 255 / 0.55);
+
+  --animate-float: float 7s ease-in-out infinite;
+  --animate-float-slow: float 9s ease-in-out infinite;
+  --animate-ping-soft: ping-soft 2.8s cubic-bezier(0, 0, 0.2, 1) infinite;
+
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-8px);
+    }
+  }
+  @keyframes ping-soft {
+    0% {
+      transform: scale(1);
+      opacity: 0.45;
+    }
+    75%,
+    100% {
+      transform: scale(1.55);
+      opacity: 0;
+    }
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/*  Base                                                               */
+/* ------------------------------------------------------------------ */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 4.5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-ink-950 font-sans text-slate-300 antialiased;
+    overflow-x: hidden;
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  ::selection {
+    background: rgb(76 92 255 / 0.35);
+    color: #fff;
+  }
+
+  :focus-visible {
+    outline: 2px solid #6b7bff;
+    outline-offset: 3px;
+    border-radius: 0.375rem;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/*  Componentes reutilizables                                          */
+/* ------------------------------------------------------------------ */
+@layer components {
+  .container-x {
+    @apply mx-auto w-full max-w-[75rem] px-5 sm:px-8;
+  }
+
+  .section-y {
+    @apply py-16 sm:py-20 lg:py-24;
+  }
+
+  /* Contenedor para unidades cqw dentro de los mockups */
+  .cq {
+    container-type: inline-size;
+  }
+
+  .btn {
+    @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-6 py-3 text-center text-[0.95rem] leading-snug font-semibold transition duration-200 ease-out hover:scale-[1.03] active:scale-[0.99];
+  }
+
+  .btn-primary {
+    @apply text-white hover:brightness-110;
+    background-image: linear-gradient(135deg, #4c5cff 0%, #6a45f0 62%, #7c3aed 100%);
+    box-shadow:
+      0 0 0 1px rgb(255 255 255 / 0.12) inset,
+      0 12px 32px -12px rgb(76 92 255 / 0.8);
+  }
+
+  .btn-ghost-dark {
+    @apply border border-white/20 bg-white/[0.04] text-white backdrop-blur hover:border-white/40 hover:bg-white/10;
+  }
+
+  .btn-outline-light {
+    @apply border border-slate-300 bg-white text-ink-800 hover:border-brand-500 hover:text-brand-600;
+  }
+
+  .text-gradient {
+    background-image: linear-gradient(90deg, #6c7bff 0%, #a78bfa 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .text-gradient-light {
+    background-image: linear-gradient(90deg, #3b49e8 0%, #7c3aed 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Cuadrícula tecnológica muy sutil para fondos oscuros */
+  .bg-grid {
+    background-image:
+      linear-gradient(to right, rgb(255 255 255 / 0.045) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(255 255 255 / 0.045) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(ellipse 70% 60% at 60% 30%, #000 30%, transparent 78%);
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/*  Animaciones de entrada                                             */
+/* ------------------------------------------------------------------ */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) var(--d, 0ms),
+    transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) var(--d, 0ms);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Hero: entra al cargar (sin depender del scroll) */
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.hero-in {
+  animation: rise-in 0.65s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation-delay: var(--d, 0ms);
+}
+
+/* Solo desplazamiento (sin opacidad): el texto principal (LCP) se pinta de inmediato */
+@keyframes slide-in {
+  from {
+    transform: translateY(10px);
+  }
+  to {
+    transform: none;
+  }
+}
+.hero-slide {
+  animation: slide-in 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+/* ------------------------------------------------------------------ */
+/*  Accordion (FAQ)                                                    */
+/* ------------------------------------------------------------------ */
+.accordion-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s ease;
+}
+.accordion-panel > div {
+  overflow: hidden;
+  visibility: hidden;
+  transition: visibility 0s linear 0.3s;
+}
+.accordion-panel[data-open='true'] {
+  grid-template-rows: 1fr;
+}
+.accordion-panel[data-open='true'] > div {
+  visibility: visible;
+  transition-delay: 0s;
+}
+
+/* ------------------------------------------------------------------ */
+/*  Menú móvil                                                         */
+/* ------------------------------------------------------------------ */
+.menu-panel {
+  opacity: 0;
+  transform: translateY(-8px);
+  visibility: hidden;
+  transition:
+    opacity 0.22s ease,
+    transform 0.22s ease,
+    visibility 0s linear 0.22s;
+}
+.menu-panel[data-open='true'] {
+  opacity: 1;
+  transform: none;
+  visibility: visible;
+  transition-delay: 0s;
+}
+
+/* ------------------------------------------------------------------ */
+/*  Accesibilidad: respetar prefers-reduced-motion                      */
+/* ------------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.001ms !important;
+    transition-delay: 0ms !important;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
