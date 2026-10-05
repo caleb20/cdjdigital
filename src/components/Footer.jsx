@@ -25,13 +25,13 @@ const socials = [
   { label: 'TikTok', href: site.social.tiktok, Icon: TikTokIcon },
 ]
 
-const linkClass = 'text-sm text-slate-400 transition-colors hover:text-white'
+const linkClass = 'inline-block py-2 text-sm text-slate-400 transition-colors hover:text-white'
 
 function FooterColumn({ title, children }) {
   return (
     <div>
       <h3 className="text-sm font-semibold text-white">{title}</h3>
-      <ul className="mt-4 space-y-3">{children}</ul>
+      <ul className="mt-3 space-y-0.5">{children}</ul>
     </div>
   )
 }

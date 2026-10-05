@@ -3,6 +3,7 @@ import { whatsappMessages } from '../config/site.js'
 import { getWhatsAppUrl } from '../lib/whatsapp.js'
 import DeviceShowcase from './mockups/DeviceShowcase.jsx'
 import { WhatsAppIcon } from './ui/BrandIcons.jsx'
+import Logo from './ui/Logo.jsx'
 import Reveal from './ui/Reveal.jsx'
 
 const perks = ['Respuesta rápida', 'Sin compromiso', 'Asesoría personalizada']
@@ -14,6 +15,10 @@ export default function FinalCTA() {
         <div className="absolute -top-24 left-[-10%] h-[26rem] w-[26rem] rounded-full bg-brand-500/30 blur-[120px]" />
         <div className="absolute -right-20 -bottom-32 h-[28rem] w-[28rem] rounded-full bg-violet-brand/35 blur-[130px]" />
         <div className="bg-grid absolute inset-0 opacity-70" />
+      </div>
+
+      <div aria-hidden="true" className="absolute top-8 right-6 hidden opacity-90 lg:block xl:right-[max(2.5rem,calc((100vw-72rem)/2))]">
+        <Logo className="h-12" />
       </div>
 
       <div className="container-x grid grid-cols-1 items-center gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-10">

@@ -64,7 +64,7 @@ export default function FAQ() {
               href={getWhatsAppUrl(whatsappMessages.general)}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-brand-600 transition-colors hover:text-brand-700"
+              className="mt-6 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-brand-600 transition-colors hover:text-brand-700"
             >
               Escribir por WhatsApp
               <span aria-hidden="true">→</span>

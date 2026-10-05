@@ -259,3 +259,21 @@
     transform: none;
   }
 }
+
+/* ------------------------------------------------------------ optimización para celular */
+/* Sin retraso de 300 ms ni zoom por doble toque en controles; resaltado táctil discreto. */
+a, button, summary, label, select, input, textarea, [role='button'], [role='tab'], [role='switch'] {
+  touch-action: manipulation;
+}
+html {
+  -webkit-tap-highlight-color: rgb(0 0 0 / 0.08);
+}
+
+/* iPhone/Safari hace zoom al tocar un campo con letra menor de 16 px: en pantallas pequeñas todos los campos usan 16 px. */
+@media (max-width: 767px) {
+  input:not([type='checkbox']):not([type='radio']):not([type='range']):not([type='file']),
+  select,
+  textarea {
+    font-size: 16px;
+  }
+}

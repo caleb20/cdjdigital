@@ -1,40 +1,51 @@
 import { useId } from 'react'
 
 /**
- * Logotipo CDJ DIGITAL: "CDJ" monolínea (la J lleva el degradado de marca) y "DIGITAL" espaciado.
- * `tone="light"` = letras blancas (fondos oscuros) · `tone="dark"` = letras navy (fondos claros).
+ * Logotipo CDJ DIGITAL (según el modelo `landing.png`):
+ *  · «C» abierta cuyo trazo baja y gira en diagonal hacia la «D» (efecto de lazo entrelazado),
+ *  · «D» abierta por la izquierda, «J» con barra superior,
+ *  · «DIGITAL» en mayúsculas muy espaciadas, centrado debajo.
+ * `tone="light"` = trazo blanco/plata (fondos oscuros) · `tone="dark"` = trazo azul marino (fondos claros).
+ * Es un SVG: se ve nítido a cualquier tamaño. Se dimensiona con `className` (por defecto, alto de 2.5rem).
  */
 export default function Logo({ tone = 'light', className = '' }) {
   const gradientId = useId()
-  const letters = tone === 'light' ? 'text-white' : 'text-ink-800'
-  const sub = tone === 'light' ? 'text-slate-400' : 'text-slate-500'
+  const [from, to] = tone === 'light' ? ['#ffffff', '#c7cde6'] : ['#0f1a46', '#2a3585']
 
   return (
-    <span className={`inline-flex flex-col items-start leading-none ${className}`}>
-      <svg
-        viewBox="-3 3 96 34"
-        className={`h-7 w-auto ${letters}`}
-        fill="none"
-        strokeWidth="5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        aria-hidden="true"
+    <svg
+      viewBox="45 76 855 462"
+      role="img"
+      aria-label="CDJ Digital"
+      className={`h-10 w-auto shrink-0 ${className}`}
+      fill="none"
+    >
+      <defs>
+        <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor={from} />
+          <stop offset="1" stopColor={to} />
+        </linearGradient>
+      </defs>
+      <g stroke={`url(#${gradientId})`} strokeWidth="62" strokeLinejoin="round">
+        {/* C: arco abierto que termina en una diagonal hacia la D */}
+        <path d="M326 162 A132 132 0 1 0 270 371 L428 238" strokeLinecap="round" />
+        {/* D: abierta por la izquierda */}
+        <path d="M396 118 H505 A130 130 0 0 1 505 378 H390" strokeLinecap="butt" />
+        {/* J: barra superior, tallo y gancho */}
+        <path d="M766 118 H858 V288 A92 92 0 0 1 766 380 H728" strokeLinecap="butt" />
+      </g>
+      <text
+        x="135"
+        y="527"
+        fill={`url(#${gradientId})`}
+        fontFamily="inherit"
+        fontWeight="600"
+        fontSize="92"
+        textLength="662"
+        lengthAdjust="spacing"
       >
-        <defs>
-          <linearGradient id={gradientId} x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stopColor="#6c7bff" />
-            <stop offset="1" stopColor="#a78bfa" />
-          </linearGradient>
-        </defs>
-        <g stroke="currentColor">
-          <path d="M26.7 11 A14 14 0 1 0 26.7 29" />
-          <path d="M40 6 H48 A14 14 0 0 1 48 34 H40 Z" />
-        </g>
-        <path d="M86 6 V24 A9 9 0 0 1 68 24" stroke={`url(#${gradientId})`} />
-      </svg>
-      <span className={`mt-1 pl-0.5 text-[0.5rem] font-semibold tracking-[0.5em] ${sub}`}>
         DIGITAL
-      </span>
-    </span>
+      </text>
+    </svg>
   )
 }
