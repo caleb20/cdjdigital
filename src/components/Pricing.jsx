@@ -34,7 +34,8 @@ function PlanCard({ plan }) {
         </h3>
       </div>
 
-      <p className="mt-4 text-sm leading-relaxed text-slate-600">{plan.description}</p>
+      <p className="mt-5 text-lg leading-snug font-bold text-ink-800">{plan.promise}</p>
+      <p className="mt-2 text-sm leading-relaxed text-slate-600">{plan.description}</p>
 
       <p className="mt-6 flex items-baseline gap-1.5">
         <span className="text-5xl font-extrabold tracking-tight text-ink-800">S/{plan.price}</span>

@@ -51,6 +51,23 @@ export default function PlanDetails() {
         />
 
         <Reveal className="mt-12">
+          <h3 className="text-2xl font-bold tracking-tight text-ink-800">¿Cuál me conviene?</h3>
+          <ul className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-3">
+            {plans.map((plan) => (
+              <li
+                key={plan.id}
+                className={`rounded-2xl border bg-white p-5 shadow-card ${plan.featured ? 'border-brand-300 ring-1 ring-brand-200' : 'border-line'}`}
+              >
+                <p className="text-sm font-semibold text-brand-700">
+                  Elige {plan.name} <span className="font-medium text-slate-500">· S/{plan.price} al mes</span>
+                </p>
+                <p className="mt-2 text-[0.95rem] leading-relaxed text-slate-700">{plan.chooseIf}</p>
+              </li>
+            ))}
+          </ul>
+        </Reveal>
+
+        <Reveal className="mt-14">
           <div className="overflow-hidden rounded-3xl border border-line bg-white shadow-card max-md:border-0 max-md:bg-transparent max-md:shadow-none">
             <table className="w-full text-left text-[0.92rem] max-md:block">
               <caption className="sr-only">Comparación detallada de los planes Inicio, Negocio y Pro</caption>
