@@ -1,6 +1,7 @@
 import { ArrowRight, Check, ExternalLink } from 'lucide-react'
 import { site, whatsappMessages } from '../config/site.js'
 import { conceptDemos, kopaDemo } from '../data/demos.js'
+import { plans } from '../data/pricing.js'
 import { getWhatsAppUrl } from '../lib/whatsapp.js'
 import ConceptScreen from './mockups/ConceptScreen.jsx'
 import { BrowserFrame, PhoneFrame } from './mockups/Frames.jsx'
@@ -60,7 +61,7 @@ function KopaFeatured() {
         </div>
 
         <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-          <a href={site.kopaUrl} target="_blank" rel="noopener noreferrer" className="btn btn-ghost-dark">
+          <a href={site.demos.negocio} target="_blank" rel="noopener noreferrer" className="btn btn-ghost-dark">
             Ver demo
             <ExternalLink className="h-4 w-4" aria-hidden="true" />
             <span className="sr-only">(se abre en una pestaña nueva)</span>
@@ -74,6 +75,28 @@ function KopaFeatured() {
             Quiero una web como esta
             <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </a>
+        </div>
+
+        <div className="mt-7 border-t border-white/10 pt-5">
+          <p className="text-xs font-semibold tracking-wide text-slate-400 uppercase">Una demo real por plan</p>
+          <ul className="mt-3 flex flex-wrap gap-2">
+            {plans
+              .filter((plan) => site.demos[plan.id])
+              .map((plan) => (
+                <li key={plan.id}>
+                  <a
+                    href={site.demos[plan.id]}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-white/15 bg-white/[0.04] px-4 text-sm font-semibold text-slate-200 transition hover:border-brand-400/50 hover:bg-white/10 hover:text-white"
+                  >
+                    Plan {plan.name}
+                    <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
+                    <span className="sr-only">(se abre en una pestaña nueva)</span>
+                  </a>
+                </li>
+              ))}
+          </ul>
         </div>
       </div>
     </Reveal>

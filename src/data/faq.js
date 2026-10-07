@@ -11,7 +11,7 @@ export const faqs = [
   {
     question: '¿El dominio está incluido?',
     answer:
-      'En los planes Negocio y Pro el dominio va incluido el primer año; la renovación se cotiza según el dominio elegido. En el plan Inicio no está incluido: puedes agregarlo cuando quieras (se cotiza aparte) o conectar uno que ya tengas.',
+      'En los planes Negocio y Pro el dominio va incluido el primer año; la renovación se cotiza según el dominio elegido. En el plan Inicio el dominio es obligatorio para publicar tu web, pero no está incluido: se paga aparte (si ya tienes uno, lo conectamos).',
   },
   {
     question: '¿Incluyen hosting?',

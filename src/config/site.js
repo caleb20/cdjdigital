@@ -45,8 +45,15 @@ export const site = {
     themeColor: '#050816',
   },
 
-  /** Demo real que ya está en línea (primer proyecto de CDJ Digital). */
-  kopaUrl: 'https://kopa-caffe.vercel.app/',
+  /**
+   * Demos reales en línea, una por plan (mismo negocio, Kopa Caffe, con las funciones de cada plan).
+   * Si una demo se deja en `null`, su enlace no se muestra.
+   */
+  demos: {
+    inicio: 'https://kopa-caffe-inicio.vercel.app/',
+    negocio: 'https://kopa-caffe.vercel.app/',
+    pro: 'https://kopa-caffe-pro.vercel.app/',
+  },
 }
 
 /** Mensajes prearmados de WhatsApp. Los de cada plan viven en `data/pricing.js`. */

@@ -1,5 +1,5 @@
-import { ArrowRight, Check, Crown, Plus, Send, Star, Zap } from 'lucide-react'
-import { whatsappMessages } from '../config/site.js'
+import { ArrowRight, Check, Crown, ExternalLink, Plus, Send, Star, Zap } from 'lucide-react'
+import { site, whatsappMessages } from '../config/site.js'
 import { plans } from '../data/pricing.js'
 import { getWhatsAppUrl } from '../lib/whatsapp.js'
 import Reveal from './ui/Reveal.jsx'
@@ -10,6 +10,7 @@ const planIcons = { inicio: Send, negocio: Crown, pro: Zap }
 function PlanCard({ plan }) {
   const Icon = planIcons[plan.id]
   const { featured } = plan
+  const demoUrl = site.demos[plan.id]
 
   const card = (
     <article
@@ -42,7 +43,7 @@ function PlanCard({ plan }) {
 
       <ul className="mt-7 flex-1 space-y-2.5 border-t border-line pt-6 text-[0.92rem] text-slate-700">
         {plan.features.map((feature, index) => {
-          const addon = feature.includes('opcional')
+          const addon = feature.includes('se paga aparte')
           const Mark = addon ? Plus : Check
           return (
             <li key={feature} className="flex gap-2.5">
@@ -69,6 +70,18 @@ function PlanCard({ plan }) {
         Quiero este plan
         <ArrowRight className="h-4 w-4" aria-hidden="true" />
       </a>
+      {demoUrl && (
+        <a
+          href={demoUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-2 inline-flex min-h-11 items-center justify-center gap-1.5 text-sm font-semibold text-brand-700 hover:text-brand-600"
+        >
+          Ver la demo del plan {plan.name}
+          <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
+          <span className="sr-only">(se abre en una pestaña nueva)</span>
+        </a>
+      )}
     </article>
   )
 

@@ -25,7 +25,7 @@ export const plans = [
       'Hosting',
       'Soporte por WhatsApp',
       `Hasta ${monthlyChanges.inicio} cambios de contenido al mes`,
-      'Dominio propio opcional (se cotiza aparte)',
+      'Dominio obligatorio (se paga aparte)',
     ],
     whatsappMessage: 'Hola, estoy interesado en el plan Inicio de CDJ Digital de S/99/mes.',
   },
@@ -104,7 +104,7 @@ export const planComparison = [
   {
     label: 'Dominio propio',
     hint: 'La dirección de tu web, por ejemplo tunegocio.pe.',
-    inicio: 'No incluido. Es opcional y se cotiza aparte',
+    inicio: 'No incluido: es obligatorio para publicar tu web y se paga aparte',
     negocio: 'Incluido el primer año',
     pro: 'Incluido el primer año',
   },

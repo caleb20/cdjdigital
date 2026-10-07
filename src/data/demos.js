@@ -1,5 +1,5 @@
 /**
- * Demos. `kopa` es un proyecto real (https://kopa-caffe.vercel.app/).
+ * Demos. `kopa` es un proyecto real (https://kopa-caffe.vercel.app/); las URLs de las demos por plan están en `config/site.js`.
  * El resto son CONCEPTOS visuales: negocios ficticios para mostrar variedad de rubros.
  * Se renderizan con HTML/CSS (sin imágenes externas) y siempre se rotulan como "Concepto".
  */
