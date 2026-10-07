@@ -1,3 +1,7 @@
+import { plans } from './pricing.js'
+
+const changesByPlan = plans.map((plan) => `${plan.monthlyChanges} en ${plan.name}`).join(', ')
+
 export const faqs = [
   {
     question: '¿Tengo que pagar una instalación?',
@@ -7,7 +11,7 @@ export const faqs = [
   {
     question: '¿El dominio está incluido?',
     answer:
-      'Sí, el dominio está incluido durante el primer año en los planes indicados. La renovación posterior se cotiza según el dominio elegido.',
+      'En los planes Negocio y Pro el dominio va incluido el primer año; la renovación se cotiza según el dominio elegido. En el plan Inicio no está incluido: puedes agregarlo cuando quieras (se cotiza aparte) o conectar uno que ya tengas.',
   },
   {
     question: '¿Incluyen hosting?',
@@ -16,7 +20,7 @@ export const faqs = [
   {
     question: '¿Puedo cambiar los productos o precios?',
     answer:
-      'Sí. Los planes incluyen actualizaciones menores de contenido. Cambios o funcionalidades nuevas pueden requerir una cotización adicional.',
+      `Sí. Cada plan incluye cambios de contenido al mes (${changesByPlan}): textos, precios, horarios, fotos y enlaces. Páginas nuevas, rediseños o funciones nuevas se cotizan aparte. El detalle está en «¿Qué es un cambio menor?».`,
   },
   {
     question: '¿Incluyen correo corporativo?',

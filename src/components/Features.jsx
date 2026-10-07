@@ -21,7 +21,7 @@ const features = [
   { Icon: Smartphone, label: 'Responsive' },
   { Icon: Cloud, label: 'Hosting' },
   { Icon: Lock, label: 'HTTPS' },
-  { Icon: Globe, label: 'Dominio el primer año' },
+  { Icon: Globe, label: 'Dominio (Negocio y Pro)' },
   { Icon: MessageCircle, label: 'WhatsApp' },
   { Icon: MapPin, label: 'Google Maps' },
   { Icon: Search, label: 'SEO básico' },
@@ -58,8 +58,8 @@ export default function Features() {
         <Reveal className="mt-8 flex items-start gap-2.5 text-sm text-slate-600">
           <Info className="mt-0.5 h-4 w-4 shrink-0 text-brand-600" aria-hidden="true" />
           <p>
-            El dominio se incluye durante el primer año. La renovación se cotiza según el dominio
-            elegido.
+            El dominio se incluye el primer año en los planes Negocio y Pro; en el plan Inicio es opcional
+            y se cotiza aparte. La renovación se cotiza según el dominio elegido.
           </p>
         </Reveal>
       </div>

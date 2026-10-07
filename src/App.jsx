@@ -6,6 +6,7 @@ import FinalCTA from './components/FinalCTA.jsx'
 import Footer from './components/Footer.jsx'
 import Header from './components/Header.jsx'
 import Hero from './components/Hero.jsx'
+import PlanDetails from './components/PlanDetails.jsx'
 import Pricing from './components/Pricing.jsx'
 import Process from './components/Process.jsx'
 import SEOSection from './components/SEOSection.jsx'
@@ -29,6 +30,7 @@ export default function App() {
         <Services />
         <Process />
         <Pricing />
+        <PlanDetails />
         <CorporateEmail />
         <Demos />
         <Features />

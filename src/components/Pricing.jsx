@@ -1,4 +1,4 @@
-import { ArrowRight, Check, Crown, Send, Star, Zap } from 'lucide-react'
+import { ArrowRight, Check, Crown, Plus, Send, Star, Zap } from 'lucide-react'
 import { whatsappMessages } from '../config/site.js'
 import { plans } from '../data/pricing.js'
 import { getWhatsAppUrl } from '../lib/whatsapp.js'
@@ -41,14 +41,22 @@ function PlanCard({ plan }) {
       </p>
 
       <ul className="mt-7 flex-1 space-y-2.5 border-t border-line pt-6 text-[0.92rem] text-slate-700">
-        {plan.features.map((feature, index) => (
-          <li key={feature} className="flex gap-2.5">
-            <Check className="mt-0.5 h-4 w-4 shrink-0 text-brand-600" strokeWidth={2.6} aria-hidden="true" />
-            <span className={index === 0 && feature.startsWith('Todo lo del') ? 'font-semibold text-ink-800' : ''}>
-              {feature}
-            </span>
-          </li>
-        ))}
+        {plan.features.map((feature, index) => {
+          const addon = feature.includes('opcional')
+          const Mark = addon ? Plus : Check
+          return (
+            <li key={feature} className="flex gap-2.5">
+              <Mark
+                className={`mt-0.5 h-4 w-4 shrink-0 ${addon ? 'text-slate-400' : 'text-brand-600'}`}
+                strokeWidth={2.6}
+                aria-hidden="true"
+              />
+              <span className={index === 0 && feature.startsWith('Todo lo del') ? 'font-semibold text-ink-800' : addon ? 'text-slate-500' : ''}>
+                {feature}
+              </span>
+            </li>
+          )
+        })}
       </ul>
 
       <a
@@ -111,8 +119,11 @@ export default function Pricing() {
             <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </a>
           <p className="mx-auto mt-6 max-w-xl text-sm leading-relaxed text-slate-500">
-            Los planes incluyen actualizaciones menores y cambios de contenido. Nuevas funcionalidades o
-            sistemas personalizados se cotizan por separado.
+            Cada plan incluye una cantidad de cambios de contenido al mes. Nuevas funcionalidades o
+            sistemas personalizados se cotizan por separado.{' '}
+            <a href="#detalle" className="font-semibold text-brand-700 underline underline-offset-2 hover:text-brand-600">
+              Ver qué incluye cada plan
+            </a>
           </p>
         </Reveal>
       </div>
