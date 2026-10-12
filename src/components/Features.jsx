@@ -47,7 +47,7 @@ export default function Features() {
           {features.map(({ Icon, label, text }, index) => (
             <Reveal as="li" key={label} delay={(index % 3) * 60}>
               <div className="group flex h-full items-start gap-4 rounded-2xl border border-line bg-white p-4 shadow-card transition duration-300 hover:-translate-y-0.5 hover:border-brand-300 hover:shadow-card-hover sm:p-5">
-                <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-brand-50 text-brand-600 ring-1 ring-brand-100 transition-colors duration-300 group-hover:bg-brand-500 group-hover:text-white sm:h-11 sm:w-11">
+                <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-brand-50 text-brand-600 ring-1 ring-brand-100 transition duration-300 group-hover:scale-110 group-hover:bg-brand-500 group-hover:text-white sm:h-11 sm:w-11">
                   <Icon className="h-5 w-5" aria-hidden="true" />
                 </span>
                 <div className="min-w-0">

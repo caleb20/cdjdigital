@@ -38,15 +38,21 @@ export default function DeviceShowcase({
       </div>
 
       {showChips &&
-        chips.map(({ label, Icon, pos, delay, anim }) => (
+        chips.map(({ label, Icon, pos, delay, anim }, index) => (
+          // Capa externa: entrada (llega tras el mockup). Capa interna: flotación continua.
           <span
             key={label}
             aria-hidden="true"
-            style={{ animationDelay: delay }}
-            className={`absolute ${pos} ${anim} hidden items-center gap-1.5 rounded-full border border-white/15 bg-ink-800/70 px-3 py-1.5 text-xs font-medium text-slate-200 shadow-lg backdrop-blur-md sm:inline-flex`}
+            style={{ '--d': `${520 + index * 90}ms` }}
+            className={`pop-in absolute ${pos} hidden sm:block`}
           >
-            <Icon className="h-3.5 w-3.5 text-brand-300" />
-            {label}
+            <span
+              style={{ animationDelay: delay }}
+              className={`${anim} inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-ink-800/70 px-3 py-1.5 text-xs font-medium text-slate-200 shadow-lg backdrop-blur-md`}
+            >
+              <Icon className="h-3.5 w-3.5 text-brand-300" />
+              {label}
+            </span>
           </span>
         ))}
     </div>

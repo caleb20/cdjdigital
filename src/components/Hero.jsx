@@ -15,8 +15,8 @@ export default function Hero() {
     >
       {/* Fondo: glows azul/violeta + cuadrícula sutil */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute -top-40 right-[-10%] h-[34rem] w-[34rem] rounded-full bg-brand-500/25 blur-[120px]" />
-        <div className="absolute right-[-15%] bottom-[-12rem] h-[30rem] w-[30rem] rounded-full bg-violet-brand/25 blur-[130px]" />
+        <div className="absolute -top-40 right-[-10%] h-[34rem] w-[34rem] rounded-full bg-brand-500/25 blur-[120px] md:animate-breathe" />
+        <div className="absolute right-[-15%] bottom-[-12rem] h-[30rem] w-[30rem] rounded-full bg-violet-brand/25 blur-[130px] md:animate-breathe-slow" />
         <div className="absolute top-1/3 -left-40 h-[22rem] w-[22rem] rounded-full bg-brand-600/15 blur-[120px]" />
         <div className="bg-grid absolute inset-0" />
       </div>

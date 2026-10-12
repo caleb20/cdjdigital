@@ -34,9 +34,24 @@
   --shadow-card-hover: 0 1px 2px rgb(15 23 42 / 0.04), 0 18px 40px -16px rgb(76 92 255 / 0.35);
   --shadow-glow: 0 0 0 1px rgb(76 92 255 / 0.3), 0 24px 64px -20px rgb(76 92 255 / 0.55);
 
+  /*
+   * Identidad de movimiento (Corporate): una curva firma para casi todo, una de entrada con
+   * frenado largo y una de salida que acelera. Tres duraciones: quick / standard / slow.
+   * Las clases `transition` de Tailwind heredan la curva firma de --default-transition-*.
+   */
+  --ease-signature: cubic-bezier(0.2, 0, 0, 1);
+  --ease-enter: cubic-bezier(0.05, 0.7, 0.1, 1);
+  --ease-exit: cubic-bezier(0.3, 0, 1, 1);
+  --default-transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
+  --dur-quick: 150ms;
+  --dur-standard: 300ms;
+  --dur-slow: 600ms;
+
   --animate-float: float 7s ease-in-out infinite;
   --animate-float-slow: float 9s ease-in-out infinite;
-  --animate-ping-soft: ping-soft 2.8s cubic-bezier(0, 0, 0.2, 1) infinite;
+  --animate-breathe: breathe 14s ease-in-out infinite;
+  --animate-breathe-slow: breathe 18s ease-in-out -6s infinite;
+  --animate-ping-soft: ping-soft 7s cubic-bezier(0, 0, 0.2, 1) infinite;
 
   @keyframes float {
     0%,
@@ -47,12 +62,25 @@
       transform: translateY(-8px);
     }
   }
+  /* Capa ambiental: el fondo "respira" con una onda seno, sin competir con el contenido */
+  @keyframes breathe {
+    0%,
+    100% {
+      transform: scale(1);
+      opacity: 0.7;
+    }
+    50% {
+      transform: scale(1.1);
+      opacity: 1;
+    }
+  }
+  /* Un pulso de ~1.4 s y luego reposo: llama la atención sin insistir */
   @keyframes ping-soft {
     0% {
       transform: scale(1);
       opacity: 0.45;
     }
-    75%,
+    20%,
     100% {
       transform: scale(1.55);
       opacity: 0;
@@ -111,7 +139,7 @@
   }
 
   .btn {
-    @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-6 py-3 text-center text-[0.95rem] leading-snug font-semibold transition duration-200 ease-out hover:scale-[1.03] active:scale-[0.99];
+    @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-6 py-3 text-center text-[0.95rem] leading-snug font-semibold transition duration-(--dur-quick) ease-signature hover:scale-[1.02] active:scale-[0.97];
   }
 
   .btn-primary {
@@ -157,12 +185,13 @@
 /* ------------------------------------------------------------------ */
 /*  Animaciones de entrada                                             */
 /* ------------------------------------------------------------------ */
+/* La opacidad llega rápido y el desplazamiento se asienta despacio: se siente ágil y suave */
 .reveal {
   opacity: 0;
-  transform: translateY(18px);
+  transform: translateY(20px);
   transition:
-    opacity 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) var(--d, 0ms),
-    transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) var(--d, 0ms);
+    opacity var(--dur-standard) var(--ease-signature) var(--d, 0ms),
+    transform var(--dur-slow) var(--ease-enter) var(--d, 0ms);
 }
 .reveal.is-visible {
   opacity: 1;
@@ -181,7 +210,23 @@
   }
 }
 .hero-in {
-  animation: rise-in 0.65s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation: rise-in 0.65s var(--ease-enter) both;
+  animation-delay: var(--d, 0ms);
+}
+
+/* Capa secundaria del hero (chips): llegan después del mockup, con un pequeño "pop" */
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.pop-in {
+  animation: pop-in 0.5s var(--ease-enter) both;
   animation-delay: var(--d, 0ms);
 }
 
@@ -195,47 +240,74 @@
   }
 }
 .hero-slide {
-  animation: slide-in 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation: slide-in 0.5s var(--ease-enter) both;
 }
 
 /* ------------------------------------------------------------------ */
 /*  Accordion (FAQ)                                                    */
 /* ------------------------------------------------------------------ */
+/* Abrir es más lento que cerrar; el texto aparece un instante después de que se abra el hueco */
 .accordion-panel {
   display: grid;
   grid-template-rows: 0fr;
-  transition: grid-template-rows 0.3s ease;
+  transition: grid-template-rows 0.2s var(--ease-signature);
 }
 .accordion-panel > div {
   overflow: hidden;
   visibility: hidden;
-  transition: visibility 0s linear 0.3s;
+  opacity: 0;
+  transition:
+    opacity 0.12s linear,
+    visibility 0s linear 0.2s;
 }
 .accordion-panel[data-open='true'] {
   grid-template-rows: 1fr;
+  transition: grid-template-rows var(--dur-standard) var(--ease-signature);
 }
 .accordion-panel[data-open='true'] > div {
   visibility: visible;
-  transition-delay: 0s;
+  opacity: 1;
+  transition:
+    opacity 0.24s var(--ease-signature) 80ms,
+    visibility 0s;
 }
 
 /* ------------------------------------------------------------------ */
 /*  Menú móvil                                                         */
 /* ------------------------------------------------------------------ */
+/* Entra desacelerando (300 ms) y sale acelerando y más rápido (160 ms) */
 .menu-panel {
   opacity: 0;
   transform: translateY(-8px);
   visibility: hidden;
   transition:
-    opacity 0.22s ease,
-    transform 0.22s ease,
-    visibility 0s linear 0.22s;
+    opacity 0.16s var(--ease-exit),
+    transform 0.16s var(--ease-exit),
+    visibility 0s linear 0.16s;
 }
 .menu-panel[data-open='true'] {
   opacity: 1;
   transform: none;
   visibility: visible;
-  transition-delay: 0s;
+  transition:
+    opacity var(--dur-standard) var(--ease-enter),
+    transform var(--dur-standard) var(--ease-enter),
+    visibility 0s;
+}
+/* Cascada corta de enlaces (30 ms entre cada uno). Al cerrar se reinician solo cuando el panel ya se ocultó */
+.menu-panel li {
+  opacity: 0;
+  transform: translateY(6px);
+  transition:
+    opacity 0s linear 0.16s,
+    transform 0s linear 0.16s;
+}
+.menu-panel[data-open='true'] li {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity var(--dur-standard) var(--ease-enter) calc(60ms + var(--i, 0) * 30ms),
+    transform var(--dur-standard) var(--ease-enter) calc(60ms + var(--i, 0) * 30ms);
 }
 
 /* ------------------------------------------------------------------ */

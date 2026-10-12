@@ -125,8 +125,8 @@ export default function Header() {
       >
         <nav aria-label="Menú móvil" className="container-x py-4">
           <ul className="flex flex-col">
-            {navLinks.map((link) => (
-              <li key={link.href}>
+            {navLinks.map((link, index) => (
+              <li key={link.href} style={{ '--i': index }}>
                 <a
                   href={link.href}
                   onClick={() => setOpen(false)}

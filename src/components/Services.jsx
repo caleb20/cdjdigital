@@ -40,7 +40,7 @@ export default function Services() {
           {services.map(({ Icon, title, text }, index) => (
             <Reveal as="li" key={title} delay={index * 80}>
               <div className="group h-full rounded-2xl border border-line bg-gradient-to-b from-white to-mist p-6 shadow-card transition duration-300 hover:-translate-y-1 hover:border-brand-300 hover:shadow-card-hover">
-                <span className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-brand-50 text-brand-600 ring-1 ring-brand-100 transition-colors duration-300 group-hover:bg-brand-500 group-hover:text-white">
+                <span className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-brand-50 text-brand-600 ring-1 ring-brand-100 transition duration-300 group-hover:scale-110 group-hover:bg-brand-500 group-hover:text-white">
                   <Icon className="h-6 w-6" aria-hidden="true" />
                 </span>
                 <h3 className="text-lg font-semibold text-ink-800">{title}</h3>
