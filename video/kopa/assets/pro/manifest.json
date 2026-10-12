@@ -1,0 +1,422 @@
+[
+ {
+  "i": 0,
+  "file": "img-00.webp",
+  "w": 768,
+  "h": 1024,
+  "alt": "Fachada de Kopa Caffe al atardecer, con la entrada iluminada y clientes conversando en la puerta"
+ },
+ {
+  "i": 1,
+  "file": "img-01.jpg",
+  "w": 1000,
+  "h": 625,
+  "alt": "Inicio de la web de Kopa Caffe con la fachada, el título y el botón Ver nuestra carta."
+ },
+ {
+  "i": 2,
+  "file": "img-02.jpg",
+  "w": 1000,
+  "h": 625,
+  "alt": "La carta con las pestañas de categoría y las primeras tarjetas de producto."
+ },
+ {
+  "i": 3,
+  "file": "img-03.jpg",
+  "w": 1000,
+  "h": 750,
+  "alt": "Ventana del producto Kopa Burger con el punto de la carne, los extras, las indicaciones y la cantidad."
+ },
+ {
+  "i": 4,
+  "file": "img-04.jpg",
+  "w": 1000,
+  "h": 625,
+  "alt": "Panel Tu pedido abierto sobre la carta con un Kopa Burger y el total."
+ },
+ {
+  "i": 5,
+  "file": "img-05.jpg",
+  "w": 1000,
+  "h": 1383,
+  "alt": "Formulario de finalizar pedido con datos, entrega con zona, pago con tarjeta seleccionado y notas."
+ },
+ {
+  "i": 6,
+  "file": "img-06.jpg",
+  "w": 1000,
+  "h": 1047,
+  "alt": "Pantalla de pago con tarjeta rechazada y opción de reintentar."
+ },
+ {
+  "i": 7,
+  "file": "img-07.jpg",
+  "w": 1000,
+  "h": 1244,
+  "alt": "Seguimiento de un pedido con Yape: instrucciones de pago y botón para subir el comprobante."
+ },
+ {
+  "i": 8,
+  "file": "img-08.jpg",
+  "w": 1000,
+  "h": 625,
+  "alt": "Pantalla Pago aprobado con el monto, la tarjeta, el número de operación y la fecha."
+ },
+ {
+  "i": 9,
+  "file": "img-09.jpg",
+  "w": 1000,
+  "h": 979,
+  "alt": "Seguimiento del pedido con la línea de estados y el detalle del pedido."
+ },
+ {
+  "i": 10,
+  "file": "img-10.jpg",
+  "w": 1000,
+  "h": 683,
+  "alt": "Tablero de pedidos con columnas Nuevos, En cocina y Listos o en camino."
+ },
+ {
+  "i": 11,
+  "file": "img-11.jpg",
+  "w": 1000,
+  "h": 683,
+  "alt": "Detalle del pedido con cliente, entrega, productos, total y pago con tarjeta."
+ },
+ {
+  "i": 12,
+  "file": "img-12.jpg",
+  "w": 1000,
+  "h": 683,
+  "alt": "Detalle del pedido tras pulsar Confirmar."
+ },
+ {
+  "i": 13,
+  "file": "img-13.jpg",
+  "w": 1000,
+  "h": 683,
+  "alt": "Panel de pagos con cobrado hoy, rechazados, tasa de aprobación y la tabla de intentos."
+ },
+ {
+  "i": 14,
+  "file": "img-14.jpg",
+  "w": 1000,
+  "h": 625,
+  "alt": "Pantalla de cuenta con la pestaña Crear cuenta."
+ },
+ {
+  "i": 15,
+  "file": "img-15.jpg",
+  "w": 1000,
+  "h": 625,
+  "alt": "Mis pedidos con el historial y el estado de cada pedido."
+ },
+ {
+  "i": 16,
+  "file": "img-16.jpg",
+  "w": 1000,
+  "h": 625,
+  "alt": "Perfil con datos personales, direcciones guardadas y cambio de contraseña."
+ },
+ {
+  "i": 17,
+  "file": "img-17.jpg",
+  "w": 400,
+  "h": 866,
+  "alt": "Inicio en un celular."
+ },
+ {
+  "i": 18,
+  "file": "img-18.jpg",
+  "w": 400,
+  "h": 866,
+  "alt": "Producto destacado en un celular: foto arriba, luego nombre, precio y botón."
+ },
+ {
+  "i": 19,
+  "file": "img-19.jpg",
+  "w": 400,
+  "h": 866,
+  "alt": "La carta en un celular."
+ },
+ {
+  "i": 20,
+  "file": "img-20.jpg",
+  "w": 400,
+  "h": 866,
+  "alt": "Finalizar pedido en un celular."
+ },
+ {
+  "i": 21,
+  "file": "img-21.jpg",
+  "w": 400,
+  "h": 866,
+  "alt": "Pago con tarjeta en un celular."
+ },
+ {
+  "i": 22,
+  "file": "img-22.jpg",
+  "w": 400,
+  "h": 866,
+  "alt": "Seguimiento del pedido en un celular."
+ },
+ {
+  "i": 23,
+  "file": "img-23.jpg",
+  "w": 1000,
+  "h": 683,
+  "alt": "Lista de productos con interruptores de visible, disponible y destacado."
+ },
+ {
+  "i": 24,
+  "file": "img-24.jpg",
+  "w": 1000,
+  "h": 683,
+  "alt": "Ajustes del negocio con datos, pedidos y entrega."
+ },
+ {
+  "i": 25,
+  "file": "img-01.jpg",
+  "w": 1000,
+  "h": 625,
+  "alt": "Inicio."
+ },
+ {
+  "i": 26,
+  "file": "img-26.jpg",
+  "w": 1000,
+  "h": 494,
+  "alt": "Sección de productos destacados con flechas y puntos para recorrerlos."
+ },
+ {
+  "i": 27,
+  "file": "img-03.jpg",
+  "w": 1000,
+  "h": 750,
+  "alt": "Producto con opciones."
+ },
+ {
+  "i": 28,
+  "file": "img-04.jpg",
+  "w": 1000,
+  "h": 625,
+  "alt": "Panel Tu pedido."
+ },
+ {
+  "i": 29,
+  "file": "img-05.jpg",
+  "w": 1000,
+  "h": 1383,
+  "alt": "Finalizar pedido."
+ },
+ {
+  "i": 30,
+  "file": "img-30.jpg",
+  "w": 1000,
+  "h": 625,
+  "alt": "Pantalla de pago."
+ },
+ {
+  "i": 31,
+  "file": "img-08.jpg",
+  "w": 1000,
+  "h": 625,
+  "alt": "Pago aprobado."
+ },
+ {
+  "i": 32,
+  "file": "img-07.jpg",
+  "w": 1000,
+  "h": 1244,
+  "alt": "Pedido con Yape."
+ },
+ {
+  "i": 33,
+  "file": "img-09.jpg",
+  "w": 1000,
+  "h": 979,
+  "alt": "Seguimiento."
+ },
+ {
+  "i": 34,
+  "file": "img-34.jpg",
+  "w": 1000,
+  "h": 929,
+  "alt": "Pedido recién hecho con botón Cancelar."
+ },
+ {
+  "i": 35,
+  "file": "img-35.jpg",
+  "w": 1000,
+  "h": 778,
+  "alt": "Seguimiento de un pedido cancelado con el motivo que escribió el cliente."
+ },
+ {
+  "i": 36,
+  "file": "img-36.jpg",
+  "w": 1000,
+  "h": 625,
+  "alt": "Detalle del pedido cancelado en el panel, con el motivo del cliente."
+ },
+ {
+  "i": 37,
+  "file": "img-14.jpg",
+  "w": 1000,
+  "h": 625,
+  "alt": "Crear cuenta."
+ },
+ {
+  "i": 38,
+  "file": "img-15.jpg",
+  "w": 1000,
+  "h": 625,
+  "alt": "Mis pedidos."
+ },
+ {
+  "i": 39,
+  "file": "img-16.jpg",
+  "w": 1000,
+  "h": 625,
+  "alt": "Perfil."
+ },
+ {
+  "i": 40,
+  "file": "img-40.jpg",
+  "w": 1000,
+  "h": 1191,
+  "alt": "Calificar el pedido."
+ },
+ {
+  "i": 41,
+  "file": "img-41.jpg",
+  "w": 1000,
+  "h": 625,
+  "alt": "Reservas."
+ },
+ {
+  "i": 42,
+  "file": "img-42.jpg",
+  "w": 1000,
+  "h": 625,
+  "alt": "Contacto."
+ },
+ {
+  "i": 43,
+  "file": "img-43.jpg",
+  "w": 1000,
+  "h": 625,
+  "alt": "Promociones."
+ },
+ {
+  "i": 44,
+  "file": "img-10.jpg",
+  "w": 1000,
+  "h": 683,
+  "alt": "Tablero de pedidos."
+ },
+ {
+  "i": 45,
+  "file": "img-11.jpg",
+  "w": 1000,
+  "h": 683,
+  "alt": "Detalle del pedido."
+ },
+ {
+  "i": 46,
+  "file": "img-46.jpg",
+  "w": 1000,
+  "h": 625,
+  "alt": "Historial de pedidos con filtros de estado y fechas, búsqueda y paginación."
+ },
+ {
+  "i": 47,
+  "file": "img-13.jpg",
+  "w": 1000,
+  "h": 683,
+  "alt": "Pagos."
+ },
+ {
+  "i": 48,
+  "file": "img-48.jpg",
+  "w": 1000,
+  "h": 683,
+  "alt": "Reservas."
+ },
+ {
+  "i": 49,
+  "file": "img-49.jpg",
+  "w": 1000,
+  "h": 683,
+  "alt": "Mensajes."
+ },
+ {
+  "i": 50,
+  "file": "img-50.jpg",
+  "w": 1000,
+  "h": 683,
+  "alt": "Reseñas."
+ },
+ {
+  "i": 51,
+  "file": "img-23.jpg",
+  "w": 1000,
+  "h": 683,
+  "alt": "Productos con el contador de destacados."
+ },
+ {
+  "i": 52,
+  "file": "img-52.jpg",
+  "w": 1000,
+  "h": 683,
+  "alt": "Editar producto."
+ },
+ {
+  "i": 53,
+  "file": "img-53.jpg",
+  "w": 1000,
+  "h": 494,
+  "alt": "Segundo producto destacado en el carrusel."
+ },
+ {
+  "i": 54,
+  "file": "img-54.jpg",
+  "w": 1000,
+  "h": 683,
+  "alt": "Promociones."
+ },
+ {
+  "i": 55,
+  "file": "img-55.jpg",
+  "w": 1000,
+  "h": 683,
+  "alt": "Blog."
+ },
+ {
+  "i": 56,
+  "file": "img-56.jpg",
+  "w": 1000,
+  "h": 683,
+  "alt": "Usuarios."
+ },
+ {
+  "i": 57,
+  "file": "img-57.jpg",
+  "w": 1000,
+  "h": 683,
+  "alt": "Ajustes de pago."
+ },
+ {
+  "i": 58,
+  "file": "img-58.jpg",
+  "w": 1000,
+  "h": 625,
+  "alt": "Página de error con los botones Volver al inicio y Ver la carta."
+ },
+ {
+  "i": 59,
+  "file": "img-06.jpg",
+  "w": 1000,
+  "h": 1047,
+  "alt": "Pantalla de pago con el aviso de tarjeta rechazada."
+ }
+]

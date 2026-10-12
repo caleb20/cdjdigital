@@ -1,0 +1,163 @@
+[
+ {
+  "i": 0,
+  "file": "img-00.webp",
+  "w": 768,
+  "h": 1024,
+  "alt": "Fachada de Kopa Caffe al atardecer, con la entrada iluminada y clientes conversando en la puerta"
+ },
+ {
+  "i": 1,
+  "file": "img-01.jpg",
+  "w": 1000,
+  "h": 625,
+  "alt": "Inicio de la web de Kopa Caffe con la fachada, el título, los botones Escríbenos por WhatsApp y Cómo llegar, la ciudad y el horario."
+ },
+ {
+  "i": 2,
+  "file": "img-02.jpg",
+  "w": 1000,
+  "h": 358,
+  "alt": "Sección Un lugar para todos tus momentos con las categorías y los tres momentos: para tu café, para compartir y para celebrar."
+ },
+ {
+  "i": 3,
+  "file": "img-03.jpg",
+  "w": 1000,
+  "h": 566,
+  "alt": "Sección ¿Tienes algo que celebrar? con los botones Reserva tu mesa y Consulta para eventos."
+ },
+ {
+  "i": 4,
+  "file": "img-04.jpg",
+  "w": 1000,
+  "h": 493,
+  "alt": "Sección Te esperamos con la dirección, el horario, el mapa y el botón Cómo llegar."
+ },
+ {
+  "i": 5,
+  "file": "img-05.jpg",
+  "w": 1000,
+  "h": 583,
+  "alt": "Formulario de contacto con el nombre María Pérez, un teléfono y un mensaje para reservar una mesa."
+ },
+ {
+  "i": 6,
+  "file": "img-06.jpg",
+  "w": 1000,
+  "h": 626,
+  "alt": "Formulario vacío con el aviso Escribe tu nombre en rojo y el campo marcado."
+ },
+ {
+  "i": 7,
+  "file": "img-07.jpg",
+  "w": 1000,
+  "h": 619,
+  "alt": "Formulario con el aviso ¡Listo! Abrimos WhatsApp con tu mensaje."
+ },
+ {
+  "i": 8,
+  "file": "img-04.jpg",
+  "w": 1000,
+  "h": 493,
+  "alt": "Sección Te esperamos con la dirección, el horario y el mapa real de Kopa Caffe."
+ },
+ {
+  "i": 9,
+  "file": "img-09.jpg",
+  "w": 400,
+  "h": 866,
+  "alt": "Inicio en un celular con el título, los botones y el horario."
+ },
+ {
+  "i": 10,
+  "file": "img-10.jpg",
+  "w": 400,
+  "h": 866,
+  "alt": "Menú del celular abierto con Inicio, Nosotros, Ubicación, Contacto y el botón Escríbenos por WhatsApp."
+ },
+ {
+  "i": 11,
+  "file": "img-11.jpg",
+  "w": 400,
+  "h": 866,
+  "alt": "La sección Un lugar para todos tus momentos en un celular."
+ },
+ {
+  "i": 12,
+  "file": "img-12.jpg",
+  "w": 400,
+  "h": 866,
+  "alt": "La sección Contacto en un celular."
+ },
+ {
+  "i": 13,
+  "file": "img-01.jpg",
+  "w": 1000,
+  "h": 625,
+  "alt": "Inicio de la web."
+ },
+ {
+  "i": 14,
+  "file": "img-02.jpg",
+  "w": 1000,
+  "h": 358,
+  "alt": "Sección Nosotros."
+ },
+ {
+  "i": 15,
+  "file": "img-03.jpg",
+  "w": 1000,
+  "h": 566,
+  "alt": "Sección de celebraciones."
+ },
+ {
+  "i": 16,
+  "file": "img-04.jpg",
+  "w": 1000,
+  "h": 493,
+  "alt": "Sección de ubicación."
+ },
+ {
+  "i": 17,
+  "file": "img-05.jpg",
+  "w": 1000,
+  "h": 583,
+  "alt": "Formulario completo."
+ },
+ {
+  "i": 18,
+  "file": "img-06.jpg",
+  "w": 1000,
+  "h": 626,
+  "alt": "Formulario con errores."
+ },
+ {
+  "i": 19,
+  "file": "img-19.jpg",
+  "w": 1000,
+  "h": 361,
+  "alt": "Pie de página de la web."
+ },
+ {
+  "i": 20,
+  "file": "img-09.jpg",
+  "w": 400,
+  "h": 866,
+  "alt": "Inicio en el celular."
+ },
+ {
+  "i": 21,
+  "file": "img-19.jpg",
+  "w": 1000,
+  "h": 361,
+  "alt": "Pie con la nota del Plan Inicio."
+ },
+ {
+  "i": 22,
+  "file": "img-06.jpg",
+  "w": 1000,
+  "h": 626,
+  "alt": "Formulario con el aviso Escribe tu nombre."
+ }
+]

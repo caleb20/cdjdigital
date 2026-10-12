@@ -1,0 +1,635 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Casos de uso · Kopa Caffe (video)</title>
+<style>
+  @font-face { font-family: 'Playfair Display'; src: url('assets/shared/playfair-display-latin-wght-normal.woff2') format('woff2'); font-weight: 400 900; font-style: normal; font-display: block; }
+  @font-face { font-family: 'Playfair Display'; src: url('assets/shared/playfair-display-latin-wght-italic.woff2') format('woff2'); font-weight: 400 900; font-style: italic; font-display: block; }
+  @font-face { font-family: 'Inter'; src: url('assets/shared/inter-latin-wght-normal.woff2') format('woff2'); font-weight: 100 900; font-display: block; }
+  @font-face { font-family: 'Caveat'; src: url('assets/shared/caveat-latin-600-normal.woff2') format('woff2'); font-weight: 600; font-display: block; }
+  @font-face { font-family: 'Caveat'; src: url('assets/shared/caveat-latin-700-normal.woff2') format('woff2'); font-weight: 700; font-display: block; }
+  :root {
+    --ink: #1c1b1a; --ink2: #4c4743; --cream: #f3e8df; --paper: #fbf6f1; --line: rgba(28, 27, 26, 0.13);
+    --rose: #cf7c79; --rose-soft: #f1cfcb; --rose-deep: #a63f45; --sage: #828679; --sage-soft: #dcdfd3; --sage-deep: #565b4c;
+    --bezel: #2a2726; --chat: #efe6dc; --bubble: #dcf8c6;
+    --shadow: 0 1px 2px rgba(28, 27, 26, 0.05), 0 22px 50px -26px rgba(28, 27, 26, 0.38);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #000; height: 100%; overflow: hidden; }
+  body { font-family: 'Inter', system-ui, 'Segoe UI Emoji', sans-serif; color: var(--ink); -webkit-font-smoothing: antialiased; }
+  #frame { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: hidden; background: var(--cream); transform-origin: 0 0; }
+  .bg, .scene { position: absolute; inset: 0; }
+  .scene { opacity: 0; }
+  .blob { position: absolute; border-radius: 50%; }
+  .b1 { width: 1300px; height: 1300px; right: -520px; top: -640px; background: radial-gradient(closest-side, rgba(241, 207, 203, 0.95), rgba(241, 207, 203, 0)); }
+  .b2 { width: 1200px; height: 1200px; left: -560px; bottom: -700px; background: radial-gradient(closest-side, rgba(220, 223, 211, 0.95), rgba(220, 223, 211, 0)); }
+  .b3 { width: 700px; height: 700px; left: 760px; top: 640px; background: radial-gradient(closest-side, rgba(241, 207, 203, 0.45), rgba(241, 207, 203, 0)); }
+  #grain { position: absolute; inset: 0; opacity: 0.35; mix-blend-mode: multiply; pointer-events: none; }
+  .abs { position: absolute; }
+
+  /* tipografía */
+  .eyebrow { position: absolute; font: 600 19px/1 'Inter', sans-serif; letter-spacing: 0.2em; text-transform: uppercase; color: var(--rose-deep); }
+  .h1 { position: absolute; font: 600 104px/1.02 'Playfair Display', serif; letter-spacing: -0.012em; }
+  .h2 { position: absolute; font: 600 60px/1.08 'Playfair Display', serif; letter-spacing: -0.01em; }
+  .acc { font-style: italic; color: var(--rose-deep); font-weight: 500; }
+  .w { display: inline-block; overflow: hidden; vertical-align: bottom; padding: 0 0.04em 0.18em; margin: 0 0.16em -0.18em 0; }
+  .w > span { display: inline-block; }
+  .lede { position: absolute; font: 400 27px/1.5 'Inter', sans-serif; color: var(--ink2); }
+  .lede b, .t b { color: var(--ink); font-weight: 600; }
+  .scribble { position: absolute; font: 600 48px/1.1 'Caveat', cursive; color: var(--rose-deep); white-space: nowrap; }
+  .scribble > span { display: inline-block; transform: rotate(-2deg); }
+  .note { font: 600 38px/1.15 'Caveat', cursive; color: var(--sage-deep); }
+
+  /* etiqueta tipo pincelada (como los banners de Kopa) */
+  .brushw { display: inline-block; }
+  .brush { display: inline-block; padding: 0.56em 1.35em; font: 600 18px/1 'Inter', sans-serif; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink); background: var(--rose); white-space: nowrap;
+    clip-path: polygon(1% 18%, 6% 0, 26% 8%, 52% 0, 78% 7%, 96% 0, 100% 34%, 98% 62%, 100% 92%, 78% 100%, 50% 94%, 24% 100%, 5% 95%, 0 68%, 2% 42%); transform: rotate(-1.4deg); }
+  .brush.sage { background: var(--sage); }
+  .brush.ink { background: var(--ink); color: var(--cream); }
+  .brush.sm { font-size: 15px; padding: 0.5em 1.1em; }
+
+  /* tarjetas */
+  .card { position: absolute; background: var(--paper); border: 1px solid var(--line); border-radius: 24px; box-shadow: var(--shadow); overflow: hidden; }
+  .card h3 { font: 600 36px/1.12 'Playfair Display', serif; letter-spacing: -0.005em; }
+  .t { font: 400 23px/1.45 'Inter', sans-serif; color: var(--ink2); }
+  .cases { font: 600 19px/1.2 'Inter', sans-serif; letter-spacing: 0.03em; color: var(--sage-deep); }
+  .chrome { height: 36px; border-bottom: 1px solid var(--line); background:
+      radial-gradient(circle at 20px 18px, var(--rose) 5px, transparent 5.6px), radial-gradient(circle at 40px 18px, var(--sage) 5px, transparent 5.6px),
+      radial-gradient(circle at 60px 18px, var(--sage-soft) 5px, transparent 5.6px), var(--paper); }
+  .vp { position: relative; overflow: hidden; background: #e9dfd6; }
+  .vp img { position: absolute; left: 0; top: 0; display: block; transform-origin: 50% 0; }
+  .icon { width: 64px; height: 64px; border-radius: 20px; display: flex; align-items: center; justify-content: center; }
+  .icon svg { width: 34px; height: 34px; fill: none; stroke: var(--ink); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* flujo */
+  .pill { position: absolute; display: flex; align-items: center; justify-content: center; text-align: center; padding: 0 48px; border-radius: 999px; font: 600 34px/1.2 'Playfair Display', serif; box-shadow: var(--shadow); }
+  .pill.start { background: var(--sage); color: var(--ink); }
+  .pill.end { background: var(--rose); color: var(--ink); }
+  .halo { position: absolute; inset: -3px; border-radius: inherit; box-shadow: 0 0 0 3px rgba(207, 124, 121, 0.75), 0 40px 90px -30px rgba(166, 63, 69, 0.45); opacity: 0; pointer-events: none; }
+  .links { position: absolute; left: 0; top: 0; overflow: visible; pointer-events: none; }
+  .dashp { fill: none; stroke: var(--rose); stroke-width: 3.5; stroke-dasharray: 8 9; stroke-linecap: round; }
+  .dashp.dim { stroke: rgba(130, 134, 121, 0.75); }
+  .headp { fill: var(--rose); }
+  .headp.dim { fill: rgba(130, 134, 121, 0.75); }
+  .dot { position: absolute; left: 0; top: 0; width: 18px; height: 18px; margin: -9px 0 0 -9px; border-radius: 50%; background: var(--rose-deep); box-shadow: 0 0 0 6px rgba(207, 124, 121, 0.25), 0 0 24px 6px rgba(207, 124, 121, 0.55); offset-rotate: 0deg; opacity: 0; }
+  .chat { position: relative; background: var(--chat); padding: 34px 28px; }
+  .bubble { margin-left: auto; padding: 16px 20px 12px; border-radius: 18px 18px 4px 18px; background: var(--bubble); color: #1c1b1a; font: 400 23px/1.42 'Inter', 'Segoe UI Emoji', sans-serif; white-space: pre-line; box-shadow: 0 1px 1px rgba(0, 0, 0, 0.14); transform-origin: 100% 100%; }
+  .bubble .tk { display: flex; justify-content: flex-end; gap: 6px; margin-top: 6px; font-size: 15px; color: #6b8a6b; }
+  .tk svg { width: 24px; height: 16px; fill: none; stroke: #34a8e8; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+  .stepper { position: absolute; left: 300px; top: 968px; width: 1320px; height: 80px; }
+  .stepper .rail, .stepper .fill { position: absolute; left: 0; right: 0; top: 13px; height: 3px; border-radius: 3px; }
+  .stepper .rail { background: rgba(28, 27, 26, 0.12); }
+  .stepper .fill { background: var(--rose); transform-origin: 0 50%; transform: scaleX(0); }
+  .stepper .s { position: absolute; top: 0; width: 170px; margin-left: -85px; text-align: center; font: 600 18px/1.2 'Inter', sans-serif; letter-spacing: 0.03em; color: rgba(76, 71, 67, 0.55); }
+  .stepper .s b { display: block; width: 28px; height: 28px; margin: 0 auto 10px; border-radius: 50%; background: var(--paper); border: 3px solid rgba(28, 27, 26, 0.22); }
+
+  /* recorridos */
+  .rowlabel { position: absolute; }
+  .item { position: absolute; background: var(--paper); border: 1px solid var(--line); border-radius: 20px; box-shadow: var(--shadow); overflow: hidden; }
+  .item .cap { padding: 12px 18px; font: 600 20px/1.25 'Inter', sans-serif; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .item.list { padding: 22px 26px; }
+  .item.list h4 { font: 600 26px/1.15 'Playfair Display', serif; margin-bottom: 12px; }
+  .item.list li { list-style: none; position: relative; padding-left: 22px; font: 400 20px/1.4 'Inter', sans-serif; color: var(--ink2); margin-top: 6px; }
+  .item.list li::before { content: ''; position: absolute; left: 2px; top: 11px; width: 8px; height: 8px; border-radius: 50%; background: var(--rose); }
+  .item.end { display: flex; align-items: center; justify-content: center; text-align: center; padding: 0 26px; background: var(--rose); font: 600 26px/1.25 'Playfair Display', serif; }
+  .item.bub { background: var(--chat); display: flex; align-items: center; padding: 0 22px; }
+  .item.bub .bubble { font-size: 21px; }
+  .sheet table { width: 100%; border-collapse: collapse; font: 400 18px/1.2 'Inter', sans-serif; }
+  .sheet th, .sheet td { padding: 9px 12px; text-align: left; border-bottom: 1px solid var(--line); white-space: nowrap; }
+  .sheet th { font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink2); background: var(--sage-soft); }
+  .sheet .bar { padding: 9px 14px; border-bottom: 1px solid var(--line); font: 600 14px/1 'Inter', sans-serif; letter-spacing: 0.08em; text-transform: uppercase; color: var(--sage-deep); }
+  .sheet td.hl { background: var(--rose-soft); box-shadow: inset 0 0 0 2px var(--rose); font-weight: 700; }
+
+  /* celulares */
+  .phone { position: absolute; padding: 8px; border-radius: 40px; background: var(--bezel); box-shadow: 0 40px 80px -36px rgba(28, 27, 26, 0.6); }
+  .phone img { display: block; width: 100%; border-radius: 32px; }
+  .pcap { position: absolute; text-align: center; font: 600 30px/1.1 'Playfair Display', serif; }
+  .pcap small { display: block; margin-top: 6px; font: 400 20px/1.3 'Inter', sans-serif; color: var(--ink2); }
+
+  /* casos de uso */
+  .cu { position: absolute; background: var(--paper); border: 1px solid var(--line); border-radius: 18px; box-shadow: var(--shadow); padding: 18px 22px; overflow: hidden; }
+  .cu .code { font: 700 15px/1 'Inter', sans-serif; letter-spacing: 0.14em; }
+  .cu .tt { margin-top: 10px; font: 600 25px/1.18 'Playfair Display', serif; }
+  .cu .bar { position: absolute; left: 0; top: 0; bottom: 0; width: 6px; }
+  .legend { position: absolute; display: flex; gap: 28px; font: 500 21px/1 'Inter', sans-serif; color: var(--ink2); }
+  .legend span { display: inline-flex; align-items: center; gap: 10px; }
+  .legend i { width: 16px; height: 16px; border-radius: 50%; display: inline-block; }
+
+  /* hoja de ruta */
+  .stage { position: absolute; background: var(--paper); border: 1px solid var(--line); border-radius: 22px; box-shadow: var(--shadow); padding: 26px 26px 24px; }
+  .stage.today { border: 2px solid var(--rose); background: #fff8f3; }
+  .stage h3 { margin-top: 18px; font: 600 30px/1.15 'Playfair Display', serif; }
+  .stage p { margin-top: 10px; font: 400 21px/1.42 'Inter', sans-serif; color: var(--ink2); }
+  .tagreq { position: absolute; left: 26px; right: 26px; bottom: 22px; padding: 8px 14px; border-radius: 14px; line-height: 1.3 !important; background: var(--sage-soft); font: 600 14px/1 'Inter', sans-serif; letter-spacing: 0.06em; text-transform: uppercase; color: var(--sage-deep); }
+
+  #hint { position: fixed; left: 50%; bottom: 10px; transform: translateX(-50%); font: 500 13px 'Inter', sans-serif; color: rgba(255, 255, 255, 0.55); z-index: 9; }
+</style>
+<script src="plans.js"></script>
+</head>
+<body>
+<div id="frame">
+  <div class="bg"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div><canvas id="grain" width="960" height="540"></canvas></div>
+  <div id="scenes"></div>
+</div>
+<div id="hint">Espacio: pausa · ← →: ±2 s · R: reiniciar · ?plan=inicio | negocio | pro</div>
+<script>
+/* ============================================================================
+ * Video de casos de uso de Kopa Caffe. Una sola línea de tiempo (Web Animations API) que
+ * render.mjs recorre fotograma a fotograma con window.__seek(t).
+ * Cada movimiento importante registra un efecto de sonido (`sfx`) en su segundo exacto y cada
+ * escena un cambio de sección musical (`scene`): sound.mjs sintetiza la banda sonora con esas marcas.
+ * Movimiento "Premium" de la marca: entrada (0.22, 0.61, 0.36, 1) ~0.95 s, salida que acelera (0.55 s),
+ * cámara suave ~1.2 s; capas: primaria (tarjetas), secundaria (conectores, punto viajero, scroll de capturas),
+ * ambiental (fondo que respira y grano de papel).
+ * ========================================================================== */
+const params = new URLSearchParams(location.search);
+const PLAN = PLANS[params.get('plan') || 'negocio'];
+const E = { enter: 'cubic-bezier(0.22,0.61,0.36,1)', sig: 'cubic-bezier(0.4,0,0.2,1)', exit: 'cubic-bezier(0.4,0,1,1)', inout: 'cubic-bezier(0.45,0,0.25,1)', sine: 'cubic-bezier(0.37,0,0.63,1)', write: 'cubic-bezier(0.3,0.1,0.6,1)' };
+const anims = [], cues = [];
+const scenesEl = document.getElementById('scenes');
+const DIM = {};
+const IMG = (f) => (f.startsWith('shared/') ? `assets/${f}` : `assets/${PLAN.id}/${f}`);
+
+function A(node, kf, at, dur, easing = E.enter, fill = 'both', extra = {}) {
+  const a = node.animate(kf, { duration: Math.max(dur, 0.001) * 1000, delay: at * 1000, easing, fill, ...extra });
+  a.pause(); anims.push(a); return a;
+}
+const sfx = (name, at, o = {}) => cues.push({ type: 'sfx', name, at: +at.toFixed(3), ...o });
+function el(html, parent) { const t = document.createElement('template'); t.innerHTML = html.trim(); const n = t.content.firstElementChild; if (parent) parent.appendChild(n); return n; }
+function pos(n, o) { for (const [k, v] of Object.entries(o)) n.style[k] = typeof v === 'number' ? v + 'px' : v; return n; }
+const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+const rich = (s) => esc(s).replace(/\*([^*]+)\*/g, '<b>$1</b>');
+const wc = (s) => (s || '').replace(/[*«»]/g, '').split(/\s+/).filter(Boolean).length;
+function enter(n, at, o = {}) {
+  const { y = 30, x = 0, s = 1, dur = 0.95, ease = E.enter } = o;
+  return A(n, [{ opacity: 0, transform: `translate(${x}px,${y}px) scale(${s})` }, { opacity: 1, transform: 'none' }], at, dur, ease);
+}
+function card(n, at, note = 0, o = {}) { enter(n, at, { y: 36, s: 0.97, ...o }); sfx('pop', at + 0.04, { note, gain: o.gain ?? 0.8 }); }
+/* título palabra a palabra; *texto* = destacado en cursiva rosa */
+function words(parent, text, at, o = {}) {
+  const { step = 0.07, dur = 0.95, sound = true } = o;
+  let acc = false, i = 0;
+  for (const raw of text.split(' ')) {
+    // "*web*." → parte destacada "web" + resto "." sin destacar
+    let w = raw, tail = '';
+    if (w.startsWith('*')) { acc = true; w = w.slice(1); }
+    const ci = w.indexOf('*'), close = ci >= 0;
+    if (close) { tail = w.slice(ci + 1); w = w.slice(0, ci); }
+    const inner = acc ? `<em class="acc" style="font-style:italic">${esc(w)}</em>${esc(tail)}` : esc(w + tail);
+    const outer = el(`<span class="w"><span>${inner}</span></span>`, parent);
+    A(outer.firstChild, [{ transform: 'translateY(112%)', opacity: 0 }, { transform: 'none', opacity: 1 }], at + i * step, dur, E.enter);
+    if (sound) sfx('tick', at + i * step + 0.06, { gain: 0.35, pan: -0.3 + (i % 5) * 0.15 });
+    if (close) acc = false; i++;
+  }
+  return at + i * step + dur;
+}
+/* pincelada: se "pinta" de izquierda a derecha */
+function brush(parent, text, color, at, o = {}) {
+  const w = el(`<span class="brushw abs"><span class="brush ${color || ''} ${o.sm ? 'sm' : ''}">${esc(text)}</span></span>`, parent);
+  A(w, [{ clipPath: 'inset(-20% 100% -20% 0)' }, { clipPath: 'inset(-20% -2% -20% 0)' }], at, 0.6, E.write);
+  if (o.sound !== false) sfx('swish', at, { gain: 0.45, dur: 0.5 });
+  return w;
+}
+/* letra manuscrita: se escribe de izquierda a derecha, con sonido de lápiz */
+function scribble(parent, text, at, cls = 'scribble') {
+  const n = el(`<div class="${cls} abs"><span>${esc(text)}</span></div>`, parent);
+  const dur = Math.min(2.2, Math.max(0.9, text.length * 0.045));
+  A(n, [{ clipPath: 'inset(-30% 100% -30% -2%)', opacity: 1 }, { clipPath: 'inset(-30% -2% -30% -2%)', opacity: 1 }], at, dur, E.write);
+  sfx('pencil', at, { dur, gain: 0.9 });
+  return n;
+}
+function scene(T0, D, name) {
+  const sc = el('<div class="scene"></div>', scenesEl);
+  A(sc, [{ opacity: 0 }, { opacity: 1 }], T0, 0.35, E.sig);
+  A(sc, [{ opacity: 1, transform: 'none' }, { opacity: 0, transform: 'translateY(-16px)' }], T0 + D - 0.55, 0.55, E.exit, 'forwards');
+  cues.push({ type: 'scene', name, at: +T0.toFixed(3) });
+  if (T0 > 0.1) sfx('whoosh', T0 - 0.25, { dur: 1.0, dir: 1, gain: 0.55 });
+  return sc;
+}
+function header(sc, T0, eyebrow, title, o = {}) {
+  const e = pos(el(`<div class="eyebrow">${esc(eyebrow)}</div>`, sc), { left: 150, top: o.top ?? 74 });
+  enter(e, T0 + 0.15, { y: 14, dur: 0.8 });
+  const h = pos(el('<div class="h2" style="width:1620px"></div>', sc), { left: 150, top: (o.top ?? 74) + 38 });
+  return words(h, title, T0 + 0.35, { step: 0.06 });
+}
+const ICON = {
+  user: '<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/>',
+  team: '<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 2.9-6.5 6.5-6.5s6.5 2.9 6.5 6.5"/><circle cx="17" cy="9" r="2.8"/><path d="M15.5 13.8c3.2.2 5.8 2.8 6 6.2"/>',
+  admin: '<path d="M4 6h8M18 6h2M4 12h2M12 12h8M4 18h10M20 18h0"/><circle cx="15" cy="6" r="2.2"/><circle cx="9" cy="12" r="2.2"/><circle cx="17" cy="18" r="2.2"/>',
+  shield: '<path d="M12 3l8 3v6c0 4.4-3.4 8.2-8 9-4.6-.8-8-4.6-8-9V6l8-3z"/><path d="M8.5 12l2.4 2.4 4.6-4.8"/>',
+  code: '<path d="M8 8l-4 4 4 4M16 8l4 4-4 4M13.5 5l-3 14"/>',
+};
+const actorIcon = (role) => /cliente/i.test(role) ? 'user' : /equipo|personal/i.test(role) ? 'team' : /sistema/i.test(role) ? 'shield' : /cdj/i.test(role) ? 'code' : 'admin';
+
+/* conector discontinuo que se dibuja (máscara) + punta + punto viajero */
+let MID = 0;
+function linksLayer(parent, w = 4000) { return el(`<svg class="links" width="${w}" height="1080" viewBox="0 0 ${w} 1080"><defs></defs></svg>`, parent); }
+function link(parent, svg, d, at, dur, o = {}) {
+  const { dim = false, end = null, angle = 0, dot = !dim, gain = 0.4 } = o;
+  const id = `m${MID++}`, ns = 'http://www.w3.org/2000/svg';
+  const mask = document.createElementNS(ns, 'mask'); mask.setAttribute('id', id); mask.setAttribute('maskUnits', 'userSpaceOnUse');
+  mask.setAttribute('x', '-200'); mask.setAttribute('y', '-200'); mask.setAttribute('width', String(Number(svg.getAttribute('width')) + 400)); mask.setAttribute('height', '1500');
+  const mp = document.createElementNS(ns, 'path'); mp.setAttribute('d', d); mp.setAttribute('pathLength', '1');
+  mp.setAttribute('style', 'fill:none;stroke:#fff;stroke-width:16;stroke-linecap:round;stroke-dasharray:1;');
+  mask.appendChild(mp); svg.querySelector('defs').appendChild(mask);
+  A(mp, [{ strokeDashoffset: 1 }, { strokeDashoffset: 0 }], at, dur, E.inout);
+  const p = document.createElementNS(ns, 'path'); p.setAttribute('d', d); p.setAttribute('class', 'dashp' + (dim ? ' dim' : '')); p.setAttribute('mask', `url(#${id})`); svg.appendChild(p);
+  if (end) {
+    const h = document.createElementNS(ns, 'path'); h.setAttribute('class', 'headp' + (dim ? ' dim' : ''));
+    h.setAttribute('d', 'M-14 -9 L4 0 L-14 9 Z'); h.setAttribute('transform', `translate(${end[0]} ${end[1]}) rotate(${angle})`); svg.appendChild(h);
+    A(h, [{ opacity: 0, transform: `translate(${end[0]}px,${end[1]}px) rotate(${angle}deg) scale(0.4)` }, { opacity: 1, transform: `translate(${end[0]}px,${end[1]}px) rotate(${angle}deg) scale(1)` }], at + dur * 0.82, 0.3, E.enter);
+  }
+  if (dot) {
+    const dt = el(`<div class="dot" style="offset-path:path('${d}')"></div>`, parent);
+    A(dt, [{ offsetDistance: '0%', opacity: 0, offset: 0 }, { offsetDistance: '10%', opacity: 1, offset: 0.1 }, { offsetDistance: '90%', opacity: 1, offset: 0.9 }, { offsetDistance: '100%', opacity: 0, offset: 1 }], at + 0.05, dur * 1.2, E.inout);
+  }
+  sfx('swish', at, { gain, dur: Math.min(0.7, dur) });
+}
+function shotHTML(file, w, vh) {
+  const [iw, ih] = DIM[IMG(file)] || [1000, 625];
+  let h = w * ih / iw, ww = w, ox = 0, oy = 0, bg = '';
+  // poco más baja que el recuadro: se amplía y recorta; mucho más baja: se muestra entera, centrada sobre su propio color de borde
+  if (h < vh && vh / h <= 1.12) { const k = vh / h; ww = w * k; h = vh; ox = -(ww - w) / 2; }
+  else if (h < vh) { const [top, bot] = EDGE[IMG(file)] || []; oy = (vh - h) / 2; if (top) bg = `;background:linear-gradient(${top} 50%, ${bot} 50%)`; }
+  return { html: `<div class="vp" style="height:${vh}px${bg}"><img src="${IMG(file)}" style="width:${ww}px;left:${ox}px;top:${oy}px" /></div>`, scroll: Math.max(0, h - vh) };
+}
+
+/* ======================================================================= ESCENAS */
+const B = {};
+
+B.intro = (T0, s) => {
+  const D = 8.2, sc = scene(T0, D, 'intro');
+  const logo = pos(el('<div class="abs" style="display:flex;align-items:center;gap:16px"><img src="assets/shared/kopa-icon-ink.png" style="height:86px" /><img src="assets/shared/kopa-wordmark-ink.png" style="height:62px" /></div>', sc), { left: 150, top: 96 });
+  enter(logo, T0 + 0.3, { y: 18, s: 0.96 }); sfx('pop', T0 + 0.32, { note: 0 });
+  const eb = pos(el(`<div class="eyebrow">${esc(s.eyebrow)}</div>`, sc), { left: 150, top: 300 });
+  enter(eb, T0 + 0.8, { y: 14, dur: 0.8 });
+  const h1 = pos(el('<div class="h1" style="width:1000px"></div>', sc), { left: 150, top: 344 });
+  let t = words(h1, s.title[0], T0 + 1.0, { step: 0.08 }); h1.appendChild(document.createElement('br'));
+  t = words(h1, s.title[1], T0 + 1.3 + wc(s.title[0]) * 0.08, { step: 0.08 });
+  const bw = brush(sc, s.badge, '', T0 + 2.5); pos(bw, { left: 150, top: 600 });
+  const ld = pos(el(`<div class="lede" style="width:860px">${rich(s.lede)}</div>`, sc), { left: 150, top: 680 });
+  enter(ld, T0 + 2.9, { y: 20 });
+  scribble(sc, s.scribble, T0 + 3.9).style.cssText += 'left:150px;top:880px';
+  // foto real del local (se descubre de abajo arriba y se acerca despacio)
+  const ph = pos(el(`<div class="card" style="width:620px;height:820px;border-radius:30px"><img src="${IMG(s.photo)}" style="width:100%;height:100%;object-fit:cover;object-position:50% 40%;transform-origin:50% 60%" /></div>`, sc), { left: 1150, top: 130 });
+  A(ph, [{ clipPath: 'inset(100% 0 0 0 round 30px)' }, { clipPath: 'inset(0 0 0 0 round 30px)' }], T0 + 0.6, 1.3, E.inout);
+  A(ph.querySelector('img'), [{ transform: 'scale(1.14)' }, { transform: 'scale(1)' }], T0 + 0.6, D, E.sine);
+  sfx('whoosh', T0 + 0.55, { dur: 1.3, dir: -1, gain: 0.35 });
+  const lb = brush(sc, 'Foto real del local', 'sage', T0 + 2.0); pos(lb, { left: 1110, top: 880 });
+  return D;
+};
+
+B.why = (T0, s) => {
+  const words_ = wc(s.title) + wc(s.before.text) + wc(s.after.text) + wc(s.scribble);
+  const D = Math.max(9, 3.6 + words_ / 6);
+  const sc = scene(T0, D, 'why');
+  header(sc, T0, s.eyebrow, s.title);
+  const mk = (x, lab, color, d, at, note) => {
+    const c = pos(el(`<div class="card" style="width:770px;height:360px;padding:38px 42px"><div style="height:44px"></div><h3 style="margin-top:18px;font-size:40px">${esc(d.title)}</h3><p class="t" style="margin-top:16px;font-size:26px">${rich(d.text)}</p></div>`, sc), { left: x, top: 350 });
+    card(c, at, note);
+    const b = brush(c, lab, color, at + 0.35, { sound: false }); pos(b, { left: 40, top: 34 });
+    return c;
+  };
+  const a = mk(150, 'Antes', 'sage', s.before, T0 + 1.4, 1);
+  A(a, [{ filter: 'saturate(1)' , opacity: 1 }, { filter: 'saturate(0.6)', opacity: 0.82 }], T0 + 3.4, 0.8, E.sig, 'forwards');
+  const svg = linksLayer(sc);
+  link(sc, svg, 'M 930 530 L 990 530', T0 + 2.6, 0.6, { end: [990, 530] });
+  mk(1000, 'Ahora', '', s.after, T0 + 3.0, 4);
+  sfx('chime', T0 + 3.4, { note: 4, gain: 0.7 });
+  const halo = pos(el('<div class="halo" style="border-radius:24px"></div>', sc), { left: 1000, top: 350, width: 770, height: 360 });
+  A(halo, [{ opacity: 0 }, { opacity: 1 }], T0 + 3.5, 0.8, E.sig);
+  scribble(sc, s.scribble, T0 + 4.6).style.cssText += 'left:150px;top:790px';
+  return D;
+};
+
+B.actors = (T0, s) => {
+  const n = s.actors.length, gap = 40, w = (1620 - gap * (n - 1)) / n;
+  const words_ = s.actors.reduce((a, x) => a + wc(x.title) + wc(x.text), 0) + wc(s.title);
+  const D = Math.max(9, 2.6 + n * 0.25 + words_ / 6);
+  const sc = scene(T0, D, 'actors');
+  header(sc, T0, s.eyebrow, s.title);
+  s.actors.forEach((a, i) => {
+    const color = i % 2 ? 'sage' : '';
+    const c = pos(el(`<div class="card" style="width:${w}px;height:440px;padding:36px 36px">
+      <div style="display:flex;align-items:center;gap:18px"><div class="icon" style="background:${i % 2 ? 'var(--sage-soft)' : 'var(--rose-soft)'}"><svg viewBox="0 0 24 24">${ICON[actorIcon(a.role)]}</svg></div><div style="height:40px;position:relative;flex:1"></div></div>
+      <h3 style="margin-top:26px;font-size:${n > 3 ? 33 : 39}px">${esc(a.title)}</h3><p class="t" style="margin-top:14px;font-size:${n > 3 ? 22 : 25}px">${rich(a.text)}</p>
+      <div class="cases" style="position:absolute;left:36px;bottom:32px">${esc(a.cases)}</div></div>`, sc), { left: 150 + i * (w + gap), top: 330 });
+    const at = T0 + 1.3 + i * 0.22;
+    card(c, at, i * 2);
+    const b = brush(c, a.role, color, at + 0.45, { sound: false, sm: n > 3 }); pos(b, { left: 116, top: 46 });
+  });
+  return D;
+};
+
+B.flow = (T0, s) => {
+  const CY = 590, CW = 700, VH = 370, CH = 648;
+  const nodes = s.nodes.map((n) => ({ ...n }));
+  // ancho de cada nodo en la "pista" de la cámara
+  const width = (n) => n.kind === 'shot' ? CW : n.kind === 'chat' ? 640 : n.kind === 'decision' ? 1120 : 600;
+  let x = 0; const GAP = 180;
+  nodes.forEach((n) => { n.w = width(n); n.l = x; n.r = x + n.w; n.c = x + n.w / 2; x += n.w + GAP; });
+  // tiempos: cada paso dura lo que tarda en leerse
+  const dwell = (n) => n.kind === 'start' ? 2.3 : n.kind === 'end' ? 4.4 : n.kind === 'decision' ? Math.max(5.2, 2.9 + wc(n.q + ' ' + n.options.map((o) => o.title + ' ' + o.text).join(' ')) / 5.5)
+    : n.kind === 'chat' ? Math.max(4.6, 1.9 + wc(n.bubble + ' ' + n.text) / 5.5) : Math.max(3.6, 1.5 + wc(n.title + ' ' + n.text) / 5);
+  let t = 1.0; nodes.forEach((n) => { n.t = t; t += dwell(n); });
+  const D = t + 0.4;
+  const sc = scene(T0, D, 'flow');
+  header(sc, T0, s.eyebrow, s.title, { top: 60 });
+  const trackW = Math.ceil(x + 400);
+  const track = el(`<div class="abs" style="left:0;top:0;width:${trackW}px;height:1080px"></div>`, sc);
+  const svg = linksLayer(track, trackW);
+  const cam = (n) => 960 - n.c;
+  track.style.transform = `translateX(${cam(nodes[0])}px)`;
+  const nodeEls = [];
+  nodes.forEach((n, i) => {
+    const at = T0 + n.t;
+    let ne;
+    if (n.kind === 'start' || n.kind === 'end') {
+      ne = pos(el(`<div class="pill ${n.kind}" style="width:${n.w}px;height:150px">${esc(n.text)}<div class="halo" style="border-radius:999px"></div></div>`, track), { left: n.l, top: CY - 75 });
+      card(ne, at + (i ? 0.25 : 0), i ? 6 : 0);
+      if (n.kind === 'end') {
+        sfx('success', at + 0.6, { gain: 0.8 });
+        const nt = scribble(track, n.note, at + 1.4, 'scribble note'); pos(nt, { left: n.l + 40, top: CY + 110 });
+      }
+    } else if (n.kind === 'shot') {
+      const sh = shotHTML(n.img, CW, VH);
+      ne = pos(el(`<div class="card" style="width:${CW}px;height:${CH}px"><div class="chrome"></div>${sh.html}<div style="padding:22px 32px 28px"><div style="height:40px;position:relative"></div><h3 style="margin-top:12px;font-size:${n.title.length > 20 ? 32 : 36}px">${esc(n.title)}</h3><p class="t" style="margin-top:10px;font-size:22px">${rich(n.text)}</p></div><div class="halo" style="border-radius:24px"></div></div>`, track), { left: n.l, top: CY - CH / 2 });
+      card(ne, at + 0.25, 1 + (i % 6));
+      const b = brush(ne, n.step, i % 2 ? 'sage' : '', at + 0.85, { sound: false, sm: true }); pos(b, { left: 30, top: 36 + VH + 24 });
+      sfx('chime', at + 0.9, { note: Math.min(8, 1 + i), gain: 0.55 });
+      const img = ne.querySelector('img');
+      if (sh.scroll > 0) A(img, [{ transform: 'translateY(0)' }, { transform: `translateY(${-sh.scroll}px)` }], at + 1.6, Math.max(2.4, dwell(n) - 2.0), E.inout);
+      else A(img, [{ transform: 'scale(1)' }, { transform: 'scale(1.045)' }], at + 1.0, dwell(n), E.sine);
+      if (n.sound) sfx(n.sound, at + 1.2, { gain: 0.8 });
+    } else if (n.kind === 'chat') {
+      ne = pos(el(`<div class="card" style="width:640px;height:590px"><div class="chat" style="height:330px;display:flex;align-items:center"><div class="bubble" style="width:540px;font-size:24px">${esc(n.bubble)}<div class="tk"><span>Enviado</span><svg viewBox="0 0 26 18"><path d="M2 9.5 7 14.5 16 4"/><path d="M10 11 13 14.5 23 4"/></svg></div></div></div><div style="padding:22px 32px"><div style="height:40px;position:relative"></div><h3 style="margin-top:12px;font-size:32px">${esc(n.title)}</h3><p class="t" style="margin-top:10px;font-size:23px">${rich(n.text)}</p></div><div class="halo" style="border-radius:24px"></div></div>`, track), { left: n.l, top: CY - 295 });
+      card(ne, at + 0.25, 3);
+      const b = brush(ne, n.step, 'sage', at + 0.85, { sound: false, sm: true }); pos(b, { left: 30, top: 352 });
+      const bub = ne.querySelector('.bubble');
+      A(bub, [{ opacity: 0, transform: 'scale(0.8) translateY(16px)' }, { opacity: 1, transform: 'none' }], at + 1.1, 0.8, E.enter);
+      sfx('send', at + 1.15, { gain: 0.9 });
+      A(bub.querySelector('.tk svg'), [{ opacity: 0, transform: 'scale(0.5)' }, { opacity: 1, transform: 'none' }], at + 2.0, 0.45, E.enter);
+      sfx('tick', at + 2.05, { gain: 0.6 });
+    } else if (n.kind === 'decision') {
+      const dw = 440, dh = 290, ox = n.l + dw + 120, ow = n.w - dw - 120;
+      ne = pos(el(`<div class="abs"><svg width="${dw}" height="${dh}" viewBox="0 0 ${dw} ${dh}" style="overflow:visible"><polygon class="dp" pathLength="1" points="${dw / 2},6 ${dw - 6},${dh / 2} ${dw / 2},${dh - 6} 6,${dh / 2}" fill="#fbf6f1" stroke="#cf7c79" stroke-width="3.5" stroke-linejoin="round"/></svg><div class="abs" style="left:0;top:0;width:${dw}px;height:${dh}px;display:flex;align-items:center;justify-content:center;text-align:center;padding:0 70px;font:600 34px/1.15 'Playfair Display',serif">${esc(n.q)}</div></div>`, track), { left: n.l, top: CY - dh / 2 });
+      const poly = ne.querySelector('.dp'); poly.style.strokeDasharray = '1';
+      A(ne, [{ opacity: 0 }, { opacity: 1 }], at + 0.2, 0.3, E.sig);
+      A(poly, [{ strokeDashoffset: 1, fillOpacity: 0 }, { strokeDashoffset: 0, fillOpacity: 1 }], at + 0.3, 1.0, E.inout);
+      A(ne.lastElementChild, [{ opacity: 0, transform: 'translateY(10px)' }, { opacity: 1, transform: 'none' }], at + 1.0, 0.8, E.enter);
+      sfx('tap', at + 0.35, { gain: 0.8 }); sfx('chime', at + 1.05, { note: 5, gain: 0.5 });
+      const oh = 230, ys = [CY - oh - 16, CY + 16];
+      n.options.forEach((o, k) => {
+        const hasImg = !!o.img;
+        const thumb = hasImg ? shotHTML(o.img, 230, oh - 2) : null;
+        const oc = pos(el(`<div class="card" style="width:${ow}px;height:${oh}px;display:flex"><div style="${hasImg ? 'width:232px;flex:none;border-right:1px solid var(--line)' : 'display:none'}">${hasImg ? thumb.html : ''}</div><div style="padding:24px 26px;position:relative;flex:1"><div style="height:36px;position:relative"></div><div style="margin-top:10px;font:600 27px/1.15 'Playfair Display',serif">${esc(o.title)}</div><p class="t" style="margin-top:8px;font-size:20px">${rich(o.text)}</p></div><div class="halo" style="border-radius:24px"></div></div>`, track), { left: ox, top: ys[k] });
+        const ot = at + 1.9 + k * 0.45;
+        const yo = ys[k] + oh / 2, x1 = n.l + dw + 16, x2 = ox - 16;
+        link(track, svg, `M ${x1} ${CY} C ${x1 + 60} ${CY}, ${x2 - 60} ${yo}, ${x2} ${yo}`, ot - 0.45, 0.6, { end: [x2, yo], angle: k ? -12 : 12, dim: k === 1 });
+        card(oc, ot, 3 + k * 2);
+        const b = brush(oc.children[1], o.tag, k ? 'sage' : '', ot + 0.4, { sound: false, sm: true }); pos(b, { left: 24, top: 22 });
+        if (k === 0) { A(oc.querySelector('.halo'), [{ opacity: 0 }, { opacity: 1 }], ot + 0.9, 0.7, E.sig); }
+        n['o' + k] = { x: ox + ow, y: yo };
+      });
+    }
+    nodeEls.push(ne);
+  });
+  // cámara, conectores, atenuado de lo ya visto
+  for (let i = 1; i < nodes.length; i++) {
+    const a = nodes[i - 1], b = nodes[i], at = T0 + b.t;
+    A(track, [{ transform: `translateX(${cam(a)}px)` }, { transform: `translateX(${cam(b)}px)` }], at - 0.05, 1.2, E.inout, 'forwards');
+    sfx('whoosh', at - 0.05, { dur: 1.2, dir: 1, gain: 0.28 });
+    if (a.kind === 'decision') {
+      [0, 1].forEach((k) => { const o = a['o' + k]; const x2 = b.l - 16; link(track, svg, `M ${o.x + 16} ${o.y} C ${o.x + 80} ${o.y}, ${x2 - 80} ${CY}, ${x2} ${CY}`, at - 0.55 + k * 0.15, 0.7, { end: [x2, CY], angle: k ? -12 : 12, dim: k === 1, gain: k ? 0 : 0.4 }); });
+    } else {
+      link(track, svg, `M ${a.r + 18} ${CY} L ${b.l - 20} ${CY}`, at - 0.55, 0.75, { end: [b.l - 20, CY] });
+    }
+    A(nodeEls[i - 1], [{ opacity: 1, transform: 'none' }, { opacity: 0.32, transform: 'scale(0.94)' }], at + 0.1, 0.9, E.inout, 'forwards');
+  }
+  nodeEls.forEach((ne, i) => { const h = ne.querySelector(':scope > .halo'); if (h) { A(h, [{ opacity: 0 }, { opacity: 1 }], T0 + nodes[i].t + 1.1, 0.7, E.sig); if (i < nodes.length - 1) A(h, [{ opacity: 1 }, { opacity: 0 }], T0 + nodes[i + 1].t, 0.5, E.sig, 'forwards'); } });
+  // indicador de pasos
+  const st = el('<div class="stepper"><div class="rail"></div><div class="fill"></div></div>', sc);
+  enter(st, T0 + 0.8, { y: 16, dur: 0.8 });
+  const sw = 1320, k = nodes.length - 1;
+  nodes.forEach((n, i) => {
+    const s_ = pos(el(`<div class="s"><b></b>${esc(n.label)}</div>`, st), { left: (sw / k) * i });
+    const b = s_.querySelector('b'), at = T0 + n.t + 0.35;
+    A(b, [{ background: '#fbf6f1', borderColor: 'rgba(28,27,26,0.22)', transform: 'scale(1)' }, { background: '#cf7c79', borderColor: '#a63f45', transform: 'scale(1.25)' }], at, 0.6, E.enter, 'forwards');
+    A(s_, [{ color: 'rgba(76,71,67,0.55)' }, { color: '#1c1b1a' }], at, 0.5, E.sig, 'forwards');
+    if (i < k) {
+      A(b, [{ transform: 'scale(1.25)', background: '#cf7c79' }, { transform: 'scale(1)', background: '#f1cfcb' }], T0 + nodes[i + 1].t + 0.35, 0.6, E.inout, 'forwards');
+      A(s_, [{ color: '#1c1b1a' }, { color: 'rgba(76,71,67,0.85)' }], T0 + nodes[i + 1].t + 0.35, 0.5, E.sig, 'forwards');
+      A(st.querySelector('.fill'), [{ transform: `scaleX(${i / k})` }, { transform: `scaleX(${(i + 1) / k})` }], T0 + nodes[i + 1].t + 0.35, 1.0, E.inout, 'forwards');
+    }
+  });
+  return D;
+};
+
+B.chains = (T0, s) => {
+  const nR = s.rows.length;
+  const RH = nR === 1 ? 300 : nR === 2 ? 270 : 200, Y0 = nR === 1 ? 420 : nR === 2 ? 320 : 270, GAPY = nR === 3 ? 62 : 90;
+  const AW = 74;
+  let t = 1.4, totalWords = wc(s.title);
+  const plan = s.rows.map((r, ri) => {
+    const items = r.items.map((it) => {
+      let w = 0;
+      if (it.kind === 'shot') { const [iw, ih] = DIM[IMG(it.img)] || [1000, 625]; w = Math.max(nR === 3 ? 400 : 260, Math.min(470, (RH - 50) * iw / ih)); }
+      else if (it.kind === 'list') w = 450; else if (it.kind === 'bubble') w = 430; else if (it.kind === 'sheet') w = 470; else w = 300;
+      totalWords += wc(it.caption || it.title || it.text || '') + (it.items ? wc(it.items.join(' ')) : 0);
+      return { ...it, w };
+    });
+    const tw = items.reduce((a, x) => a + x.w, 0) + AW * (items.length - 1);
+    const k = tw > 1620 ? (1620 - AW * (items.length - 1)) / (tw - AW * (items.length - 1)) : 1;
+    items.forEach((it) => { it.w *= k; });
+    const row = { ...r, items, y: Y0 + ri * (RH + GAPY), t };
+    t += 0.5 + items.length * 0.55;
+    return row;
+  });
+  const D = Math.max(t + 2.6, 2.0 + totalWords / 6);
+  const sc = scene(T0, D, 'chains');
+  header(sc, T0, s.eyebrow, s.title);
+  const svg = linksLayer(sc);
+  plan.forEach((r, ri) => {
+    const at0 = T0 + r.t;
+    const lb = brush(sc, r.label, ri % 2 ? 'sage' : '', at0, { sm: true }); pos(lb, { left: 150, top: r.y - 44 });
+    let x = 150;
+    r.items.forEach((it, k) => {
+      const at = at0 + 0.35 + k * 0.55;
+      let html;
+      if (it.kind === 'shot') { const sh = shotHTML(it.img, it.w, RH - 50); html = `<div class="item" style="width:${it.w}px;height:${RH}px">${sh.html}<div class="cap">${esc(it.caption)}</div></div>`; }
+      else if (it.kind === 'list') html = `<div class="item list" style="width:${it.w}px;height:${RH}px"><h4>${esc(it.title)}</h4><ul>${it.items.map((li) => `<li>${esc(li)}</li>`).join('')}</ul></div>`;
+      else if (it.kind === 'bubble') html = `<div class="item bub" style="width:${it.w}px;height:${RH}px"><div class="bubble">${esc(it.text)}</div></div>`;
+      else if (it.kind === 'sheet') html = `<div class="item sheet" style="width:${it.w}px;height:${RH}px"><div class="bar">Hoja de Google · carta</div><table><tr><th>nombre</th><th>precio</th><th>categoría</th></tr>${it.rows.map((row, ri2) => `<tr>${row.map((c, ci) => `<td class="${it.hl && it.hl[0] === ri2 && it.hl[1] === ci ? 'hl' : ''}">${esc(c)}</td>`).join('')}</tr>`).join('')}</table><div class="cap" style="position:absolute;bottom:0">${esc(it.caption)}</div></div>`;
+      else html = `<div class="item end" style="width:${it.w}px;height:${RH}px">${esc(it.text)}</div>`;
+      const n = pos(el(html, sc), { left: x, top: r.y });
+      card(n, at, (ri * 2 + k) % 8, { gain: 0.75 });
+      if (it.kind === 'bubble') sfx('send', at + 0.35, { gain: 0.8 });
+      if (it.kind === 'end') sfx('chime', at + 0.3, { note: 5 + (k % 3), gain: 0.5 });
+      if (it.sound) sfx(it.sound, at + 0.4, { gain: 0.9 });
+      if (it.kind === 'list') n.querySelectorAll('li').forEach((li, j) => { enter(li, at + 0.4 + j * 0.18, { y: 8, x: -8, dur: 0.6 }); sfx('tick', at + 0.45 + j * 0.18, { gain: 0.5 }); });
+      if (it.kind === 'sheet') { const hl = n.querySelector('.hl'); if (hl) { A(hl, [{ boxShadow: 'inset 0 0 0 0 #cf7c79' }, { boxShadow: 'inset 0 0 0 3px #cf7c79' }], at + 0.8, 0.6, E.sig); sfx('tap', at + 0.85, { gain: 0.6 }); } }
+      if (k > 0) link(sc, svg, `M ${x - AW + 12} ${r.y + RH / 2} L ${x - 14} ${r.y + RH / 2}`, at - 0.32, 0.45, { end: [x - 14, r.y + RH / 2], gain: 0.3 });
+      x += it.w + AW;
+    });
+  });
+  return D;
+};
+
+B.phones = (T0, s) => {
+  const n = s.phones.length, PW = n > 4 ? 218 : 262, imgW = PW - 16;
+  const [iw, ih] = DIM[IMG(s.phones[0].img)] || [400, 866];
+  const PH = imgW * ih / iw + 16, gap = (1620 - n * PW) / (n - 1), Y = 268;
+  const D = Math.max(8, 2.2 + n * 0.6 + 2.6);
+  const sc = scene(T0, D, 'phones');
+  header(sc, T0, s.eyebrow, s.title);
+  const svg = linksLayer(sc);
+  s.phones.forEach((p, i) => {
+    const x = 150 + i * (PW + gap), at = T0 + 1.3 + i * 0.5;
+    const ph = pos(el(`<div class="phone" style="width:${PW}px"><img src="${IMG(p.img)}" /></div>`, sc), { left: x, top: Y });
+    card(ph, at, i + 1, { y: 50 });
+    A(ph, [{ translate: '0 0' }, { translate: '0 -8px' }], at + 1.0 + i * 0.2, 3.2, E.sine, 'none', { iterations: Infinity, direction: 'alternate' });
+    const c = pos(el(`<div class="pcap" style="width:${PW + 40}px">${esc(p.title)}<small>${esc(p.text)}</small></div>`, sc), { left: x - 20, top: Y + PH + 28 });
+    enter(c, at + 0.3, { y: 14, dur: 0.8 });
+    if (i < n - 1) link(sc, svg, `M ${x + PW + 18} ${Y + PH / 2} L ${x + PW + gap - 18} ${Y + PH / 2}`, at + 0.35, 0.4, { end: [x + PW + gap - 18, Y + PH / 2], gain: 0.25 });
+  });
+  return D;
+};
+
+const GROUPC = ['var(--rose)', 'var(--sage)', 'var(--ink)'];
+const GROUPT = ['var(--rose-deep)', 'var(--sage-deep)', 'var(--ink)'];
+B.cases = (T0, s) => {
+  const all = []; s.groups.forEach((g, gi) => g.items.forEach(([code, tt]) => all.push({ code, tt, gi })));
+  const n = all.length, cols = n > 12 ? 6 : 4, rows = Math.ceil(n / cols);
+  const GX = 22, GY = 22, CWc = (1620 - GX * (cols - 1)) / cols, CHc = n > 12 ? 128 : n > 8 ? 136 : 168;
+  const Y0 = Math.round(290 + (600 - rows * (CHc + GY)) / 2);
+  const D = Math.max(9, 2.4 + n * 0.08 + 4.2 + n * 0.12);
+  const sc = scene(T0, D, 'cases');
+  header(sc, T0, s.eyebrow, s.title);
+  const lg = pos(el(`<div class="legend">${s.groups.map((g, gi) => `<span><i style="background:${GROUPC[gi]}"></i>${esc(g.label)} (${g.items.length})</span>`).join('')}</div>`, sc), { left: 150, top: Y0 + rows * (CHc + GY) + 18 });
+  enter(lg, T0 + 1.6, { y: 10, dur: 0.7 });
+  all.forEach((c, i) => {
+    const r = Math.floor(i / cols), k = i % cols;
+    const n_ = pos(el(`<div class="cu" style="width:${CWc}px;height:${CHc}px"><div class="bar" style="background:${GROUPC[c.gi]}"></div><div class="code" style="color:${GROUPT[c.gi]}">${c.code}</div><div class="tt" style="font-size:${n > 12 ? 22 : 25}px">${esc(c.tt)}</div></div>`, sc), { left: 150 + k * (CWc + GX), top: Y0 + r * (CHc + GY) });
+    const at = T0 + 1.2 + (r + k) * 0.09 + i * 0.015;
+    enter(n_, at, { y: 26, s: 0.96, dur: 0.8 });
+    sfx('pop', at + 0.03, { note: (r + k) % 9, gain: 0.45 });
+  });
+  return D;
+};
+
+B.special = (T0, s) => {
+  const n = s.items.length, cols = Math.min(5, n), rows = Math.ceil(n / cols);
+  const GX = 24, CWc = (1620 - GX * (cols - 1)) / cols, CHc = rows > 1 ? 244 : 340, Y0 = rows > 1 ? 320 : 380;
+  const D = Math.max(9, 2.6 + n * 0.25 + s.items.reduce((a, x) => a + wc(x.title + ' ' + x.text), 0) / 6.5);
+  const sc = scene(T0, D, 'special');
+  header(sc, T0, s.eyebrow, s.title);
+  s.items.forEach((it, i) => {
+    const r = Math.floor(i / cols), k = i % cols;
+    const c = pos(el(`<div class="card" style="width:${CWc}px;height:${CHc}px;padding:28px 26px"><div style="height:36px;position:relative"></div><h3 style="margin-top:16px;font-size:${rows > 1 ? 27 : 30}px">${esc(it.title)}</h3><p class="t" style="margin-top:10px;font-size:${rows > 1 ? 20 : 23}px">${rich(it.text)}</p></div>`, sc), { left: 150 + k * (CWc + GX), top: Y0 + r * (CHc + 26) });
+    const at = T0 + 1.3 + i * 0.22;
+    card(c, at, i % 9, { gain: 0.6 });
+    const b = brush(c, it.code, i % 2 ? 'sage' : '', at + 0.35, { sound: false, sm: true }); pos(b, { left: 24, top: 26 });
+  });
+  return D;
+};
+
+B.roadmap = (T0, s) => {
+  const n = s.stages.length, GX = 70, SW = (1620 - GX * (n - 1)) / n, SH = n > 3 ? 410 : 330, Y = n > 3 ? 330 : 360;
+  const D = Math.max(9.5, 2.8 + n * 0.6 + s.stages.reduce((a, x) => a + wc(x.title + ' ' + x.text), 0) / 6);
+  const sc = scene(T0, D, 'roadmap');
+  header(sc, T0, s.eyebrow, s.title);
+  const svg = linksLayer(sc);
+  s.stages.forEach((st, i) => {
+    const x = 150 + i * (SW + GX), at = T0 + 1.3 + i * 0.6;
+    const c = pos(el(`<div class="stage ${st.today ? 'today' : ''}" style="width:${SW}px;height:${SH}px"><div style="height:36px;position:relative"></div><h3 style="font-size:${n > 3 ? 26 : 30}px">${esc(st.title)}</h3><p style="font-size:${n > 3 ? 20 : 23}px">${rich(st.text)}</p>${st.tag ? `<div class="tagreq">${esc(st.tag)}</div>` : ''}</div>`, sc), { left: x, top: Y });
+    card(c, at, i * 2, { gain: 0.7 });
+    const b = brush(c, st.label, st.today ? '' : 'sage', at + 0.35, { sound: false, sm: n > 3 }); pos(b, { left: 24, top: 24 });
+    if (st.today) { sfx('chime', at + 0.5, { note: 2, gain: 0.6 }); scribble(sc, 'Tu web hoy ♡', at + 0.8, 'scribble').style.cssText += `left:${x + 10}px;top:${Y + SH + 26}px;font-size:40px`; }
+    if (i > 0) link(sc, svg, `M ${x - GX + 12} ${Y + SH / 2} L ${x - 14} ${Y + SH / 2}`, at - 0.35, 0.45, { end: [x - 14, Y + SH / 2], gain: 0.3 });
+  });
+  return D;
+};
+
+B.outro = (T0, s) => {
+  const D = 7.6, sc = scene(T0, D, 'outro');
+  const logo = pos(el('<img class="abs" src="assets/shared/kopa-logo-ink.png" style="height:300px" />', sc), { left: 960 - 84, top: 160 });
+  A(logo, [{ opacity: 0, transform: 'scale(0.9)' }, { opacity: 1, transform: 'none' }], T0 + 0.4, 1.2, E.enter);
+  sfx('success', T0 + 0.5, { gain: 0.9 });
+  const sb = scribble(sc, s.scribble, T0 + 1.6); pos(sb, { left: 0, top: 520, width: '1920px', textAlign: 'center' });
+  const ln = pos(el(`<div class="lede" style="width:1920px;text-align:center;font-size:26px">${esc(s.line)}</div>`, sc), { left: 0, top: 640 });
+  enter(ln, T0 + 2.8, { y: 14 });
+  const cr = pos(el(`<div class="abs" style="width:1920px;text-align:center"><span class="brushw"><span class="brush ink sm">${esc(s.credit)}</span></span></div>`, sc), { left: 0, top: 760 });
+  A(cr.firstChild, [{ clipPath: 'inset(-20% 100% -20% 0)' }, { clipPath: 'inset(-20% -2% -20% 0)' }], T0 + 3.4, 0.7, E.write);
+  sfx('swish', T0 + 3.4, { gain: 0.5 });
+  return D;
+};
+
+/* ======================================================================= FONDO (capa ambiental) */
+(function ambient() {
+  const o = { iterations: Infinity, direction: 'alternate' };
+  A(document.querySelector('.b1'), [{ transform: 'scale(1)', opacity: 0.85 }, { transform: 'scale(1.1) translate(-30px, 20px)', opacity: 1 }], 0, 13, E.sine, 'both', o);
+  A(document.querySelector('.b2'), [{ transform: 'scale(1)', opacity: 0.85 }, { transform: 'scale(1.12) translate(30px, -20px)', opacity: 1 }], -5, 16, E.sine, 'both', o);
+  A(document.querySelector('.b3'), [{ transform: 'scale(1)', opacity: 0.6 }, { transform: 'scale(1.2)', opacity: 1 }], -3, 11, E.sine, 'both', o);
+  // grano de papel (estático)
+  const c = document.getElementById('grain'), g = c.getContext('2d'), d = g.createImageData(c.width, c.height);
+  let s = 7; const r = () => ((s = (s * 16807) % 2147483647) / 2147483647);
+  for (let i = 0; i < d.data.length; i += 4) { const v = 200 + r() * 55; d.data[i] = v; d.data[i + 1] = v * 0.97; d.data[i + 2] = v * 0.94; d.data[i + 3] = 255; }
+  g.putImageData(d, 0, 0); c.style.width = '1920px'; c.style.height = '1080px';
+})();
+
+/* ======================================================================= MONTAJE */
+let TOTAL = 0;
+function seek(t) { t = Math.max(0, Math.min(TOTAL, t)); for (const a of anims) a.currentTime = t * 1000; }
+function build() {
+  let T = 0;
+  PLAN.scenes.forEach((s) => { const d = B[s.type](T, s); T += d - 0.35; });
+  TOTAL = T + 0.35 + 0.6;
+  window.__seek = seek; window.__duration = TOTAL; window.__cues = cues.sort((a, b) => a.at - b.at);
+}
+async function preload() {
+  const files = new Set();
+  PLAN.scenes.forEach((s) => {
+    if (s.photo) files.add(IMG(s.photo));
+    (s.nodes || []).forEach((n) => { if (n.img) files.add(IMG(n.img)); (n.options || []).forEach((o) => o.img && files.add(IMG(o.img))); });
+    (s.rows || []).forEach((r) => r.items.forEach((it) => it.img && files.add(IMG(it.img))));
+    (s.phones || []).forEach((p) => files.add(IMG(p.img)));
+  });
+  await Promise.all([...files].map((f) => new Promise((res) => { const im = new Image(); im.onload = () => { DIM[f] = [im.naturalWidth, im.naturalHeight]; EDGE[f] = edges(im); res(); }; im.onerror = () => res(); im.src = f; })));
+}
+// color medio de la franja superior e inferior de una captura (para rellenar si no llena el recuadro)
+const EDGE = {};
+function edges(im) {
+  const c = document.createElement('canvas'); c.width = 64; c.height = 64;
+  const g = c.getContext('2d'); g.drawImage(im, 0, 0, 64, 64);
+  const avg = (y) => { const d = g.getImageData(0, y, 64, 2).data; let r = 0, gg = 0, b = 0; for (let i = 0; i < d.length; i += 4) { r += d[i]; gg += d[i + 1]; b += d[i + 2]; } const n = d.length / 4; return `rgb(${Math.round(r / n)},${Math.round(gg / n)},${Math.round(b / n)})`; };
+  return [avg(0), avg(62)];
+}
+
+const RENDER = params.has('render');
+const frame = document.getElementById('frame');
+function fit() { if (RENDER) return; const s = Math.min(innerWidth / 1920, innerHeight / 1080); frame.style.transform = `scale(${s})`; frame.style.left = (innerWidth - 1920 * s) / 2 + 'px'; frame.style.top = (innerHeight - 1080 * s) / 2 + 'px'; }
+fit(); addEventListener('resize', fit);
+if (RENDER) document.getElementById('hint').remove();
+document.title = `Casos de uso · Kopa Caffe · ${PLAN.title}`;
+
+preload().then(() => { build(); return Promise.all([document.fonts.ready, ...[...document.images].map((i) => i.decode().catch(() => {}))]); }).then(() => {
+  seek(0);
+  window.__ready = true;
+  if (!RENDER) {
+    let playing = true, base = parseFloat(params.get('t') || '0'), t0 = performance.now();
+    const cur = () => (playing ? base + (performance.now() - t0) / 1000 : base);
+    const loop = () => { let t = cur(); if (t > TOTAL) { base = 0; t0 = performance.now(); t = 0; } seek(t); requestAnimationFrame(loop); };
+    requestAnimationFrame(loop);
+    addEventListener('keydown', (e) => {
+      if (e.code === 'Space') { e.preventDefault(); if (playing) { base = cur(); playing = false; } else { t0 = performance.now(); playing = true; } }
+      if (e.code === 'ArrowRight') { base = Math.min(TOTAL, cur() + 2); t0 = performance.now(); }
+      if (e.code === 'ArrowLeft') { base = Math.max(0, cur() - 2); t0 = performance.now(); }
+      if (e.key === 'r' || e.key === 'R') { base = 0; t0 = performance.now(); playing = true; }
+    });
+  }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+# Videos y audio generados por render.mjs: pesan cientos de MB y se regeneran con un comando (ver README)
+*.mp4
+kopa/out/
+*.soundtrack.wav
+*.cues.json
+stills/

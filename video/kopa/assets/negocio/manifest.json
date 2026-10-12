@@ -1,0 +1,170 @@
+[
+ {
+  "i": 0,
+  "file": "img-00.webp",
+  "w": 768,
+  "h": 1024,
+  "alt": "Fachada de Kopa Caffe al atardecer, con la entrada iluminada y clientes conversando en la puerta"
+ },
+ {
+  "i": 1,
+  "file": "img-01.webp",
+  "w": 1200,
+  "h": 750,
+  "alt": "Pantalla de inicio de la web: la fachada de Kopa Caffe, el título, el botón Ver nuestra carta, la ciudad y el horario."
+ },
+ {
+  "i": 2,
+  "file": "img-02.webp",
+  "w": 1100,
+  "h": 500,
+  "alt": "Sección Nuestros sabores, tu momento, con cuatro tarjetas de categoría y su botón Ver más."
+ },
+ {
+  "i": 3,
+  "file": "img-03.webp",
+  "w": 1100,
+  "h": 688,
+  "alt": "Página de la carta con sus pestañas de categoría y los primeros productos."
+ },
+ {
+  "i": 4,
+  "file": "img-04.webp",
+  "w": 1100,
+  "h": 688,
+  "alt": "Carta filtrada por la categoría Alitas, con la pestaña Alitas activa."
+ },
+ {
+  "i": 5,
+  "file": "img-05.webp",
+  "w": 1200,
+  "h": 750,
+  "alt": "El panel Tu pedido abierto sobre la carta, con dos Kopa Burger, unas Alitas BBQ, el total y el botón Enviar pedido por WhatsApp."
+ },
+ {
+  "i": 6,
+  "file": "img-06.webp",
+  "w": 1100,
+  "h": 534,
+  "alt": "Sección ¿Tienes algo que celebrar? con la foto de la mesa larga y los botones Reserva tu mesa y Consulta para eventos."
+ },
+ {
+  "i": 7,
+  "file": "img-07.webp",
+  "w": 1100,
+  "h": 453,
+  "alt": "Sección Te esperamos con la dirección, el horario, los enlaces de WhatsApp e Instagram, el mapa real de Kopa Caffe y una foto de la taza de la marca."
+ },
+ {
+  "i": 8,
+  "file": "img-08.webp",
+  "w": 460,
+  "h": 995,
+  "alt": "Inicio de la web en un celular, con la barra inferior Inicio, Carta, Local y Pedir."
+ },
+ {
+  "i": 9,
+  "file": "img-09.webp",
+  "w": 460,
+  "h": 995,
+  "alt": "Menú del celular abierto con los enlaces Inicio, Carta, Nosotros, Locales, Contacto y el botón Pedir ahora."
+ },
+ {
+  "i": 10,
+  "file": "img-10.webp",
+  "w": 460,
+  "h": 995,
+  "alt": "La carta en un celular, con los productos en filas compactas."
+ },
+ {
+  "i": 11,
+  "file": "img-11.webp",
+  "w": 460,
+  "h": 995,
+  "alt": "El panel Tu pedido a pantalla completa en un celular, con un Kopa Burger y el botón Enviar pedido por WhatsApp."
+ },
+ {
+  "i": 12,
+  "file": "img-12.webp",
+  "w": 1100,
+  "h": 827,
+  "alt": "La carta en la página de inicio, con las tarjetas de producto y sus precios."
+ },
+ {
+  "i": 13,
+  "file": "img-01.webp",
+  "w": 1200,
+  "h": 750,
+  "alt": "Pantalla de inicio de la web de Kopa Caffe."
+ },
+ {
+  "i": 14,
+  "file": "img-02.webp",
+  "w": 1100,
+  "h": 500,
+  "alt": "Sección de categorías con el botón Ver más en cada tarjeta."
+ },
+ {
+  "i": 15,
+  "file": "img-03.webp",
+  "w": 1100,
+  "h": 688,
+  "alt": "Página de la carta con sus productos."
+ },
+ {
+  "i": 16,
+  "file": "img-05.webp",
+  "w": 1200,
+  "h": 750,
+  "alt": "El panel Tu pedido abierto con dos productos."
+ },
+ {
+  "i": 17,
+  "file": "img-06.webp",
+  "w": 1100,
+  "h": 534,
+  "alt": "Sección de celebraciones con los botones de reserva y de consulta para eventos."
+ },
+ {
+  "i": 18,
+  "file": "img-07.webp",
+  "w": 1100,
+  "h": 453,
+  "alt": "Sección Te esperamos con el horario, los enlaces y el mapa real de Kopa Caffe."
+ },
+ {
+  "i": 19,
+  "file": "img-19.webp",
+  "w": 1100,
+  "h": 562,
+  "alt": "Galería con siete fotos reales de Kopa Caffe: interior, fachada de día y de noche y la taza de la marca."
+ },
+ {
+  "i": 20,
+  "file": "img-20.webp",
+  "w": 460,
+  "h": 1033,
+  "alt": "Categorías de la web en un celular, en dos columnas."
+ },
+ {
+  "i": 21,
+  "file": "img-21.webp",
+  "w": 1100,
+  "h": 173,
+  "alt": "Pie de página con los enlaces y los íconos de redes."
+ },
+ {
+  "i": 22,
+  "file": "img-12.webp",
+  "w": 1100,
+  "h": 827,
+  "alt": "La carta en la página de inicio, que se actualiza sola desde la hoja de Google."
+ },
+ {
+  "i": 23,
+  "file": "img-23.webp",
+  "w": 1000,
+  "h": 625,
+  "alt": "Página de error con el mensaje Esta página no existe y los botones Volver al inicio y Ver la carta."
+ }
+]

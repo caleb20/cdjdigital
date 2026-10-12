@@ -1,0 +1,394 @@
+/* Guiones de los videos de casos de uso de Kopa Caffe, uno por plan.
+ * Fuente: public/casos-de-uso.html de cada proyecto (kopa-caffe-inicio, kopa-caffe, kopa-caffe-pro), resumido para leerse en pantalla.
+ * `*palabra*` = palabra destacada (cursiva rosa). Las imágenes viven en assets/<plan>/ (capturas reales del documento).
+ * Cada escena tiene un `type` que index.html sabe animar: intro, why, actors, flow, chains, phones, cases, special, roadmap, outro.
+ */
+window.PLANS = {
+  /* ===================================================================== PLAN INICIO */
+  inicio: {
+    id: 'inicio',
+    title: 'Plan Inicio',
+    scenes: [
+      {
+        type: 'intro',
+        eyebrow: 'Casos de uso · Documento para el cliente',
+        title: ['Cómo usan tu web', 'tus *clientes*'],
+        badge: 'Plan Inicio · S/ 99 al mes',
+        lede: 'Los casos de uso del Plan Inicio, paso a paso y con pantallas reales: qué hace quien visita la web y qué hace tu equipo cuando llega su mensaje.',
+        scribble: 'Una web simple, un solo enlace ♡',
+        photo: 'shared/kopa-fachada-noche.webp',
+      },
+      {
+        type: 'why',
+        eyebrow: 'Por qué esta web',
+        title: 'Una sola página que presenta el local y lleva al *WhatsApp*.',
+        before: { title: 'Datos sueltos en redes', text: 'La dirección en una publicación, el horario en otra, el WhatsApp en la biografía. Muchos clientes se quedaban sin escribir.' },
+        after: { title: 'Todo en un solo enlace', text: 'Propuesta, ubicación con mapa, horario y un formulario que abre WhatsApp con el mensaje ya escrito. El equipo atiende en el mismo chat de siempre.' },
+        scribble: 'Una web simple que se entiende en un scroll ♡',
+      },
+      {
+        type: 'actors',
+        eyebrow: 'Quién usa la web',
+        title: 'Tres personas, un mismo *recorrido*',
+        actors: [
+          { role: 'Cliente', title: 'Quien visita la web', text: 'Conoce el local, ve cómo llegar y el horario, y escribe por WhatsApp o con el formulario.', cases: 'Casos de uso CU-01 a CU-07' },
+          { role: 'Equipo Kopa', title: 'Quien recibe los mensajes', text: 'Le llegan por WhatsApp las consultas ya ordenadas y responde en el mismo chat.', cases: 'Participa en CU-03 y CU-05' },
+          { role: 'CDJ Digital', title: 'Quien mantiene la web', text: 'Hosting, HTTPS, soporte y hasta 2 cambios de contenido al mes, que se piden por WhatsApp.', cases: 'Caso de uso CU-08' },
+        ],
+      },
+      {
+        type: 'flow',
+        eyebrow: 'Flujograma principal',
+        title: 'De la búsqueda al *mensaje*',
+        nodes: [
+          { kind: 'start', text: 'La persona entra a la web', label: 'Entra' },
+          { kind: 'shot', step: 'Paso 1', title: 'Inicio', img: 'img-01.jpg', label: 'Inicio', text: 'Ve la fachada, la propuesta y el horario. Dos acciones claras: *Escríbenos por WhatsApp* y *Cómo llegar*.' },
+          { kind: 'shot', step: 'Paso 2', title: 'Conoce el lugar', img: 'img-02.jpg', label: 'Nosotros', text: 'Descubre qué ofrecen (cafés, hamburguesas, alitas y postres) y para qué momentos sirve el local.' },
+          { kind: 'decision', q: '¿Qué quiere hacer?', label: 'Decide', options: [
+            { tag: 'Opción A', title: 'Celebrar o reservar', text: 'Toca «Reserva tu mesa» y se abre WhatsApp con el mensaje escrito.', img: 'img-03.jpg' },
+            { tag: 'Opción B', title: 'Llegar al local', text: 'Mira dirección, horario y mapa, y abre Google Maps.', img: 'img-04.jpg' },
+          ] },
+          { kind: 'shot', step: 'Paso 3', title: 'Formulario de contacto', img: 'img-05.jpg', label: 'Formulario', text: 'Escribe nombre, teléfono y mensaje. Si falta algo, la web lo indica junto al campo.' },
+          { kind: 'chat', step: 'Paso 4', title: 'WhatsApp con el mensaje escrito', label: 'WhatsApp', text: 'Es el mensaje real que arma la web. La persona solo lo revisa y lo envía.', bubble: 'Hola Kopa Caffe 👋, soy María Pérez. Quiero reservar una mesa para 6 personas el sábado a las 8 pm. Mi teléfono: 987654321' },
+          { kind: 'end', text: 'El equipo de Kopa responde en el mismo chat', note: 'La web no necesita servidor propio ♡', label: 'Kopa responde' },
+        ],
+      },
+      {
+        type: 'chains',
+        eyebrow: 'Otros recorridos',
+        title: 'Más caminos, mismas pantallas *reales*',
+        rows: [
+          { label: 'Formulario', items: [
+            { kind: 'shot', img: 'img-06.jpg', caption: 'Envía sin completar' },
+            { kind: 'list', title: 'La web guía, no bloquea', items: ['Nombre vacío → «Escribe tu nombre.»', 'Mensaje corto → pide más detalle', 'Teléfono opcional, pero se valida'] },
+            { kind: 'shot', img: 'img-07.jpg', caption: 'Enviado: se abre WhatsApp' },
+          ] },
+          { label: 'Llegar', items: [
+            { kind: 'shot', img: 'img-04.jpg', caption: 'Dirección, horario y mapa real' },
+            { kind: 'list', title: 'El cliente elige cómo seguir', items: ['Cómo llegar → Google Maps', 'Escríbenos → WhatsApp', 'Síguenos → Instagram'] },
+            { kind: 'end', text: 'Llega al local sin perderse' },
+          ] },
+        ],
+      },
+      {
+        type: 'phones',
+        eyebrow: 'En el celular',
+        title: 'Pensada para el *pulgar*',
+        phones: [
+          { img: 'img-09.jpg', title: 'Inicio', text: 'Se adapta sola' },
+          { img: 'img-10.jpg', title: 'Menú', text: 'Tres rayas para abrirlo' },
+          { img: 'img-11.jpg', title: 'Nosotros', text: 'Una sola columna' },
+          { img: 'img-12.jpg', title: 'Contacto', text: 'Formulario cómodo' },
+        ],
+      },
+      {
+        type: 'cases',
+        eyebrow: 'Casos de uso',
+        title: 'Los 8 casos de uso, uno por *uno*',
+        groups: [
+          { label: 'Cliente', items: [['CU-01', 'Conocer Kopa Caffe'], ['CU-02', 'Conocer la propuesta'], ['CU-03', 'Reservar una mesa o consultar por un evento'], ['CU-04', 'Saber cómo llegar y cuándo abren'], ['CU-05', 'Escribir desde el formulario'], ['CU-06', 'Escribir o seguir por WhatsApp e Instagram'], ['CU-07', 'Usar la web desde el celular']] },
+          { label: 'Dueño', items: [['CU-08', 'Pedir un cambio de contenido']] },
+        ],
+      },
+      {
+        type: 'special',
+        eyebrow: 'Casos especiales',
+        title: 'Cuando algo no sale como se *esperaba*',
+        items: [
+          { code: 'E-01', title: 'Formulario incompleto', text: 'No se envía nada: la web marca el campo y explica qué falta.' },
+          { code: 'E-02', title: 'WhatsApp no se abre', text: 'Aparece «Si no se abrió, tócalo aquí» con el mismo enlace.' },
+          { code: 'E-03', title: 'Sin conexión de mapas', text: 'Siguen visibles la dirección y el botón «Cómo llegar».' },
+          { code: 'E-04', title: 'Accesible para todos', text: 'Teclado, buen contraste y animaciones reducidas si se piden.' },
+          { code: 'E-05', title: 'Es un ejemplo', text: 'Marcada para que Google no la indexe: no compite con la web real.' },
+        ],
+      },
+      {
+        type: 'roadmap',
+        eyebrow: 'Hacia dónde puede crecer',
+        title: 'Esta web es la *base*',
+        stages: [
+          { label: 'Hoy', today: true, title: 'Plan Inicio · S/ 99', text: 'Landing profesional, WhatsApp, formulario, mapa, SEO básico, hosting y soporte.' },
+          { label: 'Plan Negocio', title: 'Más páginas y carta · S/ 150', text: 'Hasta 5 secciones, galería, carta o catálogo, reseñas y analítica.' },
+          { label: 'Plan Pro', title: 'Pedidos y gestión · S/ 249', text: 'Pedidos con seguimiento, cuentas, panel, reservas y pagos con tarjeta.', tag: 'Con base de datos' },
+        ],
+      },
+      { type: 'outro', scribble: 'Café, comida y buenos momentos ♡', line: 'Todas las pantallas son capturas reales de la web.', credit: 'Preparado por CDJ Digital · Plan Inicio' },
+    ],
+  },
+
+  /* ===================================================================== PLAN NEGOCIO (web real de Kopa) */
+  negocio: {
+    id: 'negocio',
+    title: 'Plan Negocio',
+    scenes: [
+      {
+        type: 'intro',
+        eyebrow: 'Casos de uso · Documento para el cliente',
+        title: ['Cómo usan tu web', 'tus *clientes*'],
+        badge: 'Plan Negocio · S/ 150 al mes',
+        lede: 'Todos los casos de uso de la web de Kopa Caffe, con pantallas reales: qué hace quien la visita y qué hace tu equipo para mantenerla al día.',
+        scribble: 'Café, comida y buenos momentos ♡',
+        photo: 'shared/kopa-fachada-noche.webp',
+      },
+      {
+        type: 'why',
+        eyebrow: 'Por qué esta web',
+        title: 'Ya reparten con motorizados. Les faltaba la *web*.',
+        before: { title: 'Todo a mano, por WhatsApp', text: 'El cliente escribe cada producto de memoria, sin precios ni total. El equipo arma el pedido leyendo texto suelto, uno por uno.' },
+        after: { title: 'El mismo WhatsApp, con la carta antes', text: 'El cliente arma su pedido con fotos, precios y cantidades, y llega a WhatsApp ya escrito y ordenado.' },
+        scribble: 'Mismo WhatsApp de siempre, solo que más ordenado ♡',
+      },
+      {
+        type: 'actors',
+        eyebrow: 'Quién usa la web',
+        title: 'Tres personas, un mismo *recorrido*',
+        actors: [
+          { role: 'Cliente', title: 'Quien visita la web', text: 'Mira la carta con precios, arma su pedido y lo envía por WhatsApp. También reserva y ve cómo llegar.', cases: 'Casos de uso CU-01 a CU-10' },
+          { role: 'Equipo Kopa', title: 'Quien recibe los pedidos', text: 'Recibe pedidos, reservas y consultas ya ordenados y los confirma en el mismo chat. Sin sistemas nuevos.', cases: 'Participa en CU-05 y CU-06' },
+          { role: 'Administrador', title: 'Quien mantiene la carta', text: 'Cambia precios, productos y fotos desde una hoja de Google, y la web se actualiza sola.', cases: 'Caso de uso CU-11' },
+        ],
+      },
+      {
+        type: 'flow',
+        eyebrow: 'Flujograma principal',
+        title: 'Del antojo al *pedido*',
+        nodes: [
+          { kind: 'start', text: 'El cliente entra a la web', label: 'Entra' },
+          { kind: 'shot', step: 'Paso 1', title: 'Inicio', img: 'img-01.webp', label: 'Inicio', text: 'Ve la fachada, la propuesta y un botón principal: *Ver nuestra carta*.' },
+          { kind: 'decision', q: '¿Cómo quiere seguir?', label: 'Elige', options: [
+            { tag: 'Opción A', title: 'Por categoría', text: 'Toca «Ver más» en Cafés, Hamburguesas, Alitas o Postres.', img: 'img-02.webp' },
+            { tag: 'Opción B', title: 'La carta completa', text: 'Toca «Ver nuestra carta» y va directo, sin filtro.', img: 'img-03.webp' },
+          ] },
+          { kind: 'shot', step: 'Paso 2', title: 'Carta con filtros', img: 'img-04.webp', label: 'Carta', text: 'Cambia de categoría con las pestañas y ve foto, descripción y precio de cada producto.' },
+          { kind: 'decision', q: '¿Tiene precio?', label: 'Agrega', options: [
+            { tag: 'Sí', title: 'Se suma al total', text: 'Toca «Agregar» y el producto suma al pedido.' },
+            { tag: 'No', title: '«Precio por confirmar»', text: 'Se agrega igual, pero no suma: el pedido lo avisa.' },
+          ] },
+          { kind: 'shot', step: 'Paso 3', title: 'Tu pedido', img: 'img-05.webp', label: 'Tu pedido', text: 'Ajusta cantidades, ve el total y toca *Enviar pedido por WhatsApp*.' },
+          { kind: 'chat', step: 'Paso 4', title: 'WhatsApp con el pedido escrito', label: 'WhatsApp', text: 'Es el mensaje real que arma la web con ese pedido. Solo lo revisa y lo envía.', bubble: 'Hola Kopa Caffe 👋, quisiera hacer este pedido:\n• 2 × Kopa Burger — S/ 57.80\n• 1 × Alitas BBQ — precio por confirmar\nTotal: S/ 57.80' },
+          { kind: 'end', text: 'Kopa recibe el pedido y lo confirma en el mismo chat', note: 'La web no cobra: todo se coordina por WhatsApp ♡', label: 'Kopa confirma' },
+        ],
+      },
+      {
+        type: 'chains',
+        eyebrow: 'Otros recorridos',
+        title: 'Más caminos, mismas pantallas *reales*',
+        rows: [
+          { label: 'Celebrar', items: [
+            { kind: 'shot', img: 'img-06.webp', caption: 'Reserva tu mesa o consulta' },
+            { kind: 'bubble', text: 'Hola Kopa Caffe 👋, quisiera reservar una mesa.' },
+            { kind: 'end', text: 'Kopa coordina fecha y personas' },
+          ] },
+          { label: 'Llegar', items: [
+            { kind: 'shot', img: 'img-07.webp', caption: 'Dirección, horario y mapa real' },
+            { kind: 'list', title: 'El cliente elige cómo seguir', items: ['Cómo llegar → Google Maps', 'Escríbenos → WhatsApp', 'Síguenos → Instagram'] },
+          ] },
+          { label: 'Administrador', items: [
+            { kind: 'sheet', rows: [['Kopa Burger', '28.90', 'hamburguesas'], ['Americano', '', 'cafes']], hl: [0, 1], caption: 'Edita la hoja de Google' },
+            { kind: 'end', text: 'Google la guarda sola' },
+            { kind: 'end', text: 'La web la lee en minutos' },
+            { kind: 'shot', img: 'img-12.webp', caption: 'El cliente ve el cambio' },
+          ] },
+        ],
+      },
+      {
+        type: 'phones',
+        eyebrow: 'En el celular',
+        title: 'Pensada para el *pulgar*',
+        phones: [
+          { img: 'img-08.webp', title: 'Inicio', text: 'Barra inferior siempre a mano' },
+          { img: 'img-09.webp', title: 'Menú', text: 'Tres rayas para abrirlo' },
+          { img: 'img-10.webp', title: 'Carta', text: 'Filas cómodas para el pulgar' },
+          { img: 'img-11.webp', title: 'Tu pedido', text: 'A pantalla completa' },
+        ],
+      },
+      {
+        type: 'cases',
+        eyebrow: 'Casos de uso',
+        title: 'Los 11 casos de uso, uno por *uno*',
+        groups: [
+          { label: 'Cliente', items: [['CU-01', 'Conocer Kopa Caffe'], ['CU-02', 'Explorar por categorías'], ['CU-03', 'Consultar la carta y los precios'], ['CU-04', 'Armar el pedido'], ['CU-05', 'Enviar el pedido por WhatsApp'], ['CU-06', 'Reservar una mesa o consultar por un evento'], ['CU-07', 'Saber cuándo y cómo llegar'], ['CU-08', 'Conocer el ambiente'], ['CU-09', 'Usar la web desde el celular'], ['CU-10', 'Contactar y seguir a Kopa']] },
+          { label: 'Administrador', items: [['CU-11', 'Actualizar la carta']] },
+        ],
+      },
+      {
+        type: 'special',
+        eyebrow: 'Casos especiales',
+        title: 'Cuando algo no sale como se *esperaba*',
+        items: [
+          { code: 'E-01', title: 'La dirección no existe', text: 'Un mensaje amable con «Volver al inicio» y «Ver la carta».' },
+          { code: 'E-02', title: 'La carta no se puede leer', text: 'Se muestra la última carta que funcionó. Nunca queda vacía.' },
+          { code: 'E-03', title: 'Un producto sin foto', text: 'Un espacio con los colores de la marca, nunca una imagen rota.' },
+          { code: 'E-04', title: 'Productos sin precio', text: 'Se agregan, no suman, y el mensaje dice «precio por confirmar».' },
+          { code: 'E-05', title: 'Accesible para todos', text: 'Teclado, buen contraste y animaciones reducidas si se piden.' },
+        ],
+      },
+      {
+        type: 'roadmap',
+        eyebrow: 'Hacia dónde puede crecer',
+        title: 'Esta web es la *base*',
+        stages: [
+          { label: 'Hoy', today: true, title: 'Lo que ya tienes', text: 'Carta editable desde una hoja, pedido con fotos y precios, reservas y ubicación real.' },
+          { label: 'Pedidos con estado', title: 'Que el pedido avise solo', text: 'Número de pedido y estados que el cliente recibe por el mismo chat.' },
+          { label: 'Panel', title: 'Una pantalla para el equipo', text: 'Todos los pedidos del día en una lista y reportes simples.', tag: 'Necesita un sistema propio' },
+          { label: 'Seguimiento', title: 'El cliente ve su pedido', text: 'Un enlace con el estado del pedido en el momento.', tag: 'Necesita el panel' },
+          { label: 'Pagos y cuentas', title: 'Pagar y volver a pedir', text: 'Tarjeta, Yape o Plin en la web, y cuenta con historial.', tag: 'Necesita un sistema propio' },
+        ],
+      },
+      { type: 'outro', scribble: 'Café, comida y buenos momentos ♡', line: 'Todas las pantallas son capturas reales de la web.', credit: 'Preparado por CDJ Digital para Kopa Caffe' },
+    ],
+  },
+
+  /* ===================================================================== PLAN PRO */
+  pro: {
+    id: 'pro',
+    title: 'Plan Pro',
+    scenes: [
+      {
+        type: 'intro',
+        eyebrow: 'Casos de uso · Documento para el cliente',
+        title: ['Cómo funciona tu', 'web de *pedidos*'],
+        badge: 'Plan Pro · S/ 249 al mes',
+        lede: 'Qué hace un cliente para pedir, pagar y seguir su pedido, y qué hace tu equipo para atenderlo y administrar el negocio. Con pantallas reales.',
+        scribble: 'Pedidos, pagos y seguimiento, en un solo lugar ♡',
+        photo: 'shared/kopa-fachada-noche.webp',
+      },
+      {
+        type: 'why',
+        eyebrow: 'Por qué esta web',
+        title: 'De pedir por WhatsApp a pedir en la web, con *control*.',
+        before: { title: 'Todo a mano, por WhatsApp', text: 'Productos de memoria, sin total ni confirmación. Se cobra aparte y nadie sabe en qué estado va cada pedido.' },
+        after: { title: 'Pedido, pago y seguimiento', text: 'El cliente elige, paga y sigue su pedido en vivo. El equipo avanza los estados con un clic y cuadra los pagos.' },
+        scribble: 'Mismo local, ahora con pedidos ordenados ♡',
+      },
+      {
+        type: 'actors',
+        eyebrow: 'Quién usa la web',
+        title: 'Cuatro roles, un mismo *recorrido*',
+        actors: [
+          { role: 'Cliente', title: 'Quien pide', text: 'Personaliza, paga y sigue su pedido. Puede pedir como invitado o con su cuenta.', cases: 'CU-01 a CU-14' },
+          { role: 'Personal', title: 'Quien atiende', text: 'Recibe pedidos en tiempo real, los avanza, registra pagos y atiende reservas.', cases: 'CU-15 a CU-18' },
+          { role: 'Administrador', title: 'Quien administra', text: 'Carta, promociones, blog, usuarios y ajustes: horario, zonas y pagos.', cases: 'CU-19 a CU-23' },
+          { role: 'Sistema', title: 'Quien protege los datos', text: 'Calcula los precios, valida cupones y horarios, y cada pedido lo ve solo su dueño.', cases: 'En todos los casos' },
+        ],
+      },
+      {
+        type: 'flow',
+        eyebrow: 'Flujograma principal',
+        title: 'Del antojo al pedido *entregado*',
+        nodes: [
+          { kind: 'start', text: 'El cliente entra a la web', label: 'Entra' },
+          { kind: 'shot', step: 'Paso 1', title: 'Inicio', img: 'img-01.jpg', label: 'Inicio', text: 'La propuesta, el horario y un botón principal: *Ver nuestra carta*.' },
+          { kind: 'shot', step: 'Paso 2', title: 'Carta', img: 'img-02.jpg', label: 'Carta', text: 'Filtra por categoría y ve foto, descripción y precio. Si algo está agotado, lo indica.' },
+          { kind: 'shot', step: 'Paso 3', title: 'Personaliza el producto', img: 'img-03.jpg', label: 'Personaliza', text: 'Punto de la carne, extras con precio, indicaciones y cantidad. El botón muestra el precio final.' },
+          { kind: 'shot', step: 'Paso 4', title: 'Tu pedido', img: 'img-04.jpg', label: 'Tu pedido', text: 'Suma las líneas, cambia cantidades y lleva a finalizar.' },
+          { kind: 'shot', step: 'Paso 5', title: 'Finalizar pedido', img: 'img-05.jpg', label: 'Finalizar', text: 'Datos, entrega o recojo, pago, cupón y notas. El resumen muestra el total y el tiempo estimado.' },
+          { kind: 'decision', q: '¿Cómo paga?', label: 'Paga', options: [
+            { tag: 'Tarjeta online', title: 'Paga en la web', text: 'Si el banco rechaza, ve el motivo y reintenta.', img: 'img-06.jpg' },
+            { tag: 'Yape, Plin o efectivo', title: 'Va al seguimiento', text: 'Con Yape o Plin sube su comprobante.', img: 'img-07.jpg' },
+          ] },
+          { kind: 'shot', step: 'Paso 6', title: 'Pago aprobado', img: 'img-08.jpg', label: 'Aprobado', sound: 'success', text: 'Comprobante con monto, tarjeta y número de operación. El pedido entra al panel del local.' },
+          { kind: 'shot', step: 'Paso 7', title: 'Seguimiento del pedido', img: 'img-09.jpg', label: 'Seguimiento', text: 'Recibido → confirmado → en preparación → listo → en camino → entregado. Se actualiza solo.' },
+          { kind: 'end', text: 'El equipo prepara y entrega; el cliente ve cada cambio', note: 'Después, puede calificar su pedido ♡', label: 'Entregado' },
+        ],
+      },
+      {
+        type: 'chains',
+        eyebrow: 'Otros recorridos',
+        title: 'El equipo, los pagos y la *cuenta*',
+        rows: [
+          { label: 'Personal', items: [
+            { kind: 'shot', img: 'img-10.jpg', caption: '1 · Llega con aviso sonoro', sound: 'notify' },
+            { kind: 'shot', img: 'img-11.jpg', caption: '2 · Ve el siguiente paso' },
+            { kind: 'shot', img: 'img-12.jpg', caption: '3 · Avanza con un clic' },
+            { kind: 'end', text: 'El cliente ve el nuevo estado' },
+          ] },
+          { label: 'Pagos', items: [
+            { kind: 'shot', img: 'img-13.jpg', caption: 'Cada intento, registrado' },
+            { kind: 'list', title: 'Qué puede hacer el personal', items: ['Ver lo cobrado hoy y la aprobación', 'Marcar pagado (caja, Yape o Plin)', 'Marcar reembolsado'] },
+          ] },
+          { label: 'Cuenta', items: [
+            { kind: 'shot', img: 'img-14.jpg', caption: 'Crear cuenta' },
+            { kind: 'shot', img: 'img-15.jpg', caption: 'Mis pedidos, en vivo' },
+            { kind: 'shot', img: 'img-16.jpg', caption: 'Perfil y direcciones' },
+          ] },
+        ],
+      },
+      {
+        type: 'chains',
+        eyebrow: 'El panel del negocio',
+        title: 'Administrar sin *programadores*',
+        rows: [
+          { label: 'Administración', items: [
+            { kind: 'shot', img: 'img-23.jpg', caption: '1 · Edita la carta' },
+            { kind: 'shot', img: 'img-24.jpg', caption: '2 · Horario, zonas y pagos' },
+            { kind: 'end', text: 'La web se actualiza en segundos' },
+          ] },
+          { label: 'Atención', items: [
+            { kind: 'shot', img: 'img-48.jpg', caption: 'Reservas' },
+            { kind: 'shot', img: 'img-49.jpg', caption: 'Mensajes' },
+            { kind: 'shot', img: 'img-50.jpg', caption: 'Reseñas' },
+          ] },
+          { label: 'Crecimiento', items: [
+            { kind: 'shot', img: 'img-54.jpg', caption: 'Promociones y cupones' },
+            { kind: 'shot', img: 'img-55.jpg', caption: 'Blog' },
+            { kind: 'shot', img: 'img-56.jpg', caption: 'Usuarios y roles' },
+          ] },
+        ],
+      },
+      {
+        type: 'phones',
+        eyebrow: 'En el celular',
+        title: 'Todo el pedido, desde el *teléfono*',
+        phones: [
+          { img: 'img-17.jpg', title: 'Inicio', text: 'Barra inferior' },
+          { img: 'img-18.jpg', title: 'Destacados', text: 'Primero la foto' },
+          { img: 'img-19.jpg', title: 'Carta', text: 'Filas cómodas' },
+          { img: 'img-20.jpg', title: 'Checkout', text: 'Una columna' },
+          { img: 'img-21.jpg', title: 'Pago', text: 'Tarjeta en vivo' },
+          { img: 'img-22.jpg', title: 'Seguimiento', text: 'Estado del pedido' },
+        ],
+      },
+      {
+        type: 'cases',
+        eyebrow: 'Casos de uso',
+        title: 'Los 23 casos de uso, uno por *uno*',
+        groups: [
+          { label: 'Cliente', items: [['CU-01', 'Conocer Kopa Caffe'], ['CU-02', 'Explorar y personalizar'], ['CU-03', 'Armar el pedido'], ['CU-04', 'Finalizar el pedido'], ['CU-05', 'Pagar con tarjeta'], ['CU-06', 'Pagar con Yape, Plin o efectivo'], ['CU-07', 'Seguir el pedido'], ['CU-08', 'Cancelar un pedido'], ['CU-09', 'Crear una cuenta e ingresar'], ['CU-10', 'Ver mis pedidos y mi perfil'], ['CU-11', 'Calificar un pedido'], ['CU-12', 'Reservar una mesa'], ['CU-13', 'Escribir al local'], ['CU-14', 'Promociones y cupones']] },
+          { label: 'Personal', items: [['CU-15', 'Recibir y gestionar los pedidos'], ['CU-16', 'Registrar y revisar los pagos'], ['CU-17', 'Atender reservas y mensajes'], ['CU-18', 'Moderar las reseñas']] },
+          { label: 'Administrador', items: [['CU-19', 'Administrar la carta'], ['CU-20', 'Crear promociones y cupones'], ['CU-21', 'Publicar en el blog'], ['CU-22', 'Gestionar usuarios y roles'], ['CU-23', 'Configurar el negocio']] },
+        ],
+      },
+      {
+        type: 'special',
+        eyebrow: 'Casos especiales',
+        title: 'Cuando algo no sale como se *esperaba*',
+        items: [
+          { code: 'E-01', title: 'La dirección no existe', text: 'Mensaje amable con dos salidas.' },
+          { code: 'E-02', title: 'Pago rechazado', text: 'Ve el motivo y reintenta.' },
+          { code: 'E-03', title: 'Tarjeta sin pagar', text: 'No se confirma hasta pagarse.' },
+          { code: 'E-04', title: 'Cancelado con pago', text: 'Se marca para reembolso.' },
+          { code: 'E-05', title: 'El local pausa', text: 'El checkout lo avisa.' },
+          { code: 'E-06', title: 'Producto agotado', text: 'No se puede pedir.' },
+          { code: 'E-07', title: 'Pedidos privados', text: 'Solo con su enlace o cuenta.' },
+          { code: 'E-08', title: 'Precios seguros', text: 'Los calcula la base de datos.' },
+          { code: 'E-09', title: 'Sin base de datos', text: 'Modo demostración avisado.' },
+          { code: 'E-10', title: 'Accesible', text: 'Teclado, contraste y calma.' },
+        ],
+      },
+      {
+        type: 'roadmap',
+        eyebrow: 'Hacia dónde puede crecer',
+        title: 'Esta web es la *base*',
+        stages: [
+          { label: 'Hoy', today: true, title: 'Lo que ya tienes', text: 'Pedidos con seguimiento, cuentas, pagos (Izipay listo), paneles, reservas, promociones y blog.' },
+          { label: 'Cobro real', title: 'Activar Izipay', text: 'Cobrar con tarjeta de verdad, con confirmación automática del banco.', tag: 'Necesita credenciales' },
+          { label: 'Avisos', title: 'Avisos automáticos', text: 'WhatsApp o correo cuando el pedido se confirma, sale o llega.', tag: 'Necesita un servicio de mensajes' },
+          { label: 'Fidelización', title: 'Que vuelvan más seguido', text: '«Pedir de nuevo», puntos y cupones personalizados.' },
+          { label: 'Gestión', title: 'Más control', text: 'Reparto, reportes y boleta o factura electrónica.' },
+        ],
+      },
+      { type: 'outro', scribble: 'Café, comida y buenos momentos ♡', line: 'Todas las pantallas son capturas reales de la web, con datos de ejemplo.', credit: 'Preparado por CDJ Digital · Plan Pro' },
+    ],
+  },
+}

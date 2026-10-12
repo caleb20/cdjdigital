@@ -1,0 +1,78 @@
+{
+  "model": "voxcpm2",
+  "seed": 42,
+  "voice": "Voz femenina adulta, cálida y segura, tono profesional pero cercano, ritmo pausado y claro, español latinoamericano neutro.",
+  "profile_id": "8bb3d077",
+  "lines": {
+    "s6": {
+      "file": "assets/audio/s6.wav",
+      "dur": 2.72,
+      "text": "Y todo se adapta al celular."
+    },
+    "s1": {
+      "file": "assets/audio/s1.wav",
+      "dur": 7.04,
+      "text": "Así usa tu web una persona interesada, desde el primer vistazo hasta el mensaje de WhatsApp."
+    },
+    "s2": {
+      "file": "assets/audio/s2.wav",
+      "dur": 10.24,
+      "text": "En este recorrido participan tres personas: la que visita la web, el equipo de CDJ que recibe el mensaje y la que mantiene la oferta."
+    },
+    "f0": {
+      "file": "assets/audio/f0.wav",
+      "dur": 4.16,
+      "text": "Todo empieza cuando alguien busca una página web para su negocio."
+    },
+    "f1": {
+      "file": "assets/audio/f1.wav",
+      "dur": 6.72,
+      "text": "Llega al inicio, lee la promesa y ve el precio de entrada: desde 99 soles al mes."
+    },
+    "f2": {
+      "file": "assets/audio/f2.wav",
+      "dur": 5.44,
+      "text": "Baja, entiende qué hacemos y los cuatro pasos para tener su web."
+    },
+    "f3": {
+      "file": "assets/audio/f3.wav",
+      "dur": 4.32,
+      "text": "Compara los tres planes: Inicio, Negocio y Pro."
+    },
+    "f4": {
+      "file": "assets/audio/f4.wav",
+      "dur": 11.36,
+      "text": "Si ya sabe qué quiere, toca «Quiero este plan». Si todavía no, mira las demos, el correo y las preguntas, o escribe desde el botón de WhatsApp."
+    },
+    "f5": {
+      "file": "assets/audio/f5.wav",
+      "dur": 5.6,
+      "text": "Se abre WhatsApp con el mensaje ya escrito. Solo lo revisa y lo envía."
+    },
+    "f6": {
+      "file": "assets/audio/f6.wav",
+      "dur": 5.28,
+      "text": "Al final, CDJ recibe el mensaje y conversa con el interesado."
+    },
+    "s4": {
+      "file": "assets/audio/s4.wav",
+      "dur": 8.64,
+      "text": "Son diez casos de uso: nueve del interesado y uno del administrador, cada uno con su paso a paso y su resultado."
+    },
+    "s5": {
+      "file": "assets/audio/s5.wav",
+      "dur": 8.8,
+      "text": "Hay otros caminos: pedir una web como una demo, contratar un correo corporativo, o resolver dudas antes de escribir."
+    },
+    "s7a": {
+      "file": "assets/audio/s7a.wav",
+      "dur": 4.96,
+      "text": "La web no cobra ni pide datos. Todo se coordina por WhatsApp."
+    },
+    "s7b": {
+      "file": "assets/audio/s7b.wav",
+      "dur": 4.32,
+      "text": "CDJ Digital. Tecnología que impulsa tu negocio."
+    }
+  }
+}

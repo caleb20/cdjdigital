@@ -1,0 +1,17 @@
+{
+  "name": "cdjdigital-video",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Video de los casos de uso de CDJ Digital: animación HTML con línea de tiempo determinista, renderizada a MP4 con Chrome + ffmpeg.",
+  "scripts": {
+    "preview": "node serve.mjs",
+    "render": "node render.mjs",
+    "narrate": "node narrate.mjs",
+    "narrate:import": "node narrate.mjs --import",
+    "narrate:candidates": "node narrate.mjs --candidates 6"
+  },
+  "devDependencies": {
+    "puppeteer-core": "^24.0.0"
+  }
+}

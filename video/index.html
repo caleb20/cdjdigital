@@ -1,0 +1,675 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Casos de uso · CDJ Digital (video)</title>
+<style>
+  @font-face {
+    font-family: 'Inter';
+    src: url('assets/inter-latin-wght-normal.woff2') format('woff2');
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: block;
+  }
+  :root {
+    --ink: #050816;
+    --ink2: #0b1228;
+    --b500: #4c5cff;
+    --b400: #7a8aff;
+    --b300: #a5b2ff;
+    --b200: #c8d1ff;
+    --v: #7c3aed;
+    --v300: #b9a1ff;
+    --txt: #cbd5e1;
+    --line: rgba(255, 255, 255, 0.1);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #000; height: 100%; overflow: hidden; }
+  body { font-family: 'Inter', system-ui, sans-serif; color: #fff; -webkit-font-smoothing: antialiased; }
+
+  /* Lienzo fijo de 1920x1080 que se escala para caber en la ventana (en el render queda a 1:1) */
+  #frame { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 0 0; overflow: hidden; background: var(--ink); }
+
+  /* ------------------------------------------------------------ fondo (capa ambiental) */
+  .bg, .scene { position: absolute; inset: 0; }
+  .glow { position: absolute; border-radius: 50%; }
+  .g1 { width: 1500px; height: 1500px; right: -520px; top: -820px; background: radial-gradient(closest-side, rgba(76, 92, 255, 0.34), rgba(76, 92, 255, 0)); }
+  .g2 { width: 1400px; height: 1400px; right: -640px; bottom: -900px; background: radial-gradient(closest-side, rgba(124, 58, 237, 0.30), rgba(124, 58, 237, 0)); }
+  .g3 { width: 1100px; height: 1100px; left: -620px; top: 120px; background: radial-gradient(closest-side, rgba(59, 73, 232, 0.2), rgba(59, 73, 232, 0)); }
+  .grid {
+    position: absolute; inset: 0; opacity: 0.9;
+    background-image: linear-gradient(to right, rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.04) 1px, transparent 1px);
+    background-size: 72px 72px;
+    -webkit-mask-image: radial-gradient(ellipse 75% 65% at 62% 38%, #000 25%, transparent 78%);
+            mask-image: radial-gradient(ellipse 75% 65% at 62% 38%, #000 25%, transparent 78%);
+  }
+  .scene { opacity: 0; }
+
+  /* ------------------------------------------------------------ tipografía */
+  .eyebrow { position: absolute; display: inline-flex; align-items: center; gap: 12px; padding: 11px 22px; border-radius: 999px; border: 1px solid rgba(122,138,255,0.3); background: rgba(76,92,255,0.1); color: var(--b200); font-size: 21px; font-weight: 600; letter-spacing: 0.17em; text-transform: uppercase; }
+  .eyebrow::before { content: ''; width: 9px; height: 9px; border-radius: 50%; background: var(--b400); }
+  .h1 { position: absolute; font-size: 118px; line-height: 1.05; font-weight: 800; letter-spacing: -0.04em; }
+  .h2 { position: absolute; font-size: 68px; line-height: 1.08; font-weight: 800; letter-spacing: -0.035em; }
+  .lead { position: absolute; font-size: 33px; line-height: 1.45; color: var(--txt); font-weight: 400; }
+  .w { display: inline-block; overflow: hidden; vertical-align: bottom; padding: 0 0.03em 0.16em; margin: 0 0.12em -0.16em 0; }
+  .w > span { display: inline-block; }
+  .grad { background-image: linear-gradient(90deg, #6c7bff, #b39bff); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .abs { position: absolute; }
+
+  /* ------------------------------------------------------------ tarjetas */
+  .card { position: relative; overflow: hidden; border-radius: 30px; background: linear-gradient(180deg, rgba(255,255,255,0.075), rgba(255,255,255,0.035)); border: 1px solid var(--line); box-shadow: 0 40px 90px -40px rgba(0,0,0,0.75); }
+  .node { position: absolute; }
+  .halo { position: absolute; inset: -2px; border-radius: 32px; box-shadow: 0 0 0 2px rgba(122,138,255,0.75), 0 50px 120px -30px rgba(76,92,255,0.65); opacity: 0; pointer-events: none; }
+  .chrome { height: 40px; display: flex; align-items: center; gap: 9px; padding: 0 20px; background: rgba(255,255,255,0.05); border-bottom: 1px solid var(--line); }
+  .chrome i { width: 12px; height: 12px; border-radius: 50%; background: rgba(255,255,255,0.22); }
+  .chrome i:nth-child(1) { background: #7a8aff; } .chrome i:nth-child(2) { background: #a78bfa; }
+  .viewport { position: relative; overflow: hidden; background: #0b1228; }
+  .viewport img { position: absolute; left: 0; top: 0; display: block; transform-origin: 50% 0; }
+  .body { padding: 26px 34px 32px; }
+  .top { display: flex; align-items: center; gap: 18px; }
+  .badge { display: inline-block; padding: 8px 18px; border-radius: 999px; background: linear-gradient(135deg, #4c5cff, #7c3aed); font-size: 18px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; }
+  .badge.alt { background: rgba(255,255,255,0.1); color: var(--b200); }
+  .node h3 { font-size: 44px; line-height: 1.1; font-weight: 700; letter-spacing: -0.025em; }
+  .node p { margin-top: 14px; font-size: 26px; line-height: 1.42; color: var(--txt); }
+  .node p b { color: #fff; font-weight: 600; }
+  .pill { display: flex; align-items: center; justify-content: center; gap: 22px; padding: 0 44px; border-radius: 999px; font-size: 38px; font-weight: 700; letter-spacing: -0.02em; text-align: center; line-height: 1.2; }
+  .pill.start { background: rgba(255,255,255,0.07); border: 1px solid var(--line); }
+  .pill.end { background: linear-gradient(135deg, #4c5cff 0%, #6a45f0 62%, #7c3aed 100%); box-shadow: 0 40px 100px -30px rgba(76,92,255,0.8), inset 0 0 0 1px rgba(255,255,255,0.18); }
+  .ico { width: 44px; height: 44px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+  .links { position: absolute; left: 0; top: 0; overflow: visible; pointer-events: none; }
+  .links path { fill: none; stroke: rgba(122,138,255,0.85); stroke-width: 4; stroke-linecap: round; }
+  .links path.dash { stroke: rgba(165,178,255,0.5); stroke-width: 3; stroke-dasharray: 3 12; }
+  .links path.head { stroke-width: 4.5; stroke-linejoin: round; }
+  .dot { position: absolute; left: 0; top: 0; width: 20px; height: 20px; margin: -10px 0 0 -10px; border-radius: 50%; background: #fff; box-shadow: 0 0 0 7px rgba(122,138,255,0.28), 0 0 34px 10px rgba(122,138,255,0.75); offset-rotate: 0deg; opacity: 0; }
+
+  /* chat de WhatsApp */
+  .chat { background: #e8ecf8; padding: 34px 30px 36px; height: 250px; position: relative; }
+  .bubble { position: absolute; right: 30px; top: 40px; width: 470px; padding: 18px 22px 16px; border-radius: 20px 20px 4px 20px; background: #dcf8c6; color: #14202b; font-size: 26px; line-height: 1.38; box-shadow: 0 2px 2px rgba(0,0,0,0.15); transform-origin: 100% 100%; }
+  .bubble .tick { display: flex; justify-content: flex-end; align-items: center; gap: 8px; margin-top: 8px; font-size: 17px; color: #6b8a6b; }
+  .tick svg { width: 26px; height: 18px; fill: none; stroke: #34a8e8; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* decisión */
+  .tag { display: inline-block; padding: 7px 16px; border-radius: 999px; font-size: 18px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; background: linear-gradient(135deg, #4c5cff, #7c3aed); }
+  .tag.dim { background: rgba(255,255,255,0.12); color: var(--b200); }
+
+  /* indicador de pasos */
+  .stepper { position: absolute; left: 340px; top: 962px; width: 1240px; height: 90px; }
+  .stepper .rail { position: absolute; left: 0; right: 0; top: 14px; height: 3px; border-radius: 3px; background: rgba(255,255,255,0.12); }
+  .stepper .fill { position: absolute; left: 0; top: 14px; height: 3px; width: 100%; border-radius: 3px; background: linear-gradient(90deg, #4c5cff, #a78bfa); transform-origin: 0 50%; transform: scaleX(0); }
+  .stepper .s { position: absolute; top: 0; width: 160px; margin-left: -80px; text-align: center; font-size: 19px; font-weight: 600; letter-spacing: 0.04em; color: rgba(203,213,225,0.55); }
+  .stepper .s b { display: block; width: 30px; height: 30px; margin: 0 auto 12px; border-radius: 50%; background: var(--ink2); border: 3px solid rgba(255,255,255,0.22); }
+
+  /* casos de uso */
+  .cu { position: absolute; width: 330px; height: 200px; padding: 26px 28px; border-radius: 26px; background: linear-gradient(180deg, rgba(255,255,255,0.075), rgba(255,255,255,0.035)); border: 1px solid var(--line); box-shadow: 0 30px 70px -36px rgba(0,0,0,0.7); overflow: hidden; }
+  .cu .n { font-size: 20px; font-weight: 700; letter-spacing: 0.14em; color: var(--b300); }
+  .cu.adm .n { color: var(--v300); }
+  .cu .t { margin-top: 14px; font-size: 29px; line-height: 1.22; font-weight: 650; letter-spacing: -0.02em; }
+  .cu .bar { position: absolute; left: 0; top: 0; bottom: 0; width: 5px; background: linear-gradient(180deg, #4c5cff, #7a8aff); }
+  .cu.adm .bar { background: linear-gradient(180deg, #7c3aed, #b39bff); }
+  .cu .sheen { position: absolute; inset: 0; border-radius: 26px; box-shadow: inset 0 0 0 2px rgba(165,178,255,0.9), 0 0 60px -10px rgba(76,92,255,0.7); opacity: 0; }
+  .legend { position: absolute; display: flex; align-items: center; gap: 12px; font-size: 24px; color: var(--txt); }
+  .legend i { width: 18px; height: 18px; border-radius: 50%; background: var(--b400); }
+  .legend.adm i { background: var(--v300); }
+
+  /* filas de otros recorridos */
+  .rowlabel { position: absolute; font-size: 20px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--b300); }
+  .mini { position: absolute; border-radius: 26px; overflow: hidden; background: linear-gradient(180deg, rgba(255,255,255,0.075), rgba(255,255,255,0.035)); border: 1px solid var(--line); box-shadow: 0 30px 70px -36px rgba(0,0,0,0.7); }
+  .mini .vp { position: relative; overflow: hidden; background: #0b1228; }
+  .mini .vp img { position: absolute; left: 0; top: 0; width: 100%; display: block; }
+  .mini .cap { padding: 14px 22px; font-size: 22px; font-weight: 600; color: var(--txt); }
+  .mini .mb { padding: 20px 26px 0; }
+  .mini .mb .k { font-size: 18px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--b300); }
+  .mini .mb .v { margin-top: 8px; font-size: 29px; line-height: 1.28; font-weight: 650; letter-spacing: -0.02em; }
+  .mini .mb .s { margin-top: 8px; font-size: 22px; line-height: 1.35; color: var(--txt); }
+  .mini .bub { margin: 12px 22px 0 auto; width: 450px; padding: 12px 18px; border-radius: 16px 16px 3px 16px; background: #dcf8c6; color: #14202b; font-size: 21px; line-height: 1.34; }
+
+  /* celulares */
+  .phone { position: absolute; width: 272px; padding: 8px; border-radius: 44px; background: #0b1020; border: 2px solid rgba(255,255,255,0.14); box-shadow: 0 50px 100px -40px rgba(0,0,0,0.8); }
+  .phone img { display: block; width: 100%; border-radius: 36px; }
+  .phonecap { position: absolute; width: 300px; text-align: center; font-size: 30px; font-weight: 700; letter-spacing: -0.02em; }
+  .phonecap small { display: block; margin-top: 6px; font-size: 21px; font-weight: 400; letter-spacing: 0; color: var(--txt); }
+
+  .ring { position: absolute; border-radius: 50%; border: 3px solid rgba(165,178,255,0.8); opacity: 0; }
+  #hint { position: fixed; left: 50%; bottom: 10px; transform: translateX(-50%); font: 500 13px 'Inter', sans-serif; color: rgba(255,255,255,0.55); letter-spacing: 0.04em; z-index: 9; }
+</style>
+</head>
+<body>
+<div id="frame">
+  <div class="bg">
+    <div class="glow g1"></div>
+    <div class="glow g2"></div>
+    <div class="glow g3"></div>
+    <div class="grid"></div>
+  </div>
+  <div id="scenes"></div>
+</div>
+<div id="hint">Espacio: pausa · ← →: ±2 s · R: reiniciar</div>
+
+<script>
+/* ============================================================================
+ * Video "Casos de uso" de CDJ Digital.
+ * Todo se anima con la Web Animations API, pausado, y una sola función `seek(t)`
+ * posiciona cada animación en el segundo `t`. Así el render a MP4 es exacto
+ * (render.mjs llama a seek() fotograma a fotograma) y la vista previa es la misma.
+ *
+ * Identidad de movimiento (skill motion-design): Corporate con toques Premium.
+ *  · Entradas: curva con frenado largo (0.05, 0.7, 0.1, 1), 0.9 s.
+ *  · Salidas: aceleran y son más cortas (0.55 s).
+ *  · Cámara: ease-in-out suave (0.4, 0, 0.2, 1), 1.0–1.1 s.
+ *  · Tres capas: primaria (nodos), secundaria (conectores, luz viajera, scroll de
+ *    capturas) y ambiental (fondo que respira).
+ * ========================================================================== */
+const E = {
+  enter: 'cubic-bezier(0.05,0.7,0.1,1)',
+  sig: 'cubic-bezier(0.2,0,0,1)',
+  exit: 'cubic-bezier(0.3,0,1,1)',
+  inout: 'cubic-bezier(0.4,0,0.2,1)',
+  sine: 'cubic-bezier(0.37,0,0.63,1)',
+  lin: 'linear',
+};
+const anims = [];
+const scenes = document.getElementById('scenes');
+
+/* Narración (opcional): narration.json trae la duración real de cada frase. Los tiempos de las escenas
+ * se alargan para que cada frase quepa, y `cue()` registra en qué segundo debe sonar cada una. */
+let NARR = {};
+const cues = [];
+const nd = (key, fallback = 0) => (NARR[key] ? NARR[key].dur : fallback);
+function cue(key, at) { if (NARR[key]) cues.push({ key, file: NARR[key].file, at: +at.toFixed(3), dur: NARR[key].dur }); }
+const dwell = (key, def, lead = 0.55, tail = 0.7) => Math.max(def, lead + nd(key) + tail);
+
+function A(node, kf, at, dur, easing = E.enter, fill = 'both', extra = {}) {
+  const a = node.animate(kf, { duration: Math.max(dur, 0.001) * 1000, delay: at * 1000, easing, fill, ...extra });
+  a.pause();
+  anims.push(a);
+  return a;
+}
+function el(html, parent) {
+  const t = document.createElement('template');
+  t.innerHTML = html.trim();
+  const n = t.content.firstElementChild;
+  if (parent) parent.appendChild(n);
+  return n;
+}
+function pos(n, o) { Object.assign(n.style, Object.fromEntries(Object.entries(o).map(([k, v]) => [k, typeof v === 'number' ? v + 'px' : v]))); return n; }
+function enter(n, at, o = {}) {
+  const { y = 28, x = 0, s = 1, dur = 0.9, ease = E.enter } = o;
+  return A(n, [{ opacity: 0, transform: `translate(${x}px,${y}px) scale(${s})` }, { opacity: 1, transform: 'none' }], at, dur, ease);
+}
+function fade(n, at, dur = 0.5, to = 1, from = 0) { return A(n, [{ opacity: from }, { opacity: to }], at, dur, E.sig); }
+function words(parent, text, at, o = {}) {
+  const { step = 0.075, dur = 0.95, grad = Infinity } = o;
+  text.split(' ').forEach((w, i) => {
+    const outer = el(`<span class="w"><span class="${i >= grad ? 'grad' : ''}">${w}</span></span>`, parent);
+    A(outer.firstChild, [{ transform: 'translateY(112%)', opacity: 0 }, { transform: 'none', opacity: 1 }], at + i * step, dur, E.enter);
+  });
+}
+function scene(T0, D) {
+  const sc = el('<div class="scene"></div>', scenes);
+  A(sc, [{ opacity: 0 }, { opacity: 1 }], T0, 0.25, E.sig);
+  A(sc, [{ opacity: 1, transform: 'none' }, { opacity: 0, transform: 'translateY(-14px)' }], T0 + D - 0.55, 0.55, E.exit, 'forwards');
+  return sc;
+}
+const ICON = {
+  user: '<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/>',
+  chat: '<path d="M21 12a8 8 0 0 1-11.6 7.1L3 21l1.9-5.4A8 8 0 1 1 21 12z"/>',
+  admin: '<path d="M4 6h8M18 6h2M4 12h2M12 12h8M4 18h10M20 18h0"/><circle cx="15" cy="6" r="2.2"/><circle cx="9" cy="12" r="2.2"/><circle cx="17" cy="18" r="2.2"/>',
+  search: '<circle cx="11" cy="11" r="7"/><path d="M20.5 20.5 16.2 16.2"/>',
+  mail: '<rect x="3" y="5" width="18" height="14" rx="3"/><path d="M3.5 8 12 14l8.5-6"/>',
+  help: '<circle cx="12" cy="12" r="9"/><path d="M9.5 9.3a2.6 2.6 0 0 1 5 .9c0 1.7-2.5 2.2-2.5 3.8"/><path d="M12 17.2h0"/>',
+  demos: '<rect x="3" y="4" width="18" height="12" rx="2.2"/><path d="M8 20h8M12 16v4"/>',
+  store: '<path d="M4 9l1.5-5h13L20 9"/><path d="M5 9v10h14V9"/><path d="M9 19v-5h6v5"/>',
+};
+const svgIcon = (k, cls = 'ico') => `<svg class="${cls}" viewBox="0 0 24 24">${ICON[k]}</svg>`;
+
+/* Conectores: línea que se dibuja + punta + luz que viaja por el trazo */
+function linksLayer(parent) { return el(`<svg class="links" width="4000" height="1080" viewBox="0 0 4000 1080"></svg>`, parent); }
+function link(parent, svg, d, at, dur, o = {}) {
+  const { dashed = false, head = true, angle = 0, end = null, dot = true, dotDelay = 0.05, dotDur = dur * 1.25 } = o;
+  const p = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  p.setAttribute('d', d);
+  svg.appendChild(p);
+  if (dashed) {
+    p.setAttribute('class', 'dash');
+    A(p, [{ opacity: 0 }, { opacity: 1 }], at, dur, E.sig);
+  } else {
+    p.setAttribute('pathLength', '1');
+    p.style.strokeDasharray = '1';
+    A(p, [{ strokeDashoffset: 1 }, { strokeDashoffset: 0 }], at, dur, E.inout);
+  }
+  if (head && end) {
+    const h = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    h.setAttribute('class', 'head');
+    h.setAttribute('d', 'M-14 -13 L2 0 L-14 13');
+    h.setAttribute('transform', `translate(${end[0]} ${end[1]}) rotate(${angle})`);
+    if (dashed) h.style.stroke = 'rgba(165,178,255,0.55)';
+    svg.appendChild(h);
+    A(h, [{ opacity: 0 }, { opacity: 1 }], at + dur * 0.78, 0.3, E.sig);
+  }
+  if (dot) {
+    const dt = el(`<div class="dot" style="offset-path:path('${d}')"></div>`, parent);
+    A(dt, [{ offsetDistance: '0%', opacity: 0, offset: 0 }, { offsetDistance: '8%', opacity: 1, offset: 0.08 }, { offsetDistance: '92%', opacity: 1, offset: 0.92 }, { offsetDistance: '100%', opacity: 0, offset: 1 }], at + dotDelay, dotDur, E.inout);
+  }
+  return p;
+}
+const LOGO = (w) => `<svg viewBox="45 76 855 462" width="${w}" fill="none"><defs><linearGradient id="lg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#c7cde6"/></linearGradient></defs><g stroke="url(#lg)" stroke-width="62" stroke-linejoin="round" style="fill:none"><path class="lp" pathLength="1" d="M326 162 A132 132 0 1 0 270 371 L428 238" stroke-linecap="round"/><path class="lp" pathLength="1" d="M396 118 H505 A130 130 0 0 1 505 378 H390" stroke-linecap="butt"/><path class="lp" pathLength="1" d="M766 118 H858 V288 A92 92 0 0 1 766 380 H728" stroke-linecap="butt"/></g><text class="lt" x="135" y="527" fill="url(#lg)" font-family="Inter" font-weight="600" font-size="92" textLength="662" lengthAdjust="spacing">DIGITAL</text></svg>`;
+function drawLogo(host, at) {
+  const ps = [...host.querySelectorAll('.lp')];
+  ps.forEach((p, i) => { p.style.strokeDasharray = '1'; A(p, [{ strokeDashoffset: 1 }, { strokeDashoffset: 0 }], at + i * 0.2, 1.1, E.inout); });
+  A(host.querySelector('.lt'), [{ opacity: 0 }, { opacity: 1 }], at + 1.0, 0.7, E.sig);
+}
+
+/* ======================================================================= FONDO */
+(function ambient() {
+  const kf = (s) => [{ transform: 'scale(1)', opacity: 0.75 }, { transform: `scale(${s})`, opacity: 1 }];
+  const o = { iterations: Infinity, direction: 'alternate' };
+  A(document.querySelector('.g1'), kf(1.12), 0, 14, E.sine, 'both', o);
+  A(document.querySelector('.g2'), kf(1.1), -6, 18, E.sine, 'both', o);
+  A(document.querySelector('.g3'), kf(1.14), -3, 16, E.sine, 'both', o);
+})();
+
+/* ===================================================================== ESCENA 1 */
+function S1(T0) {
+  const D = Math.max(5.4, 1.6 + nd('s1') + 1.0), sc = scene(T0, D);
+  cue('s1', T0 + 1.6);
+  const logo = pos(el(`<div class="abs">${LOGO(340)}</div>`, sc), { left: 790, top: 140 });
+  drawLogo(logo, T0 + 0.35);
+  const eb = pos(el('<div class="eyebrow">Casos de uso</div>', sc), { left: 786, top: 392 });
+  enter(eb, T0 + 1.55, { y: 20 });
+  const h1 = pos(el('<div class="h1" style="width:1500px;text-align:center"></div>', sc), { left: 210, top: 480 });
+  words(h1, 'Cómo usa tu web', T0 + 1.9);
+  h1.appendChild(document.createElement('br'));
+  words(h1, 'un interesado', T0 + 2.35, { grad: 0 });
+  const ld = pos(el('<div class="lead" style="width:1100px;text-align:center">Del primer vistazo al mensaje de WhatsApp: todos los recorridos de la web de CDJ Digital.</div>', sc), { left: 410, top: 770 });
+  enter(ld, T0 + 3.2, { y: 22 });
+  return D;
+}
+
+/* ===================================================================== ESCENA 2 */
+function S2(T0) {
+  const D = Math.max(5.9, 1.2 + nd('s2') + 1.0), sc = scene(T0, D);
+  cue('s2', T0 + 1.2);
+  enter(pos(el('<div class="eyebrow">Quién usa la web</div>', sc), { left: 150, top: 96 }), T0 + 0.2, { y: 18 });
+  const h2 = pos(el('<div class="h2" style="width:1500px"></div>', sc), { left: 150, top: 168 });
+  words(h2, 'Tres personas, un mismo', T0 + 0.45, { step: 0.06 });
+  words(h2, 'recorrido', T0 + 0.45 + 4 * 0.06, { step: 0.06, grad: 0 });
+  const defs = [
+    { k: 'user', role: 'Interesado', t: 'Quien visita la web', d: 'Conoce los servicios, compara planes, mira demos y escribe a CDJ por WhatsApp.', c: 'Casos de uso CU-01 a CU-09' },
+    { k: 'chat', role: 'Equipo CDJ', t: 'Quien recibe el mensaje', d: 'Recibe el WhatsApp con el motivo ya claro y continúa la conversación comercial.', c: 'Participa en CU-04, 06, 07 y 09' },
+    { k: 'admin', role: 'Administrador', t: 'Quien mantiene la oferta', d: 'Cambia planes, precios y preguntas en un solo lugar, sin tocar el diseño.', c: 'Caso de uso CU-10' },
+  ];
+  const W = 480, G = 150, X0 = (1920 - (3 * W + 2 * G)) / 2, Y = 400, H = 480;
+  const svg = pos(linksLayer(sc), { left: 0, top: 0 });
+  defs.forEach((o, i) => {
+    const x = X0 + i * (W + G);
+    const n = pos(el(`<div class="node"><div class="card" style="width:${W}px;height:${H}px;padding:34px 36px">
+      <div style="display:flex;align-items:center;gap:20px"><div style="width:76px;height:76px;border-radius:22px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,${i === 2 ? '#7c3aed,#b39bff' : '#4c5cff,#7a8aff'})">${svgIcon(o.k, 'ico')}</div><span class="badge ${i === 2 ? '' : ''}" style="${i === 2 ? 'background:linear-gradient(135deg,#7c3aed,#b39bff)' : ''}">${o.role}</span></div>
+      <h3 style="margin-top:28px;font-size:40px">${o.t}</h3><p style="font-size:24px">${o.d}</p>
+      <div style="position:absolute;left:36px;bottom:30px;font-size:21px;font-weight:600;letter-spacing:0.04em;color:${i === 2 ? '#b9a1ff' : '#a5b2ff'}">${o.c}</div></div></div>`, sc), { left: x, top: Y });
+    enter(n, T0 + 1.25 + i * 0.16, { y: 40, s: 0.97, dur: 1.0 });
+  });
+  const y = Y + H / 2;
+  link(sc, svg, `M${X0 + W + 16} ${y} L${X0 + W + G - 16} ${y}`, T0 + 2.9, 0.7, { end: [X0 + W + G - 16, y] });
+  const lab = pos(el('<div class="abs" style="font-size:20px;font-weight:700;letter-spacing:0.14em;color:#a5b2ff;width:150px;text-align:center">WHATSAPP</div>', sc), { left: X0 + W + G / 2 - 75, top: y - 50 });
+  fade(lab, T0 + 3.5, 0.5);
+  // El administrador sostiene lo que ve el interesado: arco punteado por debajo
+  const ax1 = X0 + 2 * (W + G) + W / 2, ax2 = X0 + W / 2, ay = Y + H + 14;
+  link(sc, svg, `M${ax1} ${ay} C ${ax1} ${ay + 120}, ${ax2} ${ay + 120}, ${ax2} ${ay + 8}`, T0 + 3.7, 0.9, { dashed: true, end: [ax2, ay + 8], angle: -90, dot: true, dotDur: 1.2 });
+  const lab2 = pos(el('<div class="abs" style="font-size:22px;color:#cbd5e1;width:700px;text-align:center">Lo que el administrador mantiene es lo que ve el interesado</div>', sc), { left: (ax1 + ax2) / 2 - 350, top: ay + 96 });
+  fade(lab2, T0 + 4.3, 0.6);
+  return D;
+}
+
+/* ===================================================================== ESCENA 3 */
+function S3(T0) {
+  const t = { n0: 0.6 };   // inicio de cada paso (la cámara se mueve ahí); cada paso dura lo que su narración
+  t.n1 = t.n0 + dwell('f0', 1.8, 0.9, 0.7);
+  t.n2 = t.n1 + dwell('f1', 3.4, 1.0, 0.8);
+  t.n3 = t.n2 + dwell('f2', 3.0, 1.0, 0.8);
+  t.n4 = t.n3 + dwell('f3', 4.4, 1.0, 1.0);
+  t.n5 = t.n4 + dwell('f4', 5.2, 1.4, 1.0);
+  t.n6 = t.n5 + dwell('f5', 4.4, 1.0, 0.9);
+  const D = t.n6 + Math.max(4.6, 1.0 + nd('f6') + 1.4);
+  const sc = scene(T0, D);
+  cue('f0', T0 + t.n0 + 0.9); cue('f1', T0 + t.n1 + 1.0); cue('f2', T0 + t.n2 + 1.0); cue('f3', T0 + t.n3 + 1.0);
+  cue('f4', T0 + t.n4 + 1.4); cue('f5', T0 + t.n5 + 1.0); cue('f6', T0 + t.n6 + 1.0);
+  enter(pos(el('<div class="eyebrow">Flujo principal</div>', sc), { left: 150, top: 70 }), T0 + 0.2, { y: 18 });
+  const h2 = pos(el('<div class="h2" style="width:1200px;font-size:60px"></div>', sc), { left: 150, top: 132 });
+  words(h2, 'Del interés al', T0 + 0.4, { step: 0.06 });
+  words(h2, 'WhatsApp', T0 + 0.4 + 3 * 0.06, { step: 0.06, grad: 0 });
+
+  const CY = 585;
+  const track = pos(el('<div class="abs" style="left:0;top:0;width:4000px;height:1080px"></div>', sc), {});
+  const svg = linksLayer(track);
+
+  const spec = [
+    { id: 'n0', w: 660 }, { id: 'n1', w: 700 }, { id: 'n2', w: 700 }, { id: 'n3', w: 700 },
+    { id: 'n4', w: 560 }, { id: 'n4b', w: 520 }, { id: 'n5', w: 640 }, { id: 'n6', w: 780 },
+  ];
+  const gaps = [180, 180, 180, 180, 150, 170, 180];
+  let cx = 0; const N = {};
+  spec.forEach((s, i) => { s.l = cx; s.r = cx + s.w; s.c = cx + s.w / 2; N[s.id] = s; cx += s.w + (gaps[i] ?? 0); });
+  const camX = (c) => 960 - c;
+  // posiciones de cámara por paso
+  const camC = { n0: N.n0.c, n1: N.n1.c, n2: N.n2.c, n3: N.n3.c, n4: (N.n4.l + N.n4b.r) / 2, n5: N.n5.c, n6: N.n6.c };
+  track.style.transform = `translateX(${camX(camC.n0)}px)`;
+  const pan = (from, to, at, dur = 1.05) => A(track, [{ transform: `translateX(${camX(camC[from])}px)` }, { transform: `translateX(${camX(camC[to])}px)` }], at, dur, E.inout, 'forwards');
+
+  const nodes = {};
+  const dimAt = (id, at) => A(nodes[id], [{ opacity: 1, transform: 'none' }, { opacity: 0.34, transform: 'scale(0.935)' }], at, 0.9, E.inout, 'forwards');
+  const halo = (id, at, off) => { const h = nodes[id].querySelector('.halo'); if (h) { A(h, [{ opacity: 0 }, { opacity: 1 }], at, 0.8, E.sig); if (off) A(h, [{ opacity: 1 }, { opacity: 0 }], off, 0.6, E.inout, 'forwards'); } };
+
+  // ---- N0: inicio (terminal)
+  nodes.n0 = pos(el(`<div class="node"><div class="halo" style="border-radius:999px"></div><div class="pill start" style="width:${N.n0.w}px;height:170px">${svgIcon('search')}<span>Una persona busca una página web para su negocio</span></div></div>`, track), { left: N.n0.l, top: CY - 85 });
+  enter(nodes.n0, T0 + t.n0, { y: 34, s: 0.96, dur: 1.0 });
+
+  // ---- tarjetas con captura
+  const shots = [
+    { id: 'n1', img: 'assets/shot-inicio.jpg', iw: 1000, ih: 625, badge: 'Paso 1', title: 'Inicio', desc: 'Lee la promesa, ve <b>Desde S/99/mes</b> y elige <b>Quiero mi web</b> o <b>Ver demos</b>.', scrollDur: 2.2 },
+    { id: 'n2', img: 'assets/shot-servicios.jpg', iw: 1000, ih: 533, badge: 'Paso 2', title: 'Qué hacemos y cómo funciona', desc: 'Entiende la oferta y los <b>4 pasos</b>: cuéntanos, diseñamos, revisamos y publicamos.', scrollDur: 0 },
+    { id: 'n3', img: 'assets/shot-planes.jpg', iw: 1000, ih: 1403, badge: 'Paso 3', title: 'Planes', desc: 'Compara <b>Inicio (S/99)</b>, <b>Negocio (S/150)</b> y <b>Pro (S/249)</b> y lo que incluye cada uno.', scrollDur: 2.9 },
+  ];
+  const CW = 700, VH = 372, CH = 664;
+  shots.forEach((s) => {
+    const n = N[s.id];
+    let ih = CW * s.ih / s.iw, iw = CW, ox = 0;
+    if (ih < VH) { const k = VH / ih; iw = CW * k; ih = VH; ox = -(iw - CW) / 2; }
+    const scroll = Math.max(0, ih - VH);
+    nodes[s.id] = pos(el(`<div class="node"><div class="halo"></div><div class="card" style="width:${CW}px;height:${CH}px"><div class="chrome"><i></i><i></i><i></i></div><div class="viewport" style="height:${VH}px"><img src="${s.img}" style="width:${iw}px;left:${ox}px" /></div><div class="body"><div class="top"><span class="badge">${s.badge}</span></div><h3 style="margin-top:16px;font-size:${s.title.length > 18 ? 38 : 44}px">${s.title}</h3><p>${s.desc}</p></div></div></div>`, track), { left: n.l, top: CY - CH / 2 });
+    const at = T0 + t[s.id];
+    enter(nodes[s.id], at + 0.15, { y: 40, s: 0.96, dur: 1.0 });
+    // capa secundaria: la captura se desplaza despacio mientras el nodo está activo
+    const img = nodes[s.id].querySelector('img');
+    if (s.scrollDur && scroll > 0) A(img, [{ transform: 'translateY(0)' }, { transform: `translateY(${-scroll}px)` }], at + 1.5, s.scrollDur, E.inout);
+    else A(img, [{ transform: 'scale(1)' }, { transform: 'scale(1.045)' }], at + 1.0, 3.2, E.inout);
+  });
+
+  // ---- N4: decisión (rombo)
+  const dw = N.n4.w, dh = 340;
+  nodes.n4 = pos(el(`<div class="node"><svg width="${dw}" height="${dh}" viewBox="0 0 ${dw} ${dh}" style="overflow:visible"><defs><linearGradient id="dg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="rgba(76,92,255,0.22)"/><stop offset="1" stop-color="rgba(124,58,237,0.22)"/></linearGradient></defs><polygon id="dpoly" pathLength="1" points="${dw / 2},6 ${dw - 6},${dh / 2} ${dw / 2},${dh - 6} 6,${dh / 2}" fill="url(#dg)" stroke="#7a8aff" stroke-width="4" stroke-linejoin="round"/></svg><div class="abs" style="left:0;top:0;width:${dw}px;height:${dh}px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:44px;font-weight:750;letter-spacing:-0.025em;line-height:1.14" id="dtxt">¿Ya sabe<br>qué quiere?</div></div>`, track), { left: N.n4.l, top: CY - dh / 2 });
+  {
+    const at = T0 + t.n4;
+    const poly = nodes.n4.querySelector('#dpoly'); poly.style.strokeDasharray = '1';
+    A(poly, [{ strokeDashoffset: 1, fillOpacity: 0 }, { strokeDashoffset: 0, fillOpacity: 1 }], at + 0.5, 1.1, E.inout);
+    enter(nodes.n4.querySelector('#dtxt'), at + 1.3, { y: 14, dur: 0.8 });
+    A(nodes.n4, [{ opacity: 0 }, { opacity: 1 }], at + 0.3, 0.3, E.sig);
+  }
+  // ---- N4b: ramas
+  const bw = N.n4b.w, bh = 196, yA = CY - 120, yB = CY + 120;
+  const branch = (id, y, tag, dim, text) => pos(el(`<div class="node"><div class="halo"></div><div class="card" style="width:${bw}px;height:${bh}px;padding:26px 30px"><span class="tag ${dim ? 'dim' : ''}">${tag}</span><p style="margin-top:14px;font-size:25px;line-height:1.4">${text}</p></div></div>`, track), { left: N.n4b.l, top: y - bh / 2 });
+  nodes.bA = branch('bA', yA, 'Sí', false, 'Toca <b>«Quiero este plan»</b> y se abre WhatsApp con el plan ya mencionado.');
+  nodes.bB = branch('bB', yB, 'Todavía no', true, 'Mira las <b>demos</b>, el correo y las preguntas, o escribe desde el botón de WhatsApp de cualquier parte.');
+  nodes.n4b = nodes.bA; // referencia para el atenuado
+
+  // ---- N5: WhatsApp
+  const chW = N.n5.w;
+  nodes.n5 = pos(el(`<div class="node"><div class="halo"></div><div class="card" style="width:${chW}px;height:560px"><div class="chat"><div class="bubble" id="bub">Hola, estoy interesado en el plan Negocio de CDJ Digital de S/150/mes.<div class="tick"><span>Enviado</span><svg viewBox="0 0 26 18"><path d="M2 9.5 7 14.5 16 4"/><path d="M10 11 13 14.5 23 4"/></svg></div></div></div><div class="body"><div class="top"><span class="badge">Paso 4</span></div><h3 style="margin-top:16px;font-size:42px">WhatsApp con el plan elegido</h3><p>Se abre con el mensaje ya redactado. La persona solo lo revisa y lo envía.</p></div></div></div>`, track), { left: N.n5.l, top: CY - 280 });
+  // ---- N6: cierre del flujo
+  nodes.n6 = pos(el(`<div class="node"><div class="halo" style="border-radius:999px"></div><div class="pill end" style="width:${N.n6.w}px;height:190px">${svgIcon('chat')}<span>CDJ recibe el mensaje y conversa con el interesado</span></div></div>`, track), { left: N.n6.l, top: CY - 95 });
+  const note = pos(el('<div class="abs" style="width:900px;text-align:center;font-size:30px;color:#cbd5e1">La web no cobra ni pide datos: todo se coordina por WhatsApp.</div>', track), { left: N.n6.c - 450, top: CY + 150 });
+
+  // ---- cámara + enfoque
+  const order = ['n0', 'n1', 'n2', 'n3', 'n4', 'n5', 'n6'];
+  for (let i = 0; i < order.length - 1; i++) pan(order[i], order[i + 1], T0 + t[order[i + 1]], i === 3 || i === 4 ? 1.15 : 1.05);
+  // dim del paso anterior justo al empezar la cámara
+  dimAt('n0', T0 + t.n1);
+  dimAt('n1', T0 + t.n2);
+  dimAt('n2', T0 + t.n3);
+  dimAt('n3', T0 + t.n4 + 0.1);
+  A(nodes.n4, [{ opacity: 1, transform: 'none' }, { opacity: 0.34, transform: 'scale(0.935)' }], T0 + t.n5, 0.9, E.inout, 'forwards');
+  A(nodes.bB, [{ opacity: 1, transform: 'none' }, { opacity: 0.34, transform: 'scale(0.935)' }], T0 + t.n5, 0.9, E.inout, 'forwards');
+  A(nodes.bA, [{ opacity: 1, transform: 'none' }, { opacity: 0.34, transform: 'scale(0.935)' }], T0 + t.n5, 0.9, E.inout, 'forwards');
+  A(nodes.n5, [{ opacity: 1, transform: 'none' }, { opacity: 0.34, transform: 'scale(0.935)' }], T0 + t.n6, 0.9, E.inout, 'forwards');
+  halo('n0', T0 + t.n0 + 0.4, T0 + t.n1);
+  halo('n1', T0 + t.n1 + 0.8, T0 + t.n2);
+  halo('n2', T0 + t.n2 + 0.8, T0 + t.n3);
+  halo('n3', T0 + t.n3 + 0.8, T0 + t.n4);
+  halo('n5', T0 + t.n5 + 0.9, T0 + t.n6);
+  halo('n6', T0 + t.n6 + 0.9);
+
+  // ---- conectores (dibujan justo antes de que la cámara avance)
+  const hl = (a, b, y = CY) => ({ d: `M${N[a].r + 18} ${y} L${N[b].l - 18} ${y}`, end: [N[b].l - 18, y] });
+  [['n0', 'n1', t.n1 - 0.2], ['n1', 'n2', t.n2 - 0.2], ['n2', 'n3', t.n3 - 0.2], ['n3', 'n4', t.n4 - 0.2]].forEach(([a, b, at]) => {
+    const l = hl(a, b);
+    link(track, svg, l.d, T0 + at - 0.35, 0.8, { end: l.end });
+    // la tarjeta siguiente aparece al llegar la luz
+  });
+  // ---- timeline decisión
+  {
+    const at = T0 + t.n4;
+    // rombo -> ramas
+    const x1 = N.n4.r + 18, x2 = N.n4b.l - 18;
+    link(track, svg, `M${x1} ${CY} C ${x1 + 70} ${CY}, ${x2 - 70} ${yA}, ${x2} ${yA}`, at + 2.0, 0.85, { end: [x2, yA], angle: 8 });
+    link(track, svg, `M${x1} ${CY} C ${x1 + 70} ${CY}, ${x2 - 70} ${yB}, ${x2} ${yB}`, at + 2.35, 0.85, { dashed: true, end: [x2, yB], angle: -8, dot: false });
+    enter(nodes.bA, at + 2.7, { y: 30, s: 0.96, dur: 0.95 });
+    enter(nodes.bB, at + 3.0, { y: 30, s: 0.96, dur: 0.95 });
+    halo('bA', at + 3.4, T0 + t.n5);
+    // ramas -> WhatsApp
+    const bx1 = N.n4b.r + 18, bx2 = N.n5.l - 18;
+    link(track, svg, `M${bx1} ${yA} C ${bx1 + 70} ${yA}, ${bx2 - 70} ${CY}, ${bx2} ${CY}`, T0 + t.n5 - 0.35, 0.85, { end: [bx2, CY], angle: 8, dotDur: 1.2 });
+    link(track, svg, `M${bx1} ${yB} C ${bx1 + 70} ${yB}, ${bx2 - 70} ${CY}, ${bx2} ${CY}`, T0 + t.n5 - 0.2, 0.85, { dashed: true, end: [bx2, CY], angle: -8, dot: false });
+  }
+  // N5 -> N6
+  {
+    const l = hl('n5', 'n6');
+    link(track, svg, l.d, T0 + t.n6 - 0.55, 0.8, { end: l.end });
+  }
+  // aparición de N5 / N6 y detalles
+  enter(nodes.n5, T0 + t.n5 + 0.15, { y: 40, s: 0.96, dur: 1.0 });
+  {
+    const b = nodes.n5.querySelector('#bub');
+    A(b, [{ opacity: 0, transform: 'scale(0.82) translateY(14px)' }, { opacity: 1, transform: 'none' }], T0 + t.n5 + 0.95, 0.75, E.enter);
+    A(b.querySelector('.tick svg'), [{ opacity: 0, transform: 'scale(0.6)' }, { opacity: 1, transform: 'none' }], T0 + t.n5 + 1.9, 0.5, E.enter);
+  }
+  enter(nodes.n6, T0 + t.n6 + 0.15, { y: 40, s: 0.94, dur: 1.1 });
+  [0, 0.55].forEach((d, i) => {
+    const r = pos(el('<div class="ring"></div>', track), { left: N.n6.l - 20, top: CY - 115, width: N.n6.w + 40, height: 230, borderRadius: 999 });
+    A(r, [{ opacity: 0.7, transform: 'scale(1)' }, { opacity: 0, transform: 'scale(1.16, 1.5)' }], T0 + t.n6 + 1.1 + d, 1.4, E.sig, 'forwards');
+  });
+  enter(note, T0 + t.n6 + 1.6, { y: 18, dur: 0.9 });
+
+  // ---- indicador de pasos
+  const labels = ['Búsqueda', 'Inicio', 'Servicios', 'Planes', 'Decisión', 'WhatsApp', 'CDJ responde'];
+  const st = pos(el('<div class="stepper"><div class="rail"></div><div class="fill"></div></div>', sc), {});
+  enter(st, T0 + 0.8, { y: 20, dur: 0.8 });
+  const sw = 1240, dots = [];
+  labels.forEach((lb, i) => {
+    const x = (sw / (labels.length - 1)) * i;
+    const s = pos(el(`<div class="s"><b></b>${lb}</div>`, st), { left: x });
+    dots.push(s);
+  });
+  const stepAt = [t.n0, t.n1, t.n2, t.n3, t.n4, t.n5, t.n6].map((v) => T0 + v + 0.3);
+  dots.forEach((s, i) => {
+    const b = s.querySelector('b');
+    A(b, [{ background: '#0b1228', borderColor: 'rgba(255,255,255,0.22)', transform: 'scale(1)' }, { background: '#7a8aff', borderColor: '#fff', transform: 'scale(1.28)' }], stepAt[i], 0.6, E.enter, 'forwards');
+    A(s, [{ color: 'rgba(203,213,225,0.55)' }, { color: '#ffffff' }], stepAt[i], 0.5, E.sig, 'forwards');
+    if (i < dots.length - 1) {
+      A(b, [{ background: '#7a8aff', borderColor: '#fff', transform: 'scale(1.28)' }, { background: '#4c5cff', borderColor: 'rgba(255,255,255,0.5)', transform: 'scale(1)' }], stepAt[i + 1], 0.6, E.inout, 'forwards');
+      A(s, [{ color: '#ffffff' }, { color: 'rgba(203,213,225,0.8)' }], stepAt[i + 1], 0.5, E.sig, 'forwards');
+    }
+  });
+  const fill = st.querySelector('.fill');
+  stepAt.forEach((a, i) => { if (i > 0) A(fill, [{ transform: `scaleX(${(i - 1) / 6})` }, { transform: `scaleX(${i / 6})` }], a, 1.0, E.inout, 'forwards'); });
+  return D;
+}
+
+/* ===================================================================== ESCENA 4 */
+function S4(T0) {
+  const D = Math.max(8.5, 1.3 + nd('s4') + 1.3), sc = scene(T0, D);
+  cue('s4', T0 + 1.3);
+  enter(pos(el('<div class="eyebrow">Casos de uso</div>', sc), { left: 150, top: 80 }), T0 + 0.2, { y: 18 });
+  const h2 = pos(el('<div class="h2" style="width:1600px"></div>', sc), { left: 150, top: 150 });
+  words(h2, 'Los', T0 + 0.4, { step: 0.06 });
+  words(h2, '10 casos de uso', T0 + 0.58, { step: 0.06, grad: 0 });
+  enter(pos(el('<div class="lead" style="width:1500px;font-size:30px">Cada uno con su paso a paso, lo que pasa si algo sale distinto y cómo termina.</div>', sc), { left: 150, top: 250 }), T0 + 0.9, { y: 18 });
+  const cases = [
+    ['CU-01', 'Entender qué ofrece CDJ Digital'], ['CU-02', 'Ver servicios y qué incluye'], ['CU-03', 'Comparar los planes'], ['CU-04', 'Contratar un plan por WhatsApp'], ['CU-05', 'Ver demos de otros negocios'],
+    ['CU-06', 'Pedir una web como una demo'], ['CU-07', 'Contratar correo corporativo'], ['CU-08', 'Resolver dudas en las preguntas frecuentes'], ['CU-09', 'Escribir a CDJ desde cualquier parte'], ['CU-10', 'Mantener planes, precios y preguntas'],
+  ];
+  const CW = 330, CH = 200, GX = 28, GY = 28, X0 = (1920 - (5 * CW + 4 * GX)) / 2, Y0 = 370;
+  const sheens = [];
+  cases.forEach(([n, t], i) => {
+    const r = Math.floor(i / 5), c = i % 5;
+    const adm = i === 9;
+    const card = pos(el(`<div class="cu ${adm ? 'adm' : ''}"><div class="bar"></div><div class="n">${n}</div><div class="t">${t}</div><div class="sheen"></div></div>`, sc), { left: X0 + c * (CW + GX), top: Y0 + r * (CH + GY) });
+    enter(card, T0 + 1.2 + (r + c) * 0.11, { y: 36, s: 0.96, dur: 0.95 });
+    sheens.push(card.querySelector('.sheen'));
+  });
+  // capa secundaria: un destello recorre las tarjetas en orden
+  sheens.forEach((s, i) => { const a = T0 + 3.4 + i * 0.3; A(s, [{ opacity: 0 }, { opacity: 1, offset: 0.35 }, { opacity: 0 }], a, 0.95, E.sine, 'none'); });
+  const l1 = pos(el('<div class="legend"><i></i>Interesado (CU-01 a CU-09)</div>', sc), { left: X0, top: 920 });
+  const l2 = pos(el('<div class="legend adm"><i></i>Administrador (CU-10)</div>', sc), { left: X0 + 520, top: 920 });
+  enter(l1, T0 + 2.6, { y: 12, dur: 0.7 }); enter(l2, T0 + 2.75, { y: 12, dur: 0.7 });
+  return D;
+}
+
+/* ===================================================================== ESCENA 5 */
+function S5(T0) {
+  const D = Math.max(10.6, 1.0 + nd('s5') + 1.4), sc = scene(T0, D);
+  cue('s5', T0 + 1.0);
+  enter(pos(el('<div class="eyebrow">Otros recorridos</div>', sc), { left: 150, top: 64 }), T0 + 0.2, { y: 18 });
+  const h2 = pos(el('<div class="h2" style="width:1600px;font-size:60px"></div>', sc), { left: 150, top: 124 });
+  words(h2, 'Más caminos, las mismas', T0 + 0.4, { step: 0.06 });
+  words(h2, 'pantallas reales', T0 + 0.4 + 4 * 0.06, { step: 0.06, grad: 0 });
+  const svg = linksLayer(sc);
+  const rows = [
+    { lab: 'Demos', img: 'assets/shot-demos.jpg', iw: 1000, ih: 1216, cap: 'Una web real y cinco conceptos', mid: { k: 'Paso siguiente', v: '«Quiero una web como esta»', bub: 'Hola, quiero una web como la demo de Barber Studio para mi negocio.' }, end: 'CDJ sabe qué estilo busca el interesado' },
+    { lab: 'Correo', img: 'assets/shot-correo.jpg', iw: 1000, ih: 394, cap: 'Correo corporativo: S/25 al mes', mid: { k: 'Paso siguiente', v: 'Se abre WhatsApp', bub: 'Hola, quiero contratar correo corporativo para mi negocio con CDJ Digital.' }, end: 'CDJ coordina el dominio y las cuentas' },
+    { lab: 'Dudas', img: 'assets/shot-faq.jpg', iw: 1000, ih: 723, cap: 'Ocho preguntas frecuentes', mid: { k: 'Si sigue con dudas', v: 'Escribir por WhatsApp', s: 'o volver a Ver planes' }, end: 'La conversación empieza en un toque, sin formularios' },
+  ];
+  const RH = 206, RY = [272, 526, 780];
+  rows.forEach((r, i) => {
+    const y = RY[i], at = T0 + 1.0 + i * 2.5;
+    const x1 = 180, w1 = 420, x2 = 700, w2 = 520, x3 = 1320, w3 = 420;
+    const lab = pos(el(`<div class="rowlabel">${r.lab}</div>`, sc), { left: x1, top: y - 36 });
+    enter(lab, at, { y: 14, dur: 0.7 });
+    // 1) captura
+    const vph = RH - 50; const ih = w1 * r.ih / r.iw;
+    const a = pos(el(`<div class="mini" style="width:${w1}px;height:${RH}px"><div class="vp" style="height:${vph}px"><img src="${r.img}" /></div><div class="cap">${r.cap}</div></div>`, sc), { left: x1, top: y });
+    enter(a, at + 0.1, { y: 30, s: 0.96, dur: 0.95 });
+    const im = a.querySelector('img'); const sc2 = Math.max(0, ih - vph);
+    if (sc2 > 0) A(im, [{ transform: 'translateY(0)' }, { transform: `translateY(${-Math.min(sc2, 520)}px)` }], at + 0.9, 2.1, E.inout);
+    link(sc, svg, `M${x1 + w1 + 16} ${y + RH / 2} L${x2 - 16} ${y + RH / 2}`, at + 0.9, 0.6, { end: [x2 - 16, y + RH / 2] });
+    // 2) paso intermedio
+    const mid = pos(el(`<div class="mini" style="width:${w2}px;height:${RH}px"><div class="mb"><div class="k">${r.mid.k}</div><div class="v">${r.mid.v}</div>${r.mid.s ? `<div class="s">${r.mid.s}</div>` : ''}</div>${r.mid.bub ? `<div class="bub">${r.mid.bub}</div>` : ''}</div>`, sc), { left: x2, top: y });
+    enter(mid, at + 1.25, { y: 30, s: 0.96, dur: 0.95 });
+    link(sc, svg, `M${x2 + w2 + 16} ${y + RH / 2} L${x3 - 16} ${y + RH / 2}`, at + 1.9, 0.6, { end: [x3 - 16, y + RH / 2] });
+    // 3) resultado
+    const out = pos(el(`<div class="abs" style="width:${w3}px;height:${RH}px;border-radius:26px;display:flex;align-items:center;justify-content:center;text-align:center;padding:0 30px;font-size:29px;line-height:1.28;font-weight:700;letter-spacing:-0.02em;background:linear-gradient(135deg,#4c5cff 0%,#6a45f0 62%,#7c3aed 100%);box-shadow:0 36px 80px -30px rgba(76,92,255,0.75), inset 0 0 0 1px rgba(255,255,255,0.18)">${r.end}</div>`, sc), { left: x3, top: y });
+    enter(out, at + 2.1, { y: 30, s: 0.95, dur: 1.0 });
+  });
+  return D;
+}
+
+/* ===================================================================== ESCENA 6 */
+function S6(T0) {
+  const D = Math.max(6.3, 1.2 + nd('s6') + 1.8), sc = scene(T0, D);
+  cue('s6', T0 + 1.2);
+  enter(pos(el('<div class="eyebrow">En el celular</div>', sc), { left: 150, top: 80 }), T0 + 0.2, { y: 18 });
+  const h2 = pos(el('<div class="h2" style="width:1600px"></div>', sc), { left: 150, top: 150 });
+  words(h2, 'Todo se adapta a', T0 + 0.4, { step: 0.06 });
+  words(h2, 'la pantalla del teléfono', T0 + 0.4 + 3 * 0.06, { step: 0.06, grad: 0 });
+  const svg = linksLayer(sc);
+  const ph = [
+    ['assets/phone-inicio.jpg', 'Inicio', 'Se adapta sola'], ['assets/phone-menu.jpg', 'Menú', 'Tres rayas para abrirlo'], ['assets/phone-planes.jpg', 'Planes', 'Una tarjeta por plan'], ['assets/phone-demos.jpg', 'Demos', 'Fáciles de recorrer con el pulgar'],
+  ];
+  const PW = 272, G = 160, X0 = (1920 - (4 * PW + 3 * G)) / 2, Y = 300;
+  const imgH = (PW - 16) * 866 / 400;
+  ph.forEach(([src, t, s], i) => {
+    const x = X0 + i * (PW + G), at = T0 + 1.2 + i * 0.75;
+    const p = pos(el(`<div class="phone"><img src="${src}" /></div>`, sc), { left: x, top: Y });
+    enter(p, at, { y: 50, s: 0.95, dur: 1.05 });
+    const c = pos(el(`<div class="phonecap">${t}<small>${s}</small></div>`, sc), { left: x + PW / 2 - 150, top: Y + imgH + 54 });
+    enter(c, at + 0.35, { y: 16, dur: 0.8 });
+    // capa ambiental: flotación muy leve
+    A(p, [{ translate: '0 0' }, { translate: '0 -7px' }], T0 + 1.2 + i * 0.3, 3.2, E.sine, 'none', { iterations: Infinity, direction: 'alternate' });
+    if (i < 3) link(sc, svg, `M${x + PW + 30} ${Y + imgH / 2} L${x + PW + G - 30} ${Y + imgH / 2}`, at + 0.7, 0.55, { end: [x + PW + G - 30, Y + imgH / 2], dotDur: 0.7 });
+  });
+  return D;
+}
+
+/* ===================================================================== ESCENA 7 */
+function S7(T0) {
+  const tagAt = Math.max(3.5, 0.9 + nd('s7a') + 0.5);
+  const D = Math.max(7.2, tagAt + nd('s7b') + 1.8), sc = scene(T0, D);
+  cue('s7a', T0 + 0.9); cue('s7b', T0 + tagAt);
+  const h1 = pos(el('<div class="h1" style="width:1000px;font-size:104px"></div>', sc), { left: 150, top: 250 });
+  words(h1, 'La web no cobra', T0 + 0.4, { step: 0.08 });
+  h1.appendChild(document.createElement('br'));
+  words(h1, 'ni pide datos.', T0 + 0.85, { step: 0.08 });
+  const lead = pos(el('<div class="lead" style="width:900px;font-size:44px;font-weight:700;letter-spacing:-0.02em;color:#fff"></div>', sc), { left: 150, top: 540 });
+  lead.innerHTML = 'Todo se coordina por <span class="grad">WhatsApp</span>.';
+  enter(lead, T0 + 1.9, { y: 22, dur: 1.0 });
+  // chat
+  const chat = pos(el(`<div class="node"><div class="halo" style="opacity:1"></div><div class="card" style="width:640px;height:270px"><div class="chat" style="height:270px;padding:34px 30px"><div class="bubble" style="top:40px;width:500px">Hola, estoy interesado en el plan Negocio de CDJ Digital de S/150/mes.<div class="tick"><span>Enviado</span><svg viewBox="0 0 26 18"><path d="M2 9.5 7 14.5 16 4"/><path d="M10 11 13 14.5 23 4"/></svg></div></div></div></div></div>`, sc), { left: 1090, top: 330 });
+  enter(chat, T0 + 1.0, { y: 40, s: 0.96, dur: 1.1 });
+  const chatNote = pos(el('<div class="abs" style="width:640px;font-size:22px;color:#cbd5e1">Mensaje real que genera la web para el plan Negocio.</div>', sc), { left: 1090, top: 626 });
+  enter(chatNote, T0 + 3.2, { y: 12, dur: 0.8 });
+  A(chat.querySelector('.bubble'), [{ opacity: 0, transform: 'scale(0.82) translateY(14px)' }, { opacity: 1, transform: 'none' }], T0 + 1.9, 0.8, E.enter);
+  A(chat.querySelector('.tick svg'), [{ opacity: 0, transform: 'scale(0.6)' }, { opacity: 1, transform: 'none' }], T0 + 2.9, 0.5, E.enter);
+  // firma
+  const logo = pos(el(`<div class="abs">${LOGO(190).replace('id="lg"', 'id="lg2"').replace(/url\(#lg\)/g, 'url(#lg2)')}</div>`, sc), { left: 150, top: 800 });
+  drawLogo(logo, T0 + tagAt - 0.2);
+  const tag = pos(el('<div class="abs" style="font-size:32px;color:#cbd5e1;font-weight:500">Tecnología que impulsa tu negocio.</div>', sc), { left: 420, top: 862 });
+  enter(tag, T0 + tagAt + 0.3, { y: 16, dur: 0.9 });
+  if (Object.keys(NARR).length) enter(pos(el('<div class="abs" style="right:70px;bottom:48px;font-size:19px;color:rgba(203,213,225,0.7)">Narración generada con IA</div>', sc), {}), T0 + tagAt + 0.6, { y: 8, dur: 0.8 });
+  return D;
+}
+
+/* ------------------------------------------------------------------ montaje */
+let TOTAL = 0;
+function seek(t) { t = Math.max(0, Math.min(TOTAL, t)); for (const a of anims) a.currentTime = t * 1000; }
+async function loadNarration() {
+  try {
+    const r = await fetch('narration.json', { cache: 'no-store' });
+    return r.ok ? (await r.json()).lines || {} : {};
+  } catch { return {}; }
+}
+function build() {
+  let T = 0;
+  [S1, S2, S3, S4, S5, S6, S7].forEach((fn) => { const d = fn(T); T += d - 0.3; });   // 0.3 s de solape entre escenas
+  TOTAL = T + 0.3 + 0.4;
+  window.__seek = seek;
+  window.__duration = TOTAL;
+  window.__cues = cues;
+}
+
+/* Ajuste a la ventana (solo vista previa) y reproducción en tiempo real */
+const params = new URLSearchParams(location.search);
+const RENDER = params.has('render');
+const frame = document.getElementById('frame');
+function fit() {
+  if (RENDER) return;
+  const s = Math.min(innerWidth / 1920, innerHeight / 1080);
+  frame.style.transform = `scale(${s})`;
+  frame.style.left = (innerWidth - 1920 * s) / 2 + 'px';
+  frame.style.top = (innerHeight - 1080 * s) / 2 + 'px';
+}
+fit(); addEventListener('resize', fit);
+if (RENDER) document.getElementById('hint').remove();
+
+loadNarration().then((n) => { NARR = n; build(); return Promise.all([document.fonts.ready, ...[...document.images].map((i) => i.decode().catch(() => {}))]); }).then(() => {
+  seek(0);
+  window.__ready = true;
+  if (!RENDER) {
+    let playing = true, base = parseFloat(params.get('t') || '0'), t0 = performance.now();
+    const cur = () => (playing ? base + (performance.now() - t0) / 1000 : base);
+    const loop = () => {
+      let t = cur();
+      if (t > TOTAL) { base = 0; t0 = performance.now(); t = 0; }
+      seek(t);
+      requestAnimationFrame(loop);
+    };
+    requestAnimationFrame(loop);
+    addEventListener('keydown', (e) => {
+      if (e.code === 'Space') { e.preventDefault(); if (playing) { base = cur(); playing = false; } else { t0 = performance.now(); playing = true; } }
+      if (e.code === 'ArrowRight') { base = Math.min(TOTAL, cur() + 2); t0 = performance.now(); }
+      if (e.code === 'ArrowLeft') { base = Math.max(0, cur() - 2); t0 = performance.now(); }
+      if (e.key === 'r' || e.key === 'R') { base = 0; t0 = performance.now(); playing = true; }
+    });
+  }
+});
+</script>
+</body>
+</html>

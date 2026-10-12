@@ -1,0 +1,70 @@
+{
+  "_nota": "Guion de la narración. `text` es lo que se lee; `tts` es lo que se envía al sintetizador (siglas y precios dichos en palabras). Las claves siguen las escenas de index.html. narrate.mjs genera un audio por frase y escribe narration.json con sus duraciones. La voz es una sola: `voice.anchor` es el clip de referencia (voz sintética generada por VoxCPM2) y narrate.mjs lo guarda como perfil y lo usa en TODAS las frases; sin él, cada frase saldría con una voz distinta.",
+  "voice": {
+    "language": "es",
+    "design": "Voz femenina adulta, cálida y segura, tono profesional pero cercano, ritmo pausado y claro, español latinoamericano neutro.",
+    "profile_name": "Narración CDJ Digital",
+    "anchor": {
+      "file": "assets/voice/anchor.wav",
+      "text": "Así usa tu web una persona interesada, desde el primer vistazo hasta el mensaje de WhatsApp."
+    }
+  },
+  "lines": {
+    "s1": {
+      "text": "Así usa tu web una persona interesada, desde el primer vistazo hasta el mensaje de WhatsApp.",
+      "tts": "Así usa tu web una persona interesada, desde el primer vistazo hasta el mensaje de WhatsApp."
+    },
+    "s2": {
+      "text": "En este recorrido participan tres personas: la que visita la web, el equipo de CDJ que recibe el mensaje y la que mantiene la oferta.",
+      "tts": "En este recorrido participan tres personas: la que visita la web, el equipo de ce de jota que recibe el mensaje y la que mantiene la oferta."
+    },
+    "f0": {
+      "text": "Todo empieza cuando alguien busca una página web para su negocio.",
+      "tts": "Todo empieza cuando alguien busca una página web para su negocio."
+    },
+    "f1": {
+      "text": "Llega al inicio, lee la promesa y ve el precio de entrada: desde 99 soles al mes.",
+      "tts": "Llega al inicio, lee la promesa y ve el precio de entrada: desde noventa y nueve soles al mes."
+    },
+    "f2": {
+      "text": "Baja, entiende qué hacemos y los cuatro pasos para tener su web.",
+      "tts": "Baja, entiende qué hacemos y los cuatro pasos para tener su web."
+    },
+    "f3": {
+      "text": "Compara los tres planes: Inicio, Negocio y Pro.",
+      "tts": "Compara los tres planes: Inicio, Negocio y Pro."
+    },
+    "f4": {
+      "text": "Si ya sabe qué quiere, toca «Quiero este plan». Si todavía no, mira las demos, el correo y las preguntas, o escribe desde el botón de WhatsApp.",
+      "tts": "Si ya sabe qué quiere, toca «Quiero este plan». Si todavía no, mira las demos, el correo y las preguntas, o escribe desde el botón de WhatsApp."
+    },
+    "f5": {
+      "text": "Se abre WhatsApp con el mensaje ya escrito. Solo lo revisa y lo envía.",
+      "tts": "Se abre WhatsApp con el mensaje ya escrito. Solo lo revisa y lo envía."
+    },
+    "f6": {
+      "text": "Al final, CDJ recibe el mensaje y conversa con el interesado.",
+      "tts": "Al final, ce de jota recibe el mensaje y conversa con el interesado."
+    },
+    "s4": {
+      "text": "Son diez casos de uso: nueve del interesado y uno del administrador, cada uno con su paso a paso y su resultado.",
+      "tts": "Son diez casos de uso: nueve del interesado y uno del administrador, cada uno con su paso a paso y su resultado."
+    },
+    "s5": {
+      "text": "Hay otros caminos: pedir una web como una demo, contratar un correo corporativo, o resolver dudas antes de escribir.",
+      "tts": "Hay otros caminos: pedir una web como una demo, contratar un correo corporativo, o resolver dudas antes de escribir."
+    },
+    "s6": {
+      "text": "Y todo se adapta al celular.",
+      "tts": "Y todo se adapta al celular."
+    },
+    "s7a": {
+      "text": "La web no cobra ni pide datos. Todo se coordina por WhatsApp.",
+      "tts": "La web no cobra ni pide datos. Todo se coordina por WhatsApp."
+    },
+    "s7b": {
+      "text": "CDJ Digital. Tecnología que impulsa tu negocio.",
+      "tts": "Ce de jota Digital. Tecnología que impulsa tu negocio."
+    }
+  }
+}
