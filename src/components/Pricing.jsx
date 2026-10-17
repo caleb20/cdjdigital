@@ -1,145 +1,131 @@
-import { ArrowRight, Check, Crown, ExternalLink, Plus, Send, Star, Zap } from 'lucide-react'
-import { site, whatsappMessages } from '../config/site.js'
+import { useState } from 'react'
+import { Check, ExternalLink } from 'lucide-react'
+import { site } from '../config/site.js'
 import { plans } from '../data/pricing.js'
+import { PLAN_SHOT_RATIO, planShot } from '../lib/planImages.js'
 import { getWhatsAppUrl } from '../lib/whatsapp.js'
-import Reveal from './ui/Reveal.jsx'
 import SectionHeading from './ui/SectionHeading.jsx'
 
-const planIcons = { inicio: Send, negocio: Crown, pro: Zap }
-
-function PlanCard({ plan }) {
-  const Icon = planIcons[plan.id]
-  const { featured } = plan
+function PlanCard({ plan, selected }) {
   const demoUrl = site.demos[plan.id]
+  const shot = planShot(plan.id)
 
-  const card = (
+  return (
     <article
-      aria-labelledby={`plan-${plan.id}`}
-      className={`relative flex h-full flex-col p-7 sm:p-8 ${
-        featured
-          ? 'rounded-[1.4rem] bg-white lg:py-10'
-          : 'rounded-3xl border border-line bg-white shadow-card transition duration-300 hover:-translate-y-1 hover:border-brand-300 hover:shadow-card-hover'
-      }`}
+      id={`plan-${plan.id}`}
+      aria-labelledby={`plan-${plan.id}-title`}
+      className={`relative flex h-full flex-col rounded-2xl bg-papel p-3 ${
+        plan.featured ? 'ring-2 ring-asfalto' : 'ring-1 ring-linea'
+      } ${selected ? '' : 'max-md:hidden'}`}
     >
-      <div className="flex items-center gap-4">
-        <span
-          className={`inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl ${
-            featured ? 'bg-gradient-to-br from-brand-500 to-violet-brand text-white' : 'bg-brand-50 text-brand-600 ring-1 ring-brand-100'
-          }`}
-        >
-          <Icon className="h-6 w-6" aria-hidden="true" />
-        </span>
-        <h3 id={`plan-${plan.id}`} className="text-2xl font-bold text-ink-800">
-          {plan.name}
-        </h3>
-      </div>
-
-      <p className="mt-5 text-lg leading-snug font-bold text-ink-800">{plan.promise}</p>
-      <p className="mt-2 text-sm leading-relaxed text-slate-600">{plan.description}</p>
-
-      <p className="mt-6 flex items-baseline gap-1.5">
-        <span className="text-5xl font-extrabold tracking-tight text-ink-800">S/{plan.price}</span>
-        <span className="text-base font-medium text-slate-500">/ mes</span>
-      </p>
-
-      <ul className="mt-7 flex-1 space-y-2.5 border-t border-line pt-6 text-[0.92rem] text-slate-700">
-        {plan.features.map((feature, index) => {
-          const addon = feature.includes('se paga aparte')
-          const Mark = addon ? Plus : Check
-          return (
-            <li key={feature} className="flex gap-2.5">
-              <Mark
-                className={`mt-0.5 h-4 w-4 shrink-0 ${addon ? 'text-slate-400' : 'text-brand-600'}`}
-                strokeWidth={2.6}
-                aria-hidden="true"
-              />
-              <span className={index === 0 && feature.startsWith('Todo lo del') ? 'font-semibold text-ink-800' : addon ? 'text-slate-500' : ''}>
-                {feature}
-              </span>
-            </li>
-          )
-        })}
-      </ul>
-
       <a
-        href={getWhatsAppUrl(plan.whatsappMessage)}
+        href={demoUrl}
         target="_blank"
         rel="noopener noreferrer"
-        aria-label={`Quiero este plan: ${plan.name}, S/${plan.price} al mes`}
-        className={`btn mt-9 w-full ${featured ? 'btn-primary' : 'btn-outline-light'}`}
+        className="group block overflow-hidden rounded-xl ring-1 ring-linea"
       >
-        Quiero este plan
-        <ArrowRight className="h-4 w-4" aria-hidden="true" />
+        <img
+          src={shot.src}
+          srcSet={shot.srcSet}
+          sizes="(min-width: 1200px) 372px, (min-width: 768px) 31vw, 92vw"
+          width={PLAN_SHOT_RATIO.width}
+          height={PLAN_SHOT_RATIO.height}
+          alt={plan.demoShot}
+          loading="lazy"
+          decoding="async"
+          className="aspect-[16/10] w-full object-cover object-top transition-transform duration-(--dur-slow) group-hover:scale-[1.03]"
+        />
+        <span className="sr-only">Abrir la demo del plan {plan.name} (se abre en una pestaña nueva)</span>
       </a>
-      {demoUrl && (
+
+      <div className="flex flex-1 flex-col px-3 pt-5 pb-3">
+        <div className="flex items-baseline justify-between gap-3">
+          <h3 id={`plan-${plan.id}-title`} className="text-[1.3rem] font-bold">
+            {plan.name}
+          </h3>
+          {plan.badge && (
+            <span className="rounded-full bg-letrero px-3 py-1 text-sm font-semibold text-asfalto">{plan.badge}</span>
+          )}
+        </div>
+
+        <p className="mt-2 flex items-baseline gap-2">
+          <span className="display text-[3.25rem] tabular-nums">S/{plan.price}</span>
+          <span className="text-muro">al mes</span>
+        </p>
+
+        <p className="mt-4 font-semibold">{plan.promise}</p>
+        <p className="mt-1 text-[0.95rem] leading-relaxed text-muro">{plan.chooseIf}</p>
+
+        <ul className="mt-5 flex-1 space-y-2.5 border-t border-linea pt-5 text-[0.95rem]">
+          {plan.highlights.map((item) => (
+            <li key={item} className="flex gap-2.5">
+              <Check className="mt-0.5 h-4 w-4 shrink-0" strokeWidth={2.6} aria-hidden="true" />
+              {item}
+            </li>
+          ))}
+          <li className="pl-[1.6rem] text-muro">{plan.domainNote}</li>
+        </ul>
+
+        <a
+          href={getWhatsAppUrl(plan.whatsappMessage)}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={`btn mt-7 w-full ${plan.featured ? 'btn-primary' : 'btn-outline'}`}
+        >
+          Pedir el plan {plan.name}
+        </a>
         <a
           href={demoUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-2 inline-flex min-h-11 items-center justify-center gap-1.5 text-sm font-semibold text-brand-700 hover:text-brand-600"
+          className="mt-1 inline-flex min-h-11 items-center justify-center gap-1.5 text-[0.95rem] font-semibold underline decoration-asfalto/30 decoration-2 underline-offset-4 hover:decoration-asfalto"
         >
-          Ver la demo del plan {plan.name}
+          Ver la demo
           <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
-          <span className="sr-only">(se abre en una pestaña nueva)</span>
+          <span className="sr-only">del plan {plan.name} (se abre en una pestaña nueva)</span>
         </a>
-      )}
+      </div>
     </article>
-  )
-
-  if (!featured) return card
-
-  // Plan destacado: borde en degradado + glow
-  return (
-    <div className="relative rounded-3xl bg-gradient-to-br from-brand-500 to-violet-brand p-[2px] shadow-glow lg:-my-5">
-      <span className="absolute -top-3.5 left-1/2 z-10 inline-flex -translate-x-1/2 items-center gap-1.5 rounded-full bg-gradient-to-r from-brand-500 to-violet-brand px-4 py-1.5 text-[0.7rem] font-bold tracking-[0.12em] whitespace-nowrap text-white shadow-lg">
-        <Star className="h-3 w-3 fill-current" aria-hidden="true" />
-        {plan.badge}
-      </span>
-      {card}
-    </div>
   )
 }
 
+/**
+ * ¿Cuánto cuesta? Los tres planes con la misma cafetería real (Kopa Caffe) hecha en cada uno.
+ * En celular se ve una tarjeta a la vez, elegida con el selector; desde tablet, las tres.
+ */
 export default function Pricing() {
+  const [selectedId, setSelectedId] = useState(plans.find((plan) => plan.featured)?.id ?? plans[0].id)
+
   return (
-    <section id="planes" aria-labelledby="planes-title" className="relative section-y bg-white">
+    <section id="planes" aria-labelledby="planes-title" className="section-y border-t border-linea">
       <div className="container-x">
         <SectionHeading
           id="planes-title"
-          align="center"
-          eyebrow="Planes"
-          title="Planes simples y sin complicaciones"
-          description="Elige el plan que mejor se adapte a tu negocio."
+          title="¿Cuánto cuesta?"
+          description="Kopa Caffe, una cafetería de Pachacamac, hecha en los tres planes. Entra a cada demo y compara."
         />
 
-        <div className="mx-auto mt-14 grid grid-cols-1 max-w-xl gap-6 lg:mt-16 lg:max-w-none lg:grid-cols-3 lg:items-stretch lg:gap-7">
-          {plans.map((plan, index) => (
-            <Reveal key={plan.id} delay={index * 100} className="h-full">
-              <PlanCard plan={plan} />
-            </Reveal>
+        <div role="group" aria-label="Ver plan" className="mt-8 grid grid-cols-3 rounded-full bg-papel p-1 ring-1 ring-linea md:hidden">
+          {plans.map((plan) => (
+            <button
+              key={plan.id}
+              type="button"
+              aria-pressed={selectedId === plan.id}
+              aria-controls={`plan-${plan.id}`}
+              onClick={() => setSelectedId(plan.id)}
+              className="min-h-11 rounded-full text-[0.95rem] font-semibold transition-colors duration-(--dur-quick) aria-pressed:bg-asfalto aria-pressed:text-white"
+            >
+              {plan.name}
+              <span className="block text-xs font-normal opacity-80">S/{plan.price}</span>
+            </button>
           ))}
         </div>
 
-        <Reveal className="mx-auto mt-14 max-w-3xl text-center">
-          <p className="text-xl font-semibold text-ink-800">¿Necesitas una funcionalidad especial?</p>
-          <p className="mt-1.5 text-slate-600">Podemos desarrollar soluciones a medida.</p>
-          <a
-            href={getWhatsAppUrl(whatsappMessages.project)}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn btn-outline-light mt-6"
-          >
-            Consultar proyecto
-            <ArrowRight className="h-4 w-4" aria-hidden="true" />
-          </a>
-          <p className="mx-auto mt-6 max-w-xl text-sm leading-relaxed text-slate-500">
-            Cada plan incluye una cantidad de cambios de contenido al mes. Nuevas funcionalidades o
-            sistemas personalizados se cotizan por separado.{' '}
-            <a href="#detalle" className="font-semibold text-brand-700 underline underline-offset-2 hover:text-brand-600">
-              Ver qué incluye cada plan
-            </a>
-          </p>
-        </Reveal>
+        <div className="mt-4 grid grid-cols-1 gap-5 md:mt-12 md:grid-cols-3 lg:gap-6">
+          {plans.map((plan) => (
+            <PlanCard key={plan.id} plan={plan} selected={selectedId === plan.id} />
+          ))}
+        </div>
       </div>
     </section>
   )

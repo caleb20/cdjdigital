@@ -20,7 +20,7 @@ export const faqs = [
   {
     question: '¿Puedo cambiar los productos o precios?',
     answer:
-      `Sí. Cada plan incluye cambios de contenido al mes (${changesByPlan}): textos, precios, horarios, fotos y enlaces. Páginas nuevas, rediseños o funciones nuevas se cotizan aparte. El detalle está en «¿Qué es un cambio menor?».`,
+      `Sí. Cada plan incluye cambios de contenido al mes (${changesByPlan}): textos, precios, horarios, fotos y enlaces. Páginas nuevas, rediseños o funciones nuevas se cotizan aparte. El detalle está en «¿Qué cuenta como un cambio?», en la sección «¿Qué incluye?».`,
   },
   {
     question: '¿Incluyen correo corporativo?',

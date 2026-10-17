@@ -5,12 +5,12 @@ import { useId } from 'react'
  *  · «C» abierta cuyo trazo baja y gira en diagonal hacia la «D» (efecto de lazo entrelazado),
  *  · «D» abierta por la izquierda, «J» con barra superior,
  *  · «DIGITAL» en mayúsculas muy espaciadas, centrado debajo.
- * `tone="light"` = trazo blanco/plata (fondos oscuros) · `tone="dark"` = trazo azul marino (fondos claros).
+ * `tone="dark"` = trazo Asfalto (fondos claros, el uso normal) · `tone="light"` = trazo blanco (el cierre oscuro).
  * Es un SVG: se ve nítido a cualquier tamaño. Se dimensiona con `className` (por defecto, alto de 2.5rem).
  */
-export default function Logo({ tone = 'light', className = '' }) {
+export default function Logo({ tone = 'dark', className = '' }) {
   const gradientId = useId()
-  const [from, to] = tone === 'light' ? ['#ffffff', '#c7cde6'] : ['#0f1a46', '#2a3585']
+  const [from, to] = tone === 'light' ? ['#ffffff', '#e9eae6'] : ['#1d2226', '#3b434a']
 
   return (
     <svg

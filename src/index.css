@@ -3,36 +3,24 @@
 /* ------------------------------------------------------------------ */
 /*  Tokens de diseño                                                   */
 /* ------------------------------------------------------------------ */
+/*
+ * Concepto: «la ciudad gris, los negocios a color». La web es un fondo neutro (el gris del
+ * cielo de Lima) y el color lo ponen los negocios. El amarillo Letrero es solo para acciones.
+ */
 @theme {
-  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto,
-    'Helvetica Neue', Arial, sans-serif;
+  /* Archivo (Omnibus-Type): un eje de ancho para titulares condensados tipo rótulo y texto normal */
+  --font-sans: 'Archivo Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Arial,
+    sans-serif;
 
-  /* Fondos oscuros (navy casi negro) */
-  --color-ink-950: #050816;
-  --color-ink-900: #080d1f;
-  --color-ink-800: #0f172a;
-  --color-ink-700: #172036;
-
-  /* Azul eléctrico (acción principal) */
-  --color-brand-50: #eef1ff;
-  --color-brand-100: #e1e6ff;
-  --color-brand-200: #c8d1ff;
-  --color-brand-300: #a5b2ff;
-  --color-brand-400: #7a8aff;
-  --color-brand-500: #4c5cff;
-  --color-brand-600: #3b49e8;
-  --color-brand-700: #2f3bc4;
-
-  /* Violeta (secundario) */
-  --color-violet-brand: #7c3aed;
-
-  /* Superficies claras */
-  --color-mist: #f5f7ff;
-  --color-line: #e2e7f5;
-
-  --shadow-card: 0 1px 2px rgb(15 23 42 / 0.04), 0 8px 24px -12px rgb(15 23 42 / 0.12);
-  --shadow-card-hover: 0 1px 2px rgb(15 23 42 / 0.04), 0 18px 40px -16px rgb(76 92 255 / 0.35);
-  --shadow-glow: 0 0 0 1px rgb(76 92 255 / 0.3), 0 24px 64px -20px rgb(76 92 255 / 0.55);
+  --color-neblina: #e9eae6; /* fondo de página */
+  --color-papel: #ffffff; /* tarjetas, tabla, marcos */
+  --color-asfalto: #1d2226; /* texto principal y franja de cierre */
+  --color-asfalto-suave: #2a3036; /* superficies sobre el cierre */
+  --color-muro: #5a6168; /* texto secundario sobre claro (6.3:1 en papel, 5.2:1 en neblina) */
+  --color-ceniza: #aeb4ba; /* texto secundario sobre asfalto (7.5:1) */
+  --color-linea: #d4d6d0; /* filetes y bordes */
+  --color-letrero: #ffc629; /* solo botones de acción; texto asfalto encima (10.5:1) */
+  --color-letrero-hondo: #f5b700; /* hover */
 
   /*
    * Identidad de movimiento (Corporate): una curva firma para casi todo, una de entrada con
@@ -46,46 +34,6 @@
   --dur-quick: 150ms;
   --dur-standard: 300ms;
   --dur-slow: 600ms;
-
-  --animate-float: float 7s ease-in-out infinite;
-  --animate-float-slow: float 9s ease-in-out infinite;
-  --animate-breathe: breathe 14s ease-in-out infinite;
-  --animate-breathe-slow: breathe 18s ease-in-out -6s infinite;
-  --animate-ping-soft: ping-soft 7s cubic-bezier(0, 0, 0.2, 1) infinite;
-
-  @keyframes float {
-    0%,
-    100% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-8px);
-    }
-  }
-  /* Capa ambiental: el fondo "respira" con una onda seno, sin competir con el contenido */
-  @keyframes breathe {
-    0%,
-    100% {
-      transform: scale(1);
-      opacity: 0.7;
-    }
-    50% {
-      transform: scale(1.1);
-      opacity: 1;
-    }
-  }
-  /* Un pulso de ~1.4 s y luego reposo: llama la atención sin insistir */
-  @keyframes ping-soft {
-    0% {
-      transform: scale(1);
-      opacity: 0.45;
-    }
-    20%,
-    100% {
-      transform: scale(1.55);
-      opacity: 0;
-    }
-  }
 }
 
 /* ------------------------------------------------------------------ */
@@ -94,12 +42,13 @@
 @layer base {
   html {
     scroll-behavior: smooth;
-    scroll-padding-top: 4.5rem;
+    scroll-padding-top: 5rem;
     -webkit-text-size-adjust: 100%;
   }
 
   body {
-    @apply bg-ink-950 font-sans text-slate-300 antialiased;
+    @apply bg-neblina font-sans text-asfalto antialiased;
+    font-stretch: 100%;
     overflow-x: hidden;
   }
 
@@ -109,13 +58,17 @@
     text-wrap: balance;
   }
 
+  p {
+    text-wrap: pretty;
+  }
+
   ::selection {
-    background: rgb(76 92 255 / 0.35);
-    color: #fff;
+    background: var(--color-letrero);
+    color: var(--color-asfalto);
   }
 
   :focus-visible {
-    outline: 2px solid #6b7bff;
+    outline: 2px solid var(--color-asfalto);
     outline-offset: 3px;
     border-radius: 0.375rem;
   }
@@ -126,125 +79,68 @@
 /* ------------------------------------------------------------------ */
 @layer components {
   .container-x {
-    @apply mx-auto w-full max-w-[75rem] px-5 sm:px-8;
+    @apply mx-auto w-full max-w-[75rem] px-4 sm:px-8;
   }
 
   .section-y {
     @apply py-16 sm:py-20 lg:py-24;
   }
 
-  /* Contenedor para unidades cqw dentro de los mockups */
+  /* Titulares tipo rótulo: Archivo condensada y pesada */
+  .display {
+    font-stretch: 72%;
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -0.01em;
+  }
+
+  /* Contenedor para unidades cqw dentro de la vista previa del hero */
   .cq {
     container-type: inline-size;
   }
 
   .btn {
-    @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-6 py-3 text-center text-[0.95rem] leading-snug font-semibold transition duration-(--dur-quick) ease-signature hover:scale-[1.02] active:scale-[0.97];
+    @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-6 py-3 text-center text-base leading-snug font-semibold transition duration-(--dur-quick) active:scale-[0.97];
   }
 
   .btn-primary {
-    @apply text-white hover:brightness-110;
-    background-image: linear-gradient(135deg, #4c5cff 0%, #6a45f0 62%, #7c3aed 100%);
-    box-shadow:
-      0 0 0 1px rgb(255 255 255 / 0.12) inset,
-      0 12px 32px -12px rgb(76 92 255 / 0.8);
+    @apply bg-letrero text-asfalto hover:bg-letrero-hondo;
   }
 
-  .btn-ghost-dark {
-    @apply border border-white/20 bg-white/[0.04] text-white backdrop-blur hover:border-white/40 hover:bg-white/10;
+  .btn-outline {
+    @apply border border-asfalto/25 bg-papel text-asfalto hover:border-asfalto;
   }
 
-  .btn-outline-light {
-    @apply border border-slate-300 bg-white text-ink-800 hover:border-brand-500 hover:text-brand-600;
+  .btn-on-dark {
+    @apply border border-white/25 text-white hover:border-white;
   }
 
-  .text-gradient {
-    background-image: linear-gradient(90deg, #6c7bff 0%, #a78bfa 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-  }
-
-  .text-gradient-light {
-    background-image: linear-gradient(90deg, #3b49e8 0%, #7c3aed 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-  }
-
-  /* Cuadrícula tecnológica muy sutil para fondos oscuros */
-  .bg-grid {
-    background-image:
-      linear-gradient(to right, rgb(255 255 255 / 0.045) 1px, transparent 1px),
-      linear-gradient(to bottom, rgb(255 255 255 / 0.045) 1px, transparent 1px);
-    background-size: 56px 56px;
-    mask-image: radial-gradient(ellipse 70% 60% at 60% 30%, #000 30%, transparent 78%);
+  .link {
+    @apply font-semibold text-asfalto underline decoration-asfalto/30 decoration-2 underline-offset-4 transition-colors hover:decoration-asfalto;
   }
 }
 
 /* ------------------------------------------------------------------ */
-/*  Animaciones de entrada                                             */
+/*  Vista previa del hero                                              */
 /* ------------------------------------------------------------------ */
-/* La opacidad llega rápido y el desplazamiento se asienta despacio: se siente ágil y suave */
-.reveal {
-  opacity: 0;
-  transform: translateY(20px);
-  transition:
-    opacity var(--dur-standard) var(--ease-signature) var(--d, 0ms),
-    transform var(--dur-slow) var(--ease-enter) var(--d, 0ms);
-}
-.reveal.is-visible {
-  opacity: 1;
-  transform: none;
-}
-
-/* Hero: entra al cargar (sin depender del scroll) */
-@keyframes rise-in {
+/* El único momento con movimiento: al cambiar de rubro la pantalla cambia de golpe de color
+   y el contenido se asienta (entra desacelerando). Se reinicia con `key` en React. */
+@keyframes preview-in {
   from {
     opacity: 0;
-    transform: translateY(14px);
+    transform: translateY(6px);
   }
   to {
     opacity: 1;
     transform: none;
   }
 }
-.hero-in {
-  animation: rise-in 0.65s var(--ease-enter) both;
-  animation-delay: var(--d, 0ms);
-}
-
-/* Capa secundaria del hero (chips): llegan después del mockup, con un pequeño "pop" */
-@keyframes pop-in {
-  from {
-    opacity: 0;
-    transform: translateY(10px) scale(0.92);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-.pop-in {
-  animation: pop-in 0.5s var(--ease-enter) both;
-  animation-delay: var(--d, 0ms);
-}
-
-/* Solo desplazamiento (sin opacidad): el texto principal (LCP) se pinta de inmediato */
-@keyframes slide-in {
-  from {
-    transform: translateY(10px);
-  }
-  to {
-    transform: none;
-  }
-}
-.hero-slide {
-  animation: slide-in 0.5s var(--ease-enter) both;
+.preview-in {
+  animation: preview-in var(--dur-standard) var(--ease-enter) both;
 }
 
 /* ------------------------------------------------------------------ */
-/*  Accordion (FAQ)                                                    */
+/*  Accordion (preguntas y explicaciones de la tabla)                  */
 /* ------------------------------------------------------------------ */
 /* Abrir es más lento que cerrar; el texto aparece un instante después de que se abra el hueco */
 .accordion-panel {
@@ -294,20 +190,23 @@
     transform var(--dur-standard) var(--ease-enter),
     visibility 0s;
 }
-/* Cascada corta de enlaces (30 ms entre cada uno). Al cerrar se reinician solo cuando el panel ya se ocultó */
-.menu-panel li {
-  opacity: 0;
-  transform: translateY(6px);
+
+/* ------------------------------------------------------------------ */
+/*  Barra fija de WhatsApp (celular)                                   */
+/* ------------------------------------------------------------------ */
+.mobile-cta {
+  transform: translateY(110%);
+  visibility: hidden;
   transition:
-    opacity 0s linear 0.16s,
-    transform 0s linear 0.16s;
+    transform 0.16s var(--ease-exit),
+    visibility 0s linear 0.16s;
 }
-.menu-panel[data-open='true'] li {
-  opacity: 1;
+.mobile-cta[data-visible='true'] {
   transform: none;
+  visibility: visible;
   transition:
-    opacity var(--dur-standard) var(--ease-enter) calc(60ms + var(--i, 0) * 30ms),
-    transform var(--dur-standard) var(--ease-enter) calc(60ms + var(--i, 0) * 30ms);
+    transform var(--dur-standard) var(--ease-enter),
+    visibility 0s;
 }
 
 /* ------------------------------------------------------------------ */
@@ -325,10 +224,6 @@
     animation-delay: 0ms !important;
     transition-duration: 0.001ms !important;
     transition-delay: 0ms !important;
-  }
-  .reveal {
-    opacity: 1;
-    transform: none;
   }
 }
 

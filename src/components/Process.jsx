@@ -1,64 +1,29 @@
-import { ChevronRight, Laptop, MessageCircle, Rocket, SlidersHorizontal } from 'lucide-react'
-import Reveal from './ui/Reveal.jsx'
 import SectionHeading from './ui/SectionHeading.jsx'
 
+/** Es una secuencia de verdad: por eso, y solo aquí, los pasos van numerados. */
 const steps = [
-  {
-    number: '01',
-    Icon: MessageCircle,
-    title: 'Cuéntanos sobre tu negocio',
-    text: 'Nos cuentas qué haces, qué vendes y qué necesitas.',
-  },
-  {
-    number: '02',
-    Icon: Laptop,
-    title: 'Diseñamos tu web',
-    text: 'Construimos una página alineada a tu negocio.',
-  },
-  {
-    number: '03',
-    Icon: SlidersHorizontal,
-    title: 'Revisamos juntos',
-    text: 'Realizamos ajustes de contenido y detalles.',
-  },
-  {
-    number: '04',
-    Icon: Rocket,
-    title: 'Publicamos',
-    text: 'Tu página queda online y lista para recibir visitas.',
-  },
+  { title: 'Nos cuentas de tu negocio', text: 'Por WhatsApp: qué haces, qué vendes y qué necesitas.' },
+  { title: 'Diseñamos tu web', text: 'La armamos con tu marca, tus fotos y tus datos.' },
+  { title: 'Revisamos juntos', text: 'Ajustamos textos y detalles hasta que te guste.' },
+  { title: 'Publicamos', text: 'Tu web queda en línea, lista para recibir clientes.' },
 ]
 
 export default function Process() {
   return (
-    <section id="proceso" aria-labelledby="proceso-title" className="section-y bg-mist">
+    <section id="proceso" aria-labelledby="proceso-title" className="section-y border-t border-linea">
       <div className="container-x">
-        <SectionHeading id="proceso-title" eyebrow="Cómo funciona" title="Tu web en 4 pasos" />
+        <SectionHeading id="proceso-title" title="¿Cómo trabajamos?" />
 
-        <ol className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
-          {steps.map(({ number, Icon, title, text }, index) => (
-            <Reveal as="li" key={number} delay={index * 90} className="relative">
-              <div className="group h-full rounded-2xl border border-line bg-white p-6 shadow-card transition duration-300 hover:-translate-y-1 hover:border-brand-300 hover:shadow-card-hover">
-                <div className="flex items-start justify-between">
-                  <span className="text-gradient-light text-6xl leading-none font-extrabold tracking-tighter">
-                    {number}
-                  </span>
-                  <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-brand-50 text-brand-600 ring-1 ring-brand-100">
-                    <Icon className="h-5 w-5" aria-hidden="true" />
-                  </span>
-                </div>
-                <h3 className="mt-6 text-lg font-semibold text-ink-800">{title}</h3>
-                <p className="mt-2 text-[0.95rem] leading-relaxed text-slate-600">{text}</p>
-              </div>
-              {index < steps.length - 1 && (
-                <span
-                  aria-hidden="true"
-                  className="absolute top-1/2 -right-[1.05rem] z-10 hidden h-7 w-7 -translate-y-1/2 items-center justify-center rounded-full border border-line bg-white text-brand-500 shadow-sm lg:inline-flex"
-                >
-                  <ChevronRight className="h-4 w-4" />
-                </span>
-              )}
-            </Reveal>
+        <ol className="mt-10 grid grid-cols-1 gap-x-6 sm:grid-cols-2 lg:mt-14 lg:grid-cols-4">
+          {steps.map((step, index) => (
+            <li
+              key={step.title}
+              className="relative border-l-2 border-asfalto pb-8 pl-5 last:pb-0 sm:pb-10 lg:border-t-2 lg:border-l-0 lg:pt-5 lg:pb-0 lg:pl-0"
+            >
+              <span className="display block text-[3rem] tabular-nums lg:text-[3.5rem]">{index + 1}</span>
+              <h3 className="mt-3 text-lg font-semibold">{step.title}</h3>
+              <p className="mt-1 max-w-[30ch] leading-relaxed text-muro">{step.text}</p>
+            </li>
           ))}
         </ol>
       </div>

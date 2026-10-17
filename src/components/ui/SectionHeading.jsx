@@ -1,46 +1,21 @@
-import Reveal from './Reveal.jsx'
-
-/** Encabezado de sección: etiqueta + título + descripción. `tone` según el fondo de la sección. */
-export default function SectionHeading({
-  id,
-  eyebrow,
-  title,
-  description,
-  align = 'left',
-  tone = 'light',
-  className = '',
-}) {
+/**
+ * Encabezado de sección: el título es la pregunta que se hace el dueño del negocio
+ * («¿Cuánto cuesta?») y la descripción la responde en una línea. `tone` según el fondo.
+ */
+export default function SectionHeading({ id, title, description, tone = 'light', className = '', children }) {
   const dark = tone === 'dark'
-  const center = align === 'center'
 
   return (
-    <Reveal className={`${center ? 'mx-auto text-center' : ''} max-w-2xl ${className}`}>
-      {eyebrow && (
-        <p
-          className={`mb-3 text-xs font-semibold tracking-[0.16em] uppercase ${
-            dark ? 'text-brand-300' : 'text-brand-600'
-          }`}
-        >
-          {eyebrow}
-        </p>
-      )}
-      <h2
-        id={id}
-        className={`text-[1.875rem] leading-[1.12] font-bold tracking-tight sm:text-4xl lg:text-[2.6rem] ${
-          dark ? 'text-white' : 'text-ink-800'
-        }`}
-      >
+    <div className={`max-w-[40rem] ${className}`}>
+      <h2 id={id} className={`display text-[2.5rem] sm:text-[3rem] lg:text-[3.5rem] ${dark ? 'text-white' : ''}`}>
         {title}
       </h2>
       {description && (
-        <p
-          className={`mt-4 text-base leading-relaxed sm:text-lg ${
-            dark ? 'text-slate-400' : 'text-slate-600'
-          }`}
-        >
+        <p className={`mt-4 text-[1.05rem] leading-relaxed sm:text-lg ${dark ? 'text-ceniza' : 'text-muro'}`}>
           {description}
         </p>
       )}
-    </Reveal>
+      {children}
+    </div>
   )
 }

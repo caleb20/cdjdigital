@@ -1,114 +1,82 @@
 import { Mail, MapPin } from 'lucide-react'
-import { site, whatsappMessages } from '../config/site.js'
+import { isPlaceholder, site, whatsappMessages } from '../config/site.js'
 import { getWhatsAppUrl } from '../lib/whatsapp.js'
+import { navLinks } from './Header.jsx'
 import { FacebookIcon, InstagramIcon, TikTokIcon, WhatsAppIcon } from './ui/BrandIcons.jsx'
 import Logo from './ui/Logo.jsx'
 
-const company = [
-  { label: 'Inicio', href: '#inicio' },
-  { label: 'Planes', href: '#planes' },
-  { label: 'Demos', href: '#demos' },
-  { label: 'FAQ', href: '#faq' },
-]
-
-const services = [
-  { label: 'Diseño web', href: '#servicios' },
-  { label: 'Landing pages', href: '#planes' },
-  { label: 'SEO básico', href: '#seo' },
-  { label: 'Mantenimiento', href: '#incluye' },
-  { label: 'Correo corporativo', href: '#correo' },
-]
-
+// Las redes solo aparecen cuando tienen un perfil real (no un placeholder de site.js).
 const socials = [
   { label: 'Facebook', href: site.social.facebook, Icon: FacebookIcon },
   { label: 'Instagram', href: site.social.instagram, Icon: InstagramIcon },
   { label: 'TikTok', href: site.social.tiktok, Icon: TikTokIcon },
-]
+].filter(({ href }) => href && !isPlaceholder(href))
 
-const linkClass = 'inline-block py-2 text-sm text-slate-400 transition-colors hover:text-white'
+const linkClass = 'inline-flex min-h-10 items-center gap-2 text-ceniza transition-colors hover:text-white'
 
-function FooterColumn({ title, children }) {
-  return (
-    <div>
-      <h3 className="text-sm font-semibold text-white">{title}</h3>
-      <ul className="mt-3 space-y-0.5">{children}</ul>
-    </div>
-  )
-}
-
+/** Sigue la franja oscura del cierre; en celular deja espacio para la barra fija de WhatsApp. */
 export default function Footer() {
   return (
-    <footer className="border-t border-white/10 bg-ink-950 pt-14 pb-28 sm:pb-10">
+    <footer className="border-t border-white/10 bg-asfalto pt-12 pb-28 text-white lg:pb-12">
       <div className="container-x">
-        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1.2fr]">
-          <div>
-            <a href="#inicio" aria-label="CDJ Digital — ir al inicio" className="inline-block rounded-md">
-              <Logo />
+        <div className="grid grid-cols-2 gap-x-6 gap-y-10 lg:grid-cols-[1.4fr_1fr_1.2fr]">
+          <div className="col-span-2 lg:col-span-1">
+            <a href="#inicio" aria-label="CDJ Digital, ir al inicio" className="inline-block rounded-md">
+              <Logo tone="light" className="h-9" />
             </a>
-            <p className="mt-4 max-w-xs text-sm leading-relaxed text-slate-400">{site.tagline}</p>
-            <ul className="mt-6 flex gap-3">
-              {socials.map(({ label, href, Icon }) => (
-                <li key={label}>
-                  <a
-                    href={href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={label}
-                    className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/12 bg-white/[0.04] text-slate-300 transition duration-200 hover:scale-105 hover:border-brand-400/50 hover:bg-white/10 hover:text-white"
-                  >
-                    <Icon className="h-[1.15rem] w-[1.15rem]" />
+            <p className="mt-4 max-w-xs text-ceniza">{site.tagline}</p>
+            {socials.length > 0 && (
+              <ul className="mt-5 flex gap-3">
+                {socials.map(({ label, href, Icon }) => (
+                  <li key={label}>
+                    <a
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={label}
+                      className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/20 text-ceniza transition-colors hover:border-white hover:text-white"
+                    >
+                      <Icon className="h-5 w-5" />
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+
+          <nav aria-label="Pie de página" className="col-span-2 lg:col-span-1">
+            <ul className="grid grid-cols-2 gap-x-6 lg:grid-cols-1">
+              {navLinks.map((link) => (
+                <li key={link.href}>
+                  <a href={link.href} className={linkClass}>
+                    {link.label}
                   </a>
                 </li>
               ))}
             </ul>
-          </div>
+          </nav>
 
-          <FooterColumn title="Empresa">
-            {company.map((link) => (
-              <li key={link.label}>
-                <a href={link.href} className={linkClass}>
-                  {link.label}
-                </a>
-              </li>
-            ))}
-          </FooterColumn>
-
-          <FooterColumn title="Servicios">
-            {services.map((link) => (
-              <li key={link.label}>
-                <a href={link.href} className={linkClass}>
-                  {link.label}
-                </a>
-              </li>
-            ))}
-          </FooterColumn>
-
-          <FooterColumn title="Contacto">
+          <ul className="col-span-2 lg:col-span-1">
             <li>
-              <a
-                href={getWhatsAppUrl(whatsappMessages.general)}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`${linkClass} inline-flex items-center gap-2`}
-              >
-                <WhatsAppIcon className="h-4 w-4" />
+              <a href={getWhatsAppUrl(whatsappMessages.general)} target="_blank" rel="noopener noreferrer" className={linkClass}>
+                <WhatsAppIcon className="h-4 w-4 shrink-0" />
                 WhatsApp
               </a>
             </li>
             <li>
-              <a href={`mailto:${site.email}`} className={`${linkClass} inline-flex items-center gap-2 break-all`}>
+              <a href={`mailto:${site.email}`} className={`${linkClass} break-all`}>
                 <Mail className="h-4 w-4 shrink-0" aria-hidden="true" />
                 {site.email}
               </a>
             </li>
-            <li className="inline-flex items-center gap-2 text-sm text-slate-400">
+            <li className="inline-flex min-h-10 items-center gap-2 text-ceniza">
               <MapPin className="h-4 w-4 shrink-0" aria-hidden="true" />
               {site.city}, {site.country}
             </li>
-          </FooterColumn>
+          </ul>
         </div>
 
-        <p className="mt-12 border-t border-white/10 pt-6 text-sm text-slate-400">
+        <p className="mt-10 border-t border-white/10 pt-6 text-sm text-ceniza">
           © {site.year} {site.name}. Todos los derechos reservados.
         </p>
       </div>

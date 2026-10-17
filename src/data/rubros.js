@@ -1,0 +1,81 @@
+/**
+ * Rubros de la vista previa del hero. Son ejemplos de diseño (no clientes): el nombre que se ve
+ * es el que escribe el visitante o, si no escribe nada, un nombre de ejemplo (`sampleName`).
+ * `noun` arma el mensaje de WhatsApp: «Hola, tengo una barbería, …».
+ */
+export const rubros = [
+  {
+    id: 'cafeteria',
+    label: 'Cafetería',
+    noun: 'una cafetería',
+    sampleName: 'Café Aurora',
+    icon: 'Coffee',
+    kicker: 'Cafetería en Lima',
+    headline: 'Café de especialidad y algo rico para acompañar.',
+    cta: 'Ver la carta',
+    tags: ['Carta', 'Local', 'Delivery'],
+    colors: { bg: '#241a14', bg2: '#3d2b20', accent: '#e0b07a', text: '#f6ece0', muted: '#c9b8a6', onAccent: '#241a14' },
+  },
+  {
+    id: 'barberia',
+    label: 'Barbería',
+    noun: 'una barbería',
+    sampleName: 'Barbería Don Lucho',
+    icon: 'Scissors',
+    kicker: 'Barbería en Lima',
+    headline: 'Cortes con estilo, sin esperar.',
+    cta: 'Reservar',
+    tags: ['Cortes', 'Barba', 'Reservas'],
+    colors: { bg: '#14110f', bg2: '#2a211a', accent: '#d9a441', text: '#f7efe2', muted: '#bfb2a0', onAccent: '#1a1208' },
+  },
+  {
+    id: 'pizzeria',
+    label: 'Pizzería',
+    noun: 'una pizzería',
+    sampleName: 'Pizzería Nonna',
+    icon: 'Pizza',
+    kicker: 'Pizzería en Lima',
+    headline: 'Pizza artesanal, recién salida del horno.',
+    cta: 'Pedir ahora',
+    tags: ['Pizzas', 'Pastas', 'Delivery'],
+    colors: { bg: '#3a0d0a', bg2: '#6b1710', accent: '#ffc857', text: '#fff4e6', muted: '#f0c9b8', onAccent: '#3a0d0a' },
+  },
+  {
+    id: 'gimnasio',
+    label: 'Gimnasio',
+    noun: 'un gimnasio',
+    sampleName: 'Gimnasio Fuerza',
+    icon: 'Dumbbell',
+    kicker: 'Gimnasio en Lima',
+    headline: 'Entrena sin excusas.',
+    cta: 'Probar clase',
+    tags: ['Clases', 'Planes', 'Horarios'],
+    colors: { bg: '#0b0f14', bg2: '#16202c', accent: '#ff6b2c', text: '#f3f6fa', muted: '#a9b4c2', onAccent: '#1a0b02' },
+  },
+  {
+    id: 'belleza',
+    label: 'Belleza',
+    noun: 'un estudio de belleza',
+    sampleName: 'Studio Bella',
+    icon: 'Sparkles',
+    kicker: 'Belleza y spa en Lima',
+    headline: 'Realza tu belleza.',
+    cta: 'Agendar cita',
+    tags: ['Servicios', 'Galería', 'Citas'],
+    colors: { bg: '#fbe9ee', bg2: '#f4c9d6', accent: '#a8325a', text: '#3b1625', muted: '#7a4a5c', onAccent: '#ffffff' },
+  },
+  {
+    id: 'hogar',
+    label: 'Hogar',
+    noun: 'un servicio para el hogar',
+    sampleName: 'Maestro Fix',
+    icon: 'Wrench',
+    kicker: 'Reparaciones en Lima',
+    headline: 'Arreglamos tu casa, rápido y bien.',
+    cta: 'Cotizar',
+    tags: ['Gasfitería', 'Electricidad', 'Pintura'],
+    colors: { bg: '#0d2240', bg2: '#17406f', accent: '#ffd23f', text: '#f2f7ff', muted: '#a8bdd4', onAccent: '#0d2240' },
+  },
+]
+
+export const defaultRubro = rubros[1]

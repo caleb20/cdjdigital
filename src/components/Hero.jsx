@@ -1,85 +1,84 @@
-import { ArrowRight, BadgeCheck, Play } from 'lucide-react'
-import { site, whatsappMessages } from '../config/site.js'
-import { getWhatsAppUrl } from '../lib/whatsapp.js'
-import DeviceShowcase from './mockups/DeviceShowcase.jsx'
+import { rubros } from '../data/rubros.js'
+import BusinessPreview from './mockups/BusinessPreview.jsx'
 import { WhatsAppIcon } from './ui/BrandIcons.jsx'
 
-const trust = [site.startingPrice, 'Sin complicaciones', 'Soporte incluido']
+/**
+ * Hero: el visitante escribe el nombre de su negocio, elige el rubro y ve su web en un celular.
+ * Lo que escribe viaja al mensaje de WhatsApp. En celular la vista previa va ARRIBA del campo,
+ * para que el teclado no la tape mientras escribe.
+ */
+export default function Hero({ business, details, onChange }) {
+  const { rubro, displayName, message, whatsappUrl } = details
 
-export default function Hero() {
   return (
-    <section
-      id="inicio"
-      aria-labelledby="hero-title"
-      className="relative isolate overflow-hidden bg-ink-950 pt-28 pb-16 sm:pt-32 lg:pt-36 lg:pb-24"
-    >
-      {/* Fondo: glows azul/violeta + cuadrícula sutil */}
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute -top-40 right-[-10%] h-[34rem] w-[34rem] rounded-full bg-brand-500/25 blur-[120px] md:animate-breathe" />
-        <div className="absolute right-[-15%] bottom-[-12rem] h-[30rem] w-[30rem] rounded-full bg-violet-brand/25 blur-[130px] md:animate-breathe-slow" />
-        <div className="absolute top-1/3 -left-40 h-[22rem] w-[22rem] rounded-full bg-brand-600/15 blur-[120px]" />
-        <div className="bg-grid absolute inset-0" />
-      </div>
-
-      <div className="container-x grid grid-cols-1 items-center gap-14 lg:grid-cols-[1fr_1.08fr] lg:gap-10 xl:gap-16">
-        <div>
-          <p
-            className="hero-slide inline-flex items-center gap-2 rounded-full border border-brand-400/25 bg-brand-500/10 px-3.5 py-1.5 text-[0.65rem] font-semibold tracking-[0.1em] text-brand-200 min-[380px]:text-[0.7rem] min-[380px]:tracking-[0.14em] sm:text-xs"
-          >
-            <span className="h-1.5 w-1.5 rounded-full bg-brand-400" aria-hidden="true" />
-            DESARROLLO WEB PARA NEGOCIOS
-          </p>
-
-          <h1
-            id="hero-title"
-            className="hero-slide mt-6 text-[2.25rem] leading-[1.05] font-extrabold tracking-tight text-white min-[380px]:text-[2.5rem] sm:text-[3.4rem] lg:text-[3.5rem] xl:text-[4rem]"
-          >
-            Tu negocio merece una web <span className="text-gradient">profesional.</span>
+    <section id="inicio" aria-labelledby="hero-title" className="pt-24 pb-16 sm:pt-28 lg:pt-32 lg:pb-24">
+      <div className="container-x grid grid-cols-1 gap-x-14 gap-y-6 sm:gap-y-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] lg:gap-y-10">
+        <div className="lg:col-start-1 lg:row-start-1 lg:self-end">
+          <h1 id="hero-title" className="display text-[2.75rem] sm:text-6xl lg:text-[4.5rem]">
+            Así se vería tu negocio en internet.
           </h1>
-
-          <p
-            className="hero-in mt-6 max-w-xl text-base leading-relaxed text-slate-300 sm:text-lg"
-            style={{ '--d': '140ms' }}
-          >
-            Creamos páginas web modernas, rápidas y adaptadas a celulares para pequeños negocios y
-            emprendimientos.
+          <p className="mt-5 hidden max-w-[34rem] text-lg leading-relaxed text-muro lg:block">
+            Escribe el nombre de tu negocio y elige el rubro. Si te gusta, nos escribes por WhatsApp y
+            la hacemos de verdad.
           </p>
-
-          <div
-            className="hero-in mt-8 flex flex-col gap-3 sm:flex-row"
-            style={{ '--d': '220ms' }}
-          >
-            <a
-              href={getWhatsAppUrl(whatsappMessages.general)}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn-primary px-7 py-3.5 text-base"
-            >
-              <WhatsAppIcon className="h-5 w-5" />
-              Quiero mi web
-              <ArrowRight className="h-4 w-4" aria-hidden="true" />
-            </a>
-            <a href="#demos" className="btn btn-ghost-dark px-7 py-3.5 text-base">
-              Ver demos
-              <Play className="h-4 w-4 fill-current" aria-hidden="true" />
-            </a>
-          </div>
-
-          <ul
-            className="hero-in mt-8 flex flex-wrap gap-x-6 gap-y-2.5 text-sm text-slate-300"
-            style={{ '--d': '300ms' }}
-          >
-            {trust.map((item) => (
-              <li key={item} className="inline-flex items-center gap-2">
-                <BadgeCheck className="h-4 w-4 text-brand-400" aria-hidden="true" />
-                {item}
-              </li>
-            ))}
-          </ul>
         </div>
 
-        <div className="hero-in mx-auto w-full max-w-[34rem] lg:max-w-none" style={{ '--d': '200ms' }}>
-          <DeviceShowcase priority showChips />
+        <div className="mx-auto w-[10.25rem] sm:w-[13.5rem] lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:w-[18rem] lg:self-center">
+          <BusinessPreview rubro={rubro} name={displayName} />
+        </div>
+
+        <div className="lg:col-start-1 lg:row-start-2 lg:self-start">
+          <label htmlFor="negocio" className="text-sm font-semibold">
+            Nombre de tu negocio
+          </label>
+          <input
+            id="negocio"
+            type="text"
+            value={business.name}
+            onChange={(event) => onChange({ name: event.target.value })}
+            placeholder={rubro.sampleName}
+            maxLength={40}
+            autoComplete="off"
+            autoCapitalize="words"
+            spellCheck={false}
+            enterKeyHint="done"
+            className="mt-2 block h-13 w-full max-w-[28rem] rounded-xl border border-linea bg-papel px-4 text-[1.05rem] text-asfalto transition-colors placeholder:text-muro/70 hover:border-asfalto/40 focus:border-asfalto"
+          />
+
+          <fieldset className="mt-5">
+            <legend className="text-sm font-semibold">Rubro</legend>
+            <div className="mt-2 flex flex-wrap gap-2">
+              {rubros.map((item) => (
+                <label key={item.id} className="cursor-pointer">
+                  <input
+                    type="radio"
+                    name="rubro"
+                    value={item.id}
+                    checked={business.rubroId === item.id}
+                    onChange={() => onChange({ rubroId: item.id, rubroChosen: true })}
+                    className="peer sr-only"
+                  />
+                  <span className="inline-flex min-h-10 items-center rounded-full border border-linea bg-papel px-4 text-[0.95rem] transition-colors duration-(--dur-quick) peer-checked:border-asfalto peer-checked:bg-asfalto peer-checked:text-white peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-asfalto hover:border-asfalto/40">
+                    {item.label}
+                  </span>
+                </label>
+              ))}
+            </div>
+          </fieldset>
+
+          <a
+            href={whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-primary mt-7 w-full px-7 text-[1.05rem] sm:w-auto"
+          >
+            <WhatsAppIcon className="h-5 w-5" />
+            Pedir esta web por WhatsApp
+          </a>
+          <p className="mt-4 text-[0.95rem] text-muro">Desde S/99 al mes, sin pago de instalación.</p>
+          <p className="mt-1 max-w-[28rem] text-sm text-muro">
+            Te abre WhatsApp con este mensaje: «{message}»
+          </p>
         </div>
       </div>
     </section>
