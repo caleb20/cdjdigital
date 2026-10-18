@@ -40,7 +40,11 @@ Concepto: **la ciudad gris, los negocios a color**. La web es un fondo neutro y 
 - **Tipografía**: Archivo (autoalojada, eje de ancho). Titulares con la clase `.display` (ancho 72 %, peso 800).
 - **Secciones**: cada título es la pregunta del dueño: hero «Así se vería tu negocio en internet», ¿Cuánto cuesta?,
   ¿Qué incluye?, ¿Cómo trabajamos?, Otras preguntas y el cierre «¿Hablamos de …?».
-- **Movimiento**: un solo momento, la vista previa del hero al cambiar de rubro. Sin animaciones al hacer scroll.
+- **Hero**: el visitante escribe su negocio y elige el rubro; ve una web de ejemplo completa con su nombre (navegador y
+  celular en escritorio, solo celular en móvil). Cada rubro es una plantilla propia en `src/components/preview/templates/`,
+  dibujada a tamaño real (1280 / 390 px) y reducida con `zoom`.
+- **Movimiento**: un solo momento: al cambiar de rubro, la web de ejemplo baja sola un tramo y vuelve (se cancela al
+  tocarla y no corre con movimiento reducido). Sin animaciones al hacer scroll en la página.
 
 ## Estructura
 
@@ -50,11 +54,13 @@ src/
   data/                   pricing.js · rubros.js · faq.js  (JS puro)
   lib/                    whatsapp.js · business.js · planImages.js
   components/             Header, Hero, Pricing, Included, Process, FAQ, FinalCTA, Footer, MobileCTA
-    mockups/              BusinessPreview: el celular del hero con el negocio del visitante
+    preview/              Showcase (navegador + celular del hero) y templates/ (una web de ejemplo por rubro)
     ui/                   Logo, SectionHeading, íconos de marca
   assets/planes/          Capturas de las demos de Kopa por plan (WebP 16:10, 480/768/1152 px)
+  assets/rubros/          Fotos de las webs de ejemplo del hero (WebP 480/1200 px)
   assets/kopa/            Fotos de Kopa optimizadas (WebP, 160/480/768/1152 px)
-reference/                Fotos originales de Kopa Caffe y capturas de las demos (planes/*.png)
+reference/                Fotos originales de Kopa Caffe, capturas de las demos (planes/*.png) y fotos de rubros
+                          (rubros/*.jpg, Unsplash: ver rubros/CREDITS.md)
 scripts/
   build-assets.mjs        npm run assets
   seoPlugin.js            Plugin de Vite: meta tags, JSON-LD, sitemap.xml y robots.txt
@@ -64,7 +70,9 @@ public/                   favicon, apple-touch-icon, og-image
 ### Cómo editar contenido
 
 - **Planes, precios y mensajes de WhatsApp de cada plan:** `src/data/pricing.js`.
-- **Rubros de la vista previa del hero:** `src/data/rubros.js` (nombres de ejemplo, colores y textos; no son clientes).
+- **Rubros de la vista previa del hero:** `src/data/rubros.js` (nombre de ejemplo y texto del mensaje) y una plantilla por
+  rubro en `src/components/preview/templates/` (diseño, tipografía, fotos y textos). Son ejemplos, no clientes.
+- **Fotos de los rubros:** guarda un JPG con la misma clave en `reference/rubros/` y corre `npm run assets`.
 - **Qué incluye cada plan:** `includedInAll` (lo común) y `planComparison` (lo que cambia, valores cortos) en `src/data/pricing.js`.
 - **Capturas de las demos por plan:** reemplaza `reference/planes/{inicio,negocio,pro}.png` (1920×1200) y corre `npm run assets`.
 - **Preguntas frecuentes:** `src/data/faq.js`.

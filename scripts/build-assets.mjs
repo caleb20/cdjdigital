@@ -5,9 +5,10 @@
  *     Los originales de reference/ NO se modifican.
  *  2. Ícono de Kopa en blanco (para el mockup oscuro).
  *  3. Capturas de las demos de Kopa por plan (reference/planes/*.png, 16:10) → src/assets/planes/*.webp.
+ *     Fotos de los rubros de la vista previa del hero (reference/rubros/*.jpg) → src/assets/rubros/*.webp.
  *  4. Favicon, apple-touch-icon e imagen Open Graph de CDJ Digital.
  */
-import { mkdir, readFile, writeFile } from 'node:fs/promises'
+import { mkdir, readdir, readFile, writeFile } from 'node:fs/promises'
 import { existsSync } from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -17,10 +18,12 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const ref = path.join(root, 'reference')
 const kopaOut = path.join(root, 'src', 'assets', 'kopa')
 const planesOut = path.join(root, 'src', 'assets', 'planes')
+const rubrosOut = path.join(root, 'src', 'assets', 'rubros')
 const publicDir = path.join(root, 'public')
 
 await mkdir(kopaOut, { recursive: true })
 await mkdir(planesOut, { recursive: true })
+await mkdir(rubrosOut, { recursive: true })
 await mkdir(publicDir, { recursive: true })
 
 /* ---------- 1. Fotos de Kopa ---------- */
@@ -87,6 +90,19 @@ for (const plan of ['inicio', 'negocio', 'pro']) {
   }
   console.log(`  ✓ captura del plan ${plan}`)
 }
+
+// Fotos de los rubros: 1200 px para portadas (la web de ejemplo se ve a ~50 % en pantallas 2x) y 480 px para miniaturas.
+const rubroPhotos = (await readdir(path.join(ref, 'rubros'))).filter((file) => file.endsWith('.jpg'))
+for (const file of rubroPhotos) {
+  const key = file.replace(/.jpg$/, '')
+  for (const w of [480, 1200]) {
+    await sharp(path.join(ref, 'rubros', file))
+      .resize({ width: w, withoutEnlargement: true })
+      .webp({ quality: 72, effort: 5 })
+      .toFile(path.join(rubrosOut, `${key}-${w}.webp`))
+  }
+}
+console.log(`  ✓ ${rubroPhotos.length} fotos de rubros (480/1200)`)
 
 /* ---------- 4. Marca CDJ Digital ---------- */
 // Logotipo monolínea "CDJ" (mismo trazado que src/components/ui/Logo.jsx).

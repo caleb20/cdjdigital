@@ -17,11 +17,24 @@ export function describeBusiness({ name, rubroId, rubroChosen }) {
     noun: rubroChosen ? rubro.noun : undefined,
     name: typedName || undefined,
   })
+  const displayName = typedName || rubro.sampleName
   return {
     rubro,
     typedName,
-    displayName: typedName || rubro.sampleName,
+    displayName,
+    domain: toDomain(displayName),
     message,
     whatsappUrl: getWhatsAppUrl(message),
   }
+}
+
+/** La dirección que tendría su web: «Barbería Don Lucho» → barberiadonlucho.pe */
+function toDomain(name) {
+  const slug = name
+    .normalize('NFD')
+    .replace(/[̀-ͯ]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '')
+    .slice(0, 28)
+  return `${slug || 'tunegocio'}.pe`
 }

@@ -1,20 +1,20 @@
 import { rubros } from '../data/rubros.js'
-import BusinessPreview from './mockups/BusinessPreview.jsx'
+import Showcase from './preview/Showcase.jsx'
 import { WhatsAppIcon } from './ui/BrandIcons.jsx'
 
 /**
- * Hero: el visitante escribe el nombre de su negocio, elige el rubro y ve su web en un celular.
- * Lo que escribe viaja al mensaje de WhatsApp. En celular la vista previa va ARRIBA del campo,
- * para que el teclado no la tape mientras escribe.
+ * Hero: el visitante escribe el nombre de su negocio, elige el rubro y ve una web completa de ejemplo
+ * con su nombre (navegador y celular en escritorio). Lo que escribe viaja al mensaje de WhatsApp.
+ * En celular la vista previa va ARRIBA del campo, para que el teclado no la tape mientras escribe.
  */
 export default function Hero({ business, details, onChange }) {
-  const { rubro, displayName, message, whatsappUrl } = details
+  const { rubro, displayName, domain, message, whatsappUrl } = details
 
   return (
     <section id="inicio" aria-labelledby="hero-title" className="pt-24 pb-16 sm:pt-28 lg:pt-32 lg:pb-24">
-      <div className="container-x grid grid-cols-1 gap-x-14 gap-y-6 sm:gap-y-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] lg:gap-y-10">
+      <div className="container-x grid grid-cols-1 gap-x-14 gap-y-6 sm:gap-y-8 lg:grid-cols-[minmax(0,0.82fr)_minmax(0,1.18fr)] lg:gap-y-10">
         <div className="lg:col-start-1 lg:row-start-1 lg:self-end">
-          <h1 id="hero-title" className="display text-[2.75rem] sm:text-6xl lg:text-[4.5rem]">
+          <h1 id="hero-title" className="display text-[2.75rem] sm:text-6xl lg:text-[4rem] xl:text-[4.5rem]">
             Así se vería tu negocio en internet.
           </h1>
           <p className="mt-5 hidden max-w-[34rem] text-lg leading-relaxed text-muro lg:block">
@@ -23,8 +23,11 @@ export default function Hero({ business, details, onChange }) {
           </p>
         </div>
 
-        <div className="mx-auto w-[10.25rem] sm:w-[13.5rem] lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:w-[18rem] lg:self-center">
-          <BusinessPreview rubro={rubro} name={displayName} />
+        <div className="lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:self-center">
+          <Showcase rubro={rubro} name={displayName} domain={domain} />
+          <p className="mt-4 hidden text-sm text-muro lg:block">
+            Es una web de ejemplo: desliza dentro de la ventana para recorrerla.
+          </p>
         </div>
 
         <div className="lg:col-start-1 lg:row-start-2 lg:self-start">
