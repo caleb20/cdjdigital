@@ -30,7 +30,7 @@ export default function MobileCTA({ whatsappUrl }) {
   return (
     <div
       data-visible={visible}
-      className="mobile-cta fixed inset-x-0 bottom-0 z-40 border-t border-linea bg-neblina/95 px-4 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] backdrop-blur-md lg:hidden"
+      className="mobile-cta fixed inset-x-0 bottom-0 z-40 border-t border-linea bg-bruma/95 px-4 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] backdrop-blur-md lg:hidden"
     >
       <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="btn btn-primary w-full">
         <WhatsAppIcon className="h-5 w-5" />

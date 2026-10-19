@@ -11,7 +11,7 @@ export default function SectionHeading({ id, title, description, tone = 'light',
         {title}
       </h2>
       {description && (
-        <p className={`mt-4 text-[1.05rem] leading-relaxed sm:text-lg ${dark ? 'text-ceniza' : 'text-muro'}`}>
+        <p className={`mt-4 text-[1.05rem] leading-relaxed sm:text-lg ${dark ? 'text-ceniza' : 'text-pizarra'}`}>
           {description}
         </p>
       )}

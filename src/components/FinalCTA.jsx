@@ -6,7 +6,7 @@ export default function FinalCTA({ details }) {
   const { typedName, whatsappUrl } = details
 
   return (
-    <section id="contacto" aria-labelledby="contacto-title" className="bg-asfalto py-20 text-white sm:py-24 lg:py-28">
+    <section id="contacto" aria-labelledby="contacto-title" className="bg-tinta py-20 text-white sm:py-24 lg:py-28">
       <div className="container-x">
         <h2 id="contacto-title" className="display max-w-[16ch] text-[2.75rem] [overflow-wrap:anywhere] sm:text-6xl lg:text-[4.5rem]">
           ¿Hablamos de {typedName || 'tu negocio'}?

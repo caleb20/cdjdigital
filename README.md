@@ -33,10 +33,11 @@ Los enlaces se generan **solo** con `getWhatsAppUrl(message)` de [`src/lib/whats
 
 ## Diseño
 
-Concepto: **la ciudad gris, los negocios a color**. La web es un fondo neutro y el color lo pone el negocio del visitante.
+Concepto: la web de CDJ es un fondo neutro y frío, y el color fuerte lo ponen los negocios en las webs de ejemplo.
 
-- **Colores** (tokens en `src/index.css`): Neblina `#e9eae6` (fondo), Papel `#ffffff` (tarjetas), Asfalto `#1d2226`
-  (texto y cierre), Muro `#5a6168` (texto secundario) y Letrero `#ffc629`, **solo** para botones de acción.
+- **Colores** (tokens en `src/index.css`): Bruma `#eef1f8` (fondo), Papel `#ffffff` (tarjetas), Tinta `#0f172a`
+  (azul marino: texto y cierre), Pizarra `#55607a` (texto secundario) y Azul `#4c5cff`, el azul de la marca, como único
+  acento: botones, selecciones, checks y números del proceso. Sin degradados.
 - **Tipografía**: Archivo (autoalojada, eje de ancho). Titulares con la clase `.display` (ancho 72 %, peso 800).
 - **Secciones**: cada título es la pregunta del dueño: hero «Así se vería tu negocio en internet», ¿Cuánto cuesta?,
   ¿Qué incluye?, ¿Cómo trabajamos?, Otras preguntas y el cierre «¿Hablamos de …?».

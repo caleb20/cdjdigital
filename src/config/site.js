@@ -42,7 +42,7 @@ export const site = {
       'Creamos páginas web profesionales, rápidas y adaptadas a celulares para negocios y emprendimientos en Perú. Planes desde S/99 al mes.',
     ogImage: '/og-image.jpg',
     ogImageAlt: 'CDJ Digital: así se vería tu negocio en internet. Planes desde S/99 al mes.',
-    themeColor: '#e9eae6',
+    themeColor: '#eef1f8',
   },
 
   /**

@@ -15,7 +15,7 @@ function PlanCard({ plan, selected }) {
       id={`plan-${plan.id}`}
       aria-labelledby={`plan-${plan.id}-title`}
       className={`relative flex h-full flex-col rounded-2xl bg-papel p-3 ${
-        plan.featured ? 'ring-2 ring-asfalto' : 'ring-1 ring-linea'
+        plan.featured ? 'ring-2 ring-azul' : 'ring-1 ring-linea'
       } ${selected ? '' : 'max-md:hidden'}`}
     >
       <a
@@ -44,26 +44,26 @@ function PlanCard({ plan, selected }) {
             {plan.name}
           </h3>
           {plan.badge && (
-            <span className="rounded-full bg-letrero px-3 py-1 text-sm font-semibold text-asfalto">{plan.badge}</span>
+            <span className="rounded-full bg-azul px-3 py-1 text-sm font-semibold text-white">{plan.badge}</span>
           )}
         </div>
 
         <p className="mt-2 flex items-baseline gap-2">
           <span className="display text-[3.25rem] tabular-nums">S/{plan.price}</span>
-          <span className="text-muro">al mes</span>
+          <span className="text-pizarra">al mes</span>
         </p>
 
         <p className="mt-4 font-semibold">{plan.promise}</p>
-        <p className="mt-1 text-[0.95rem] leading-relaxed text-muro">{plan.chooseIf}</p>
+        <p className="mt-1 text-[0.95rem] leading-relaxed text-pizarra">{plan.chooseIf}</p>
 
         <ul className="mt-5 flex-1 space-y-2.5 border-t border-linea pt-5 text-[0.95rem]">
           {plan.highlights.map((item) => (
             <li key={item} className="flex gap-2.5">
-              <Check className="mt-0.5 h-4 w-4 shrink-0" strokeWidth={2.6} aria-hidden="true" />
+              <Check className="mt-0.5 h-4 w-4 shrink-0 text-azul" strokeWidth={2.6} aria-hidden="true" />
               {item}
             </li>
           ))}
-          <li className="pl-[1.6rem] text-muro">{plan.domainNote}</li>
+          <li className="pl-[1.6rem] text-pizarra">{plan.domainNote}</li>
         </ul>
 
         <a
@@ -78,7 +78,7 @@ function PlanCard({ plan, selected }) {
           href={demoUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-1 inline-flex min-h-11 items-center justify-center gap-1.5 text-[0.95rem] font-semibold underline decoration-asfalto/30 decoration-2 underline-offset-4 hover:decoration-asfalto"
+          className="mt-1 inline-flex min-h-11 items-center justify-center gap-1.5 text-[0.95rem] font-semibold underline decoration-azul/40 decoration-2 underline-offset-4 hover:decoration-azul"
         >
           Ver la demo
           <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
@@ -113,7 +113,7 @@ export default function Pricing() {
               aria-pressed={selectedId === plan.id}
               aria-controls={`plan-${plan.id}`}
               onClick={() => setSelectedId(plan.id)}
-              className="min-h-11 rounded-full text-[0.95rem] font-semibold transition-colors duration-(--dur-quick) aria-pressed:bg-asfalto aria-pressed:text-white"
+              className="min-h-11 rounded-full text-[0.95rem] font-semibold transition-colors duration-(--dur-quick) aria-pressed:bg-azul aria-pressed:text-white"
             >
               {plan.name}
               <span className="block text-xs font-normal opacity-80">S/{plan.price}</span>

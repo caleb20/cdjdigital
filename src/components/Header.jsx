@@ -43,7 +43,7 @@ export default function Header({ whatsappUrl }) {
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 border-b bg-neblina/95 backdrop-blur-md transition-[border-color] duration-(--dur-standard) ${
+      className={`fixed inset-x-0 top-0 z-50 border-b bg-bruma/95 backdrop-blur-md transition-[border-color] duration-(--dur-standard) ${
         scrolled || open ? 'border-linea' : 'border-transparent'
       }`}
     >
@@ -56,7 +56,7 @@ export default function Header({ whatsappUrl }) {
           <ul className="flex items-center gap-8">
             {navLinks.map((link) => (
               <li key={link.href}>
-                <a href={link.href} className="text-[0.95rem] text-muro transition-colors hover:text-asfalto">
+                <a href={link.href} className="text-[0.95rem] text-pizarra transition-colors hover:text-tinta">
                   {link.label}
                 </a>
               </li>
@@ -82,7 +82,7 @@ export default function Header({ whatsappUrl }) {
             aria-expanded={open}
             aria-controls="menu-movil"
             aria-label={open ? 'Cerrar menú' : 'Abrir menú'}
-            className="relative flex h-11 w-11 items-center justify-center rounded-full text-asfalto transition-colors hover:bg-asfalto/5 lg:hidden"
+            className="relative flex h-11 w-11 items-center justify-center rounded-full text-tinta transition-colors hover:bg-tinta/5 lg:hidden"
           >
             <span aria-hidden="true" className="relative block h-3.5 w-5">
               <span
@@ -109,7 +109,7 @@ export default function Header({ whatsappUrl }) {
       <div
         id="menu-movil"
         data-open={open}
-        className="menu-panel absolute inset-x-0 top-full border-b border-linea bg-neblina lg:hidden"
+        className="menu-panel absolute inset-x-0 top-full border-b border-linea bg-bruma lg:hidden"
       >
         <nav aria-label="Menú móvil" className="container-x py-2">
           <ul className="flex flex-col divide-y divide-linea">
@@ -118,7 +118,7 @@ export default function Header({ whatsappUrl }) {
                 <a
                   href={link.href}
                   onClick={() => setOpen(false)}
-                  className="display block py-4 text-[1.75rem] text-asfalto"
+                  className="display block py-4 text-[1.75rem] text-tinta"
                 >
                   {link.label}
                 </a>

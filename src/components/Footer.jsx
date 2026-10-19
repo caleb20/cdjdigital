@@ -17,7 +17,7 @@ const linkClass = 'inline-flex min-h-10 items-center gap-2 text-ceniza transitio
 /** Sigue la franja oscura del cierre; en celular deja espacio para la barra fija de WhatsApp. */
 export default function Footer() {
   return (
-    <footer className="border-t border-white/10 bg-asfalto pt-12 pb-28 text-white lg:pb-12">
+    <footer className="border-t border-white/10 bg-tinta pt-12 pb-28 text-white lg:pb-12">
       <div className="container-x">
         <div className="grid grid-cols-2 gap-x-6 gap-y-10 lg:grid-cols-[1.4fr_1fr_1.2fr]">
           <div className="col-span-2 lg:col-span-1">

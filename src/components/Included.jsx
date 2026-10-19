@@ -10,7 +10,7 @@ function Value({ value }) {
   if (value === null) {
     return (
       <>
-        <span aria-hidden="true" className="text-muro">—</span>
+        <span aria-hidden="true" className="text-pizarra">—</span>
         <span className="sr-only">No incluido</span>
       </>
     )
@@ -18,7 +18,7 @@ function Value({ value }) {
   if (value === true) {
     return (
       <>
-        <Check className="mx-auto h-5 w-5" strokeWidth={2.6} aria-hidden="true" />
+        <Check className="mx-auto h-5 w-5 text-azul" strokeWidth={2.6} aria-hidden="true" />
         <span className="sr-only">Incluido</span>
       </>
     )
@@ -44,7 +44,7 @@ function ComparisonRow({ row, index }) {
           >
             {row.label}
             <ChevronDown
-              className={`ml-1 inline h-4 w-4 align-[-0.15em] text-muro transition-transform duration-(--dur-standard) ${open ? 'rotate-180' : ''}`}
+              className={`ml-1 inline h-4 w-4 align-[-0.15em] text-pizarra transition-transform duration-(--dur-standard) ${open ? 'rotate-180' : ''}`}
               aria-hidden="true"
             />
           </button>
@@ -52,7 +52,7 @@ function ComparisonRow({ row, index }) {
         {plans.map((plan) => (
           <td
             key={plan.id}
-            className={`px-1 py-3 text-center text-[0.9rem] sm:px-3 sm:text-base ${plan.featured ? 'bg-neblina/60' : ''}`}
+            className={`px-1 py-3 text-center text-[0.9rem] sm:px-3 sm:text-base ${plan.featured ? 'bg-bruma/60' : ''}`}
           >
             <Value value={row[plan.id]} />
           </td>
@@ -62,7 +62,7 @@ function ComparisonRow({ row, index }) {
         <td colSpan={plans.length + 1} className="p-0">
           <div id={hintId} data-open={open} className="accordion-panel">
             <div>
-              <p className="max-w-[60ch] px-4 pb-4 text-[0.95rem] leading-relaxed text-muro sm:px-6">{row.hint}</p>
+              <p className="max-w-[60ch] px-4 pb-4 text-[0.95rem] leading-relaxed text-pizarra sm:px-6">{row.hint}</p>
             </div>
           </div>
         </td>
@@ -92,7 +92,7 @@ function ChangesDisclosure() {
       <div id="cambio-menor" data-open={open} className="accordion-panel">
         <div>
           <div className="pb-6">
-            <p className="max-w-[60ch] leading-relaxed text-muro">{minorChanges.definition}</p>
+            <p className="max-w-[60ch] leading-relaxed text-pizarra">{minorChanges.definition}</p>
             <div className="mt-5 grid grid-cols-1 gap-6 md:grid-cols-2">
               {[
                 { title: 'Incluido en tu mensualidad', items: minorChanges.included, Icon: Check },
@@ -103,7 +103,7 @@ function ChangesDisclosure() {
                   <ul className="mt-3 space-y-2 text-[0.95rem]">
                     {items.map((item) => (
                       <li key={item} className="flex gap-2.5">
-                        <Icon className="mt-0.5 h-4 w-4 shrink-0 text-muro" strokeWidth={2.6} aria-hidden="true" />
+                        <Icon className="mt-0.5 h-4 w-4 shrink-0 text-pizarra" strokeWidth={2.6} aria-hidden="true" />
                         {item}
                       </li>
                     ))}
@@ -111,7 +111,7 @@ function ChangesDisclosure() {
                 </div>
               ))}
             </div>
-            <p className="mt-5 max-w-[60ch] text-[0.95rem] leading-relaxed text-muro">{minorChanges.note}</p>
+            <p className="mt-5 max-w-[60ch] text-[0.95rem] leading-relaxed text-pizarra">{minorChanges.note}</p>
           </div>
         </div>
       </div>
@@ -134,14 +134,14 @@ export default function Included() {
         <ul className="mt-4 grid grid-cols-1 gap-x-8 gap-y-2.5 sm:grid-cols-2 lg:grid-cols-3">
           {includedInAll.map((item) => (
             <li key={item} className="flex gap-2.5">
-              <Check className="mt-1 h-4 w-4 shrink-0" strokeWidth={2.6} aria-hidden="true" />
+              <Check className="mt-1 h-4 w-4 shrink-0 text-azul" strokeWidth={2.6} aria-hidden="true" />
               {item}
             </li>
           ))}
         </ul>
 
         <h3 className="mt-12 text-lg font-semibold">Lo que cambia entre planes</h3>
-        <p className="mt-1 text-[0.95rem] text-muro">Toca cada fila para ver qué significa.</p>
+        <p className="mt-1 text-[0.95rem] text-pizarra">Toca cada fila para ver qué significa.</p>
         <div className="mt-4 overflow-hidden rounded-2xl bg-papel ring-1 ring-linea">
           <table className="w-full table-fixed">
             <caption className="sr-only">Lo que cambia entre los planes Inicio, Negocio y Pro</caption>
@@ -158,10 +158,10 @@ export default function Included() {
                   <th
                     key={plan.id}
                     scope="col"
-                    className={`px-1 py-4 text-center font-bold sm:px-3 ${plan.featured ? 'bg-neblina/60' : ''}`}
+                    className={`px-1 py-4 text-center font-bold sm:px-3 ${plan.featured ? 'bg-bruma/60' : ''}`}
                   >
                     {plan.name}
-                    <span className="block text-sm font-normal text-muro">S/{plan.price}</span>
+                    <span className="block text-sm font-normal text-pizarra">S/{plan.price}</span>
                   </th>
                 ))}
               </tr>
@@ -179,7 +179,7 @@ export default function Included() {
         <div className="mt-10 grid grid-cols-1 gap-8 md:grid-cols-2">
           <div>
             <h3 className="text-lg font-semibold">Correo con tu dominio</h3>
-            <p className="mt-1 leading-relaxed text-muro">
+            <p className="mt-1 leading-relaxed text-pizarra">
               Un correo como {corporateEmail.example}, para verte más formal. S/{corporateEmail.price} por cuenta al mes.
             </p>
             <a
@@ -193,7 +193,7 @@ export default function Included() {
           </div>
           <div>
             <h3 className="text-lg font-semibold">Algo a medida</h3>
-            <p className="mt-1 leading-relaxed text-muro">
+            <p className="mt-1 leading-relaxed text-pizarra">
               Pagos en línea, un sistema interno o una integración: lo cotizamos antes de empezar, sin compromiso.
             </p>
             <a

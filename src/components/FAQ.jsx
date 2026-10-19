@@ -31,7 +31,7 @@ function FAQItem({ item, index, open, onToggle }) {
       </h3>
       <div id={panelId} role="region" aria-labelledby={buttonId} data-open={open} className="accordion-panel">
         <div>
-          <p className="max-w-[62ch] pb-5 leading-relaxed text-muro">{item.answer}</p>
+          <p className="max-w-[62ch] pb-5 leading-relaxed text-pizarra">{item.answer}</p>
         </div>
       </div>
     </div>

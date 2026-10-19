@@ -20,7 +20,7 @@ export default function App() {
     <>
       <a
         href="#contenido"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[60] focus:rounded-lg focus:bg-papel focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-asfalto"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[60] focus:rounded-lg focus:bg-papel focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-tinta"
       >
         Saltar al contenido
       </a>

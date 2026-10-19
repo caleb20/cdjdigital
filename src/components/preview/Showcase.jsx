@@ -117,13 +117,13 @@ function useTour(ref, trigger, enabled) {
 
 function BrowserBar({ domain }) {
   return (
-    <div className="flex items-center gap-3 border-b border-linea bg-[#f4f5f2] px-3 py-2">
+    <div className="flex items-center gap-3 border-b border-linea bg-[#f3f5fa] px-3 py-2">
       <span className="flex gap-1.5" aria-hidden="true">
         <span className="size-2.5 rounded-full bg-linea" />
         <span className="size-2.5 rounded-full bg-linea" />
         <span className="size-2.5 rounded-full bg-linea" />
       </span>
-      <span className="mx-auto flex min-w-0 max-w-[60%] flex-1 items-center justify-center gap-1.5 rounded-md bg-papel px-3 py-1 text-xs text-muro ring-1 ring-linea">
+      <span className="mx-auto flex min-w-0 max-w-[60%] flex-1 items-center justify-center gap-1.5 rounded-md bg-papel px-3 py-1 text-xs text-pizarra ring-1 ring-linea">
         <Lock className="size-3 shrink-0" aria-hidden="true" />
         <span className="truncate">{domain}</span>
       </span>
@@ -134,10 +134,10 @@ function BrowserBar({ domain }) {
 
 function Phone({ children, className = '' }) {
   return (
-    <div className={`rounded-[2.4rem] bg-asfalto p-[0.45rem] shadow-[0_40px_60px_-40px_rgb(29_34_38/0.6)] ${className}`}>
+    <div className={`rounded-[2.4rem] bg-tinta p-[0.45rem] shadow-[0_40px_60px_-40px_rgb(15_23_42/0.6)] ${className}`}>
       <div className="relative aspect-[9/18] overflow-hidden rounded-[2rem] bg-white">
         {/* Barra de estado: la isla no tapa la cabecera de la web */}
-        <span className="absolute inset-x-0 top-0 h-6 bg-asfalto" aria-hidden="true">
+        <span className="absolute inset-x-0 top-0 h-6 bg-tinta" aria-hidden="true">
           <span className="absolute top-1.5 left-1/2 h-3 w-[30%] -translate-x-1/2 rounded-full bg-black" />
         </span>
         <div className="absolute inset-x-0 top-6 bottom-0">{children}</div>
@@ -163,7 +163,7 @@ export default function Showcase({ rubro, name, domain }) {
   return (
     <figure role="img" aria-label={label} className={desktop ? 'relative pr-8 pb-10' : 'relative'}>
       {desktop && (
-        <div aria-hidden="true" className="overflow-hidden rounded-xl bg-papel shadow-[0_40px_80px_-50px_rgb(29_34_38/0.6)] ring-1 ring-linea">
+        <div aria-hidden="true" className="overflow-hidden rounded-xl bg-papel shadow-[0_40px_80px_-50px_rgb(15_23_42/0.6)] ring-1 ring-linea">
           <BrowserBar domain={domain} />
           <div className="relative aspect-[16/10.5]">
             <ScaledViewport designWidth={1280} scrollable viewportRef={browserRef}>

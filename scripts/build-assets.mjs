@@ -112,8 +112,8 @@ const letters = `
   <path d="M86 6 V24 A9 9 0 0 1 68 24"/>`
 
 const faviconSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="15" fill="#1d2226"/>
-  <g transform="translate(5.65 20) scale(0.6)" fill="none" stroke="#ffc629" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round">${letters}</g>
+  <rect width="64" height="64" rx="15" fill="#4c5cff"/>
+  <g transform="translate(5.65 20) scale(0.6)" fill="none" stroke="#ffffff" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round">${letters}</g>
 </svg>
 `
 await writeFile(path.join(publicDir, 'favicon.svg'), faviconSvg)
@@ -123,14 +123,14 @@ console.log('  ✓ favicon.svg, favicon-48.png, apple-touch-icon.png')
 
 // Open Graph 1200×630
 const ogSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
-  <rect width="1200" height="630" fill="#e9eae6"/>
-  <g transform="translate(80 70) scale(2.6)" fill="none" stroke="#1d2226" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">${letters}</g>
-  <text x="84" y="192" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="20" font-weight="600" letter-spacing="9" fill="#5a6168">DIGITAL</text>
-  <text x="80" y="342" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="78" font-weight="800" fill="#1d2226">Así se vería tu negocio</text>
-  <text x="80" y="430" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="78" font-weight="800" fill="#1d2226">en internet.</text>
-  <rect x="80" y="486" width="388" height="62" rx="31" fill="#ffc629"/>
-  <text x="274" y="527" text-anchor="middle" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="26" font-weight="700" fill="#1d2226">Desde S/99 al mes</text>
-  <text x="1120" y="570" text-anchor="end" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="26" font-weight="600" fill="#5a6168">cdjdigital.pe</text>
+  <rect width="1200" height="630" fill="#eef1f8"/>
+  <g transform="translate(80 70) scale(2.6)" fill="none" stroke="#0f1a46" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">${letters}</g>
+  <text x="84" y="192" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="20" font-weight="600" letter-spacing="9" fill="#55607a">DIGITAL</text>
+  <text x="80" y="342" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="78" font-weight="800" fill="#0f172a">Así se vería tu negocio</text>
+  <text x="80" y="430" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="78" font-weight="800" fill="#0f172a">en internet.</text>
+  <rect x="80" y="486" width="388" height="62" rx="31" fill="#4c5cff"/>
+  <text x="274" y="527" text-anchor="middle" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="26" font-weight="700" fill="#ffffff">Desde S/99 al mes</text>
+  <text x="1120" y="570" text-anchor="end" font-family="Segoe UI, Arial, Helvetica, sans-serif" font-size="26" font-weight="600" fill="#55607a">cdjdigital.pe</text>
 </svg>`
 await sharp(Buffer.from(ogSvg)).jpeg({ quality: 88, mozjpeg: true }).toFile(path.join(publicDir, 'og-image.jpg'))
 console.log('  ✓ og-image.jpg')

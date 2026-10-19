@@ -4,23 +4,24 @@
 /*  Tokens de diseño                                                   */
 /* ------------------------------------------------------------------ */
 /*
- * Concepto: «la ciudad gris, los negocios a color». La web es un fondo neutro (el gris del
- * cielo de Lima) y el color lo ponen los negocios. El amarillo Letrero es solo para acciones.
+ * Concepto: la web de CDJ es un fondo neutro y frío (bruma) y el color fuerte lo ponen los negocios
+ * en las webs de ejemplo. El azul de la marca es el único acento: acciones, selecciones y marcas
+ * puntuales (checks, números del proceso). La tinta azul marino es el texto y la franja de cierre.
  */
 @theme {
   /* Archivo (Omnibus-Type): un eje de ancho para titulares condensados tipo rótulo y texto normal */
   --font-sans: 'Archivo Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Arial,
     sans-serif;
 
-  --color-neblina: #e9eae6; /* fondo de página */
+  --color-bruma: #eef1f8; /* fondo de página */
   --color-papel: #ffffff; /* tarjetas, tabla, marcos */
-  --color-asfalto: #1d2226; /* texto principal y franja de cierre */
-  --color-asfalto-suave: #2a3036; /* superficies sobre el cierre */
-  --color-muro: #5a6168; /* texto secundario sobre claro (6.3:1 en papel, 5.2:1 en neblina) */
-  --color-ceniza: #aeb4ba; /* texto secundario sobre asfalto (7.5:1) */
-  --color-linea: #d4d6d0; /* filetes y bordes */
-  --color-letrero: #ffc629; /* solo botones de acción; texto asfalto encima (10.5:1) */
-  --color-letrero-hondo: #f5b700; /* hover */
+  --color-tinta: #0f172a; /* texto principal y franja de cierre (azul marino) */
+  --color-tinta-suave: #1b2540; /* superficies sobre el cierre */
+  --color-pizarra: #55607a; /* texto secundario sobre claro (6.3:1 en papel, 5.6:1 en bruma) */
+  --color-ceniza: #a9b4cc; /* texto secundario sobre tinta (8.6:1) */
+  --color-linea: #dbe1ee; /* filetes y bordes */
+  --color-azul: #4c5cff; /* azul de la marca: acciones y selecciones; texto blanco encima (4.9:1) */
+  --color-azul-hondo: #3b49e8; /* hover (6.4:1 con blanco) */
 
   /*
    * Identidad de movimiento (Corporate): una curva firma para casi todo, una de entrada con
@@ -47,7 +48,7 @@
   }
 
   body {
-    @apply bg-neblina font-sans text-asfalto antialiased;
+    @apply bg-bruma font-sans text-tinta antialiased;
     font-stretch: 100%;
     overflow-x: hidden;
   }
@@ -63,12 +64,12 @@
   }
 
   ::selection {
-    background: var(--color-letrero);
-    color: var(--color-asfalto);
+    background: var(--color-azul);
+    color: #fff;
   }
 
   :focus-visible {
-    outline: 2px solid var(--color-asfalto);
+    outline: 2px solid var(--color-azul);
     outline-offset: 3px;
     border-radius: 0.375rem;
   }
@@ -104,11 +105,11 @@
   }
 
   .btn-primary {
-    @apply bg-letrero text-asfalto hover:bg-letrero-hondo;
+    @apply bg-azul text-white hover:bg-azul-hondo;
   }
 
   .btn-outline {
-    @apply border border-asfalto/25 bg-papel text-asfalto hover:border-asfalto;
+    @apply border border-tinta/20 bg-papel text-tinta hover:border-azul hover:text-azul;
   }
 
   .btn-on-dark {
@@ -116,7 +117,7 @@
   }
 
   .link {
-    @apply font-semibold text-asfalto underline decoration-asfalto/30 decoration-2 underline-offset-4 transition-colors hover:decoration-asfalto;
+    @apply font-semibold text-tinta underline decoration-azul/40 decoration-2 underline-offset-4 transition-colors hover:decoration-azul;
   }
 }
 
