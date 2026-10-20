@@ -117,6 +117,19 @@
   .legend span { display: inline-flex; align-items: center; gap: 10px; }
   .legend i { width: 16px; height: 16px; border-radius: 50%; display: inline-block; }
 
+  /* roles y permisos (matriz) */
+  .rhead { position: absolute; background: var(--sage-soft); }
+  .rhl { position: absolute; font: 600 15px/1 'Inter', sans-serif; letter-spacing: 0.16em; text-transform: uppercase; color: var(--sage-deep); }
+  .rcol, .rcell { position: absolute; display: flex; align-items: center; justify-content: center; }
+  .rpaint { display: inline-block; }
+  .rband { position: absolute; background: rgba(207, 124, 121, 0.13); box-shadow: inset 2px 0 0 rgba(207, 124, 121, 0.45), inset -2px 0 0 rgba(207, 124, 121, 0.45); }
+  .rgrp { position: absolute; box-sizing: border-box; display: flex; align-items: center; padding-left: 28px; background: rgba(243, 232, 223, 0.7); border-top: 1px solid var(--line); font: 700 14px/1 'Inter', sans-serif; letter-spacing: 0.16em; text-transform: uppercase; color: var(--rose-deep); }
+  .rlab { position: absolute; display: flex; align-items: center; font: 500 22px/1.25 'Inter', sans-serif; color: var(--ink); }
+  .rsep { position: absolute; height: 1px; background: var(--line); }
+  .rok { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 50%; background: var(--sage-soft); color: var(--sage-deep); font: 700 20px/1 'Inter', sans-serif; }
+  .rno { font: 600 24px/1 'Inter', sans-serif; color: rgba(28, 27, 26, 0.28); }
+  .rpart { display: inline-block; max-width: 92%; padding: 7px 14px; border-radius: 999px; background: var(--rose-soft); color: var(--rose-deep); font: 600 17px/1.15 'Inter', sans-serif; text-align: center; }
+
   /* hoja de ruta */
   .stage { position: absolute; background: var(--paper); border: 1px solid var(--line); border-radius: 22px; box-shadow: var(--shadow); padding: 26px 26px 24px; }
   .stage.today { border: 2px solid var(--rose); background: #fff8f3; }
@@ -220,8 +233,9 @@ const ICON = {
   admin: '<path d="M4 6h8M18 6h2M4 12h2M12 12h8M4 18h10M20 18h0"/><circle cx="15" cy="6" r="2.2"/><circle cx="9" cy="12" r="2.2"/><circle cx="17" cy="18" r="2.2"/>',
   shield: '<path d="M12 3l8 3v6c0 4.4-3.4 8.2-8 9-4.6-.8-8-4.6-8-9V6l8-3z"/><path d="M8.5 12l2.4 2.4 4.6-4.8"/>',
   code: '<path d="M8 8l-4 4 4 4M16 8l4 4-4 4M13.5 5l-3 14"/>',
+  bike: '<circle cx="18.5" cy="17.5" r="3.5"/><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="15" cy="5" r="1"/><path d="M12 17.5V14l-3-3 4-3 2 3h2"/>',
 };
-const actorIcon = (role) => /cliente/i.test(role) ? 'user' : /equipo|personal/i.test(role) ? 'team' : /sistema/i.test(role) ? 'shield' : /cdj/i.test(role) ? 'code' : 'admin';
+const actorIcon = (role) => /cliente/i.test(role) ? 'user' : /equipo|personal/i.test(role) ? 'team' : /sistema/i.test(role) ? 'shield' : /cdj/i.test(role) ? 'code' : /motorizado/i.test(role) ? 'bike' : 'admin';
 
 /* conector discontinuo que se dibuja (máscara) + punta + punto viajero */
 let MID = 0;
@@ -320,6 +334,71 @@ B.actors = (T0, s) => {
     card(c, at, i * 2);
     const b = brush(c, a.role, color, at + 0.45, { sound: false, sm: n > 3 }); pos(b, { left: 116, top: 46 });
   });
+  return D;
+};
+
+/* roles y permisos: la matriz se arma fila por fila; cada ✓ suena con el tono de su columna y al final se ilumina
+   la columna del rol protagonista. rows: ['grp', 'Grupo'] o ['Acción', 'y' | 'n' | 'texto parcial', …] */
+const ROLE_NOTES = [0, 2, 4, 7];
+B.roles = (T0, s) => {
+  const nc = s.cols.length, LW = nc > 3 ? 640 : 720, CW = (1620 - LW) / nc;
+  const ng = s.rows.filter((r) => r[0] === 'grp').length, nr = s.rows.length - ng;
+  const TOP = 250, HH = 66, GH = 40;
+  const RH = Math.min(70, Math.floor((1000 - TOP - HH - ng * GH) / nr));
+  const H = HH + ng * GH + nr * RH;
+  const STEP = 0.42, T_ROWS = 2.2, T_END = T_ROWS + s.rows.length * STEP;
+  const words_ = wc(s.title) + s.rows.reduce((a, r) => a + (r[0] === 'grp' ? 0 : wc(r[0]) + r.slice(1).filter((c) => c.length > 1).reduce((b, c) => b + wc(c), 0)), 0);
+  const D = Math.max(10, T_END + 2.6 + words_ / 11);
+  const sc = scene(T0, D, 'roles');
+  header(sc, T0, s.eyebrow, s.title);
+
+  const box = pos(el(`<div class="card" style="width:1620px;height:${H + 2}px"></div>`, sc), { left: 150, top: TOP }); // +2: el borde de la tarjeta
+  enter(box, T0 + 0.9, { y: 30, s: 0.985, dur: 0.9 });
+  const fx = LW + s.focus * CW;
+  const band = pos(el(`<div class="rband" style="width:${CW}px;height:${H}px"></div>`, box), { left: fx, top: 0 });
+  pos(el(`<div class="rhead" style="width:1618px;height:${HH}px"></div>`, box), { left: 0, top: 0 });
+  enter(pos(el(`<div class="rhl">${esc(s.lead || 'Qué puede hacer')}</div>`, box), { left: 28, top: 26 }), T0 + 1.2, { y: 8, dur: 0.6 });
+  s.cols.forEach((c, i) => {
+    const col = pos(el(`<div class="rcol" style="width:${CW}px;height:${HH}px"><span class="rpaint"><span class="brush sm ${i % 2 ? 'sage' : ''}">${esc(c)}</span></span></div>`, box), { left: LW + i * CW, top: 0 });
+    const at = T0 + 1.3 + i * 0.22;
+    A(col.firstChild, [{ clipPath: 'inset(-20% 100% -20% 0)' }, { clipPath: 'inset(-20% -2% -20% 0)' }], at, 0.6, E.write);
+    sfx('swish', at, { gain: 0.35, dur: 0.45 });
+  });
+
+  let y = HH, t = T0 + T_ROWS;
+  s.rows.forEach((r) => {
+    if (r[0] === 'grp') {
+      const g = pos(el(`<div class="rgrp" style="width:1618px;height:${GH}px">${esc(r[1])}</div>`, box), { left: 0, top: y });
+      enter(g, t, { y: 0, x: -18, dur: 0.6 });
+      sfx('tick', t + 0.05, { gain: 0.4 });
+      y += GH; t += STEP; return;
+    }
+    const sep = pos(el('<div class="rsep" style="width:1618px"></div>', box), { left: 0, top: y });
+    A(sep, [{ opacity: 0 }, { opacity: 1 }], t, 0.4, E.sig);
+    enter(pos(el(`<div class="rlab" style="width:${LW - 56}px;height:${RH}px"><span>${rich(r[0])}</span></div>`, box), { left: 28, top: y }), t, { y: 12, dur: 0.7 });
+    r.slice(1).forEach((c, ci) => {
+      const kind = c === 'y' ? 'ok' : c === 'n' ? 'no' : 'part';
+      const inner = kind === 'ok' ? '<span class="rok">✓</span>' : kind === 'no' ? '<span class="rno">—</span>' : `<span class="rpart">${esc(c)}</span>`;
+      const cell = pos(el(`<div class="rcell" style="width:${CW}px;height:${RH}px">${inner}</div>`, box), { left: LW + ci * CW, top: y });
+      const at = t + 0.2 + ci * 0.07;
+      if (kind === 'ok') { enter(cell.firstChild, at, { y: 0, s: 0.4, dur: 0.55, ease: E.sig }); sfx('pop', at, { note: ROLE_NOTES[ci % 4], gain: 0.28, pan: -0.45 + ci * 0.3 }); }
+      else if (kind === 'part') { enter(cell.firstChild, at, { y: 8, s: 0.92, dur: 0.6 }); sfx('tap', at, { gain: 0.42 }); }
+      else enter(cell.firstChild, at, { y: 0, dur: 0.5 });
+    });
+    y += RH; t += STEP;
+  });
+
+  // la columna protagonista se ilumina de arriba abajo
+  const tb = T0 + T_END + 0.3;
+  A(band, [{ clipPath: 'inset(0 0 100% 0)' }, { clipPath: 'inset(0 0 0 0)' }], tb, 0.9, E.sig);
+  sfx('swish', tb, { gain: 0.5, dur: 0.8 });
+  sfx('chime', tb + 0.5, { note: 4, gain: 0.45 });
+  if (s.scribble) {
+    const room = TOP + H + 92 < 1060;
+    const n = scribble(sc, s.scribble, tb + 0.7);
+    pos(n, room ? { left: 150 + fx + CW / 2 - 40, top: TOP + H + 18 } : { right: 150, top: 136 });
+    if (room) n.style.transform = 'translateX(-50%)';
+  }
   return D;
 };
 
@@ -497,12 +576,13 @@ B.phones = (T0, s) => {
   return D;
 };
 
-const GROUPC = ['var(--rose)', 'var(--sage)', 'var(--ink)'];
-const GROUPT = ['var(--rose-deep)', 'var(--sage-deep)', 'var(--ink)'];
+const GROUPC = ['var(--rose)', 'var(--sage)', 'var(--ink)', 'var(--rose-deep)'];
+const GROUPT = ['var(--rose-deep)', 'var(--sage-deep)', 'var(--ink)', 'var(--rose-deep)'];
 B.cases = (T0, s) => {
   const all = []; s.groups.forEach((g, gi) => g.items.forEach(([code, tt]) => all.push({ code, tt, gi })));
   const n = all.length, cols = n > 12 ? 6 : 4, rows = Math.ceil(n / cols);
-  const GX = 22, GY = 22, CWc = (1620 - GX * (cols - 1)) / cols, CHc = n > 12 ? 128 : n > 8 ? 136 : 168;
+  // con 5 filas (más de 24 casos) las tarjetas se achican para que todo quepa bajo el título
+  const GX = 22, GY = rows > 4 ? 16 : 22, CWc = (1620 - GX * (cols - 1)) / cols, CHc = rows > 4 ? 104 : n > 12 ? 128 : n > 8 ? 136 : 168;
   const Y0 = Math.round(290 + (600 - rows * (CHc + GY)) / 2);
   const D = Math.max(9, 2.4 + n * 0.08 + 4.2 + n * 0.12);
   const sc = scene(T0, D, 'cases');
@@ -511,7 +591,8 @@ B.cases = (T0, s) => {
   enter(lg, T0 + 1.6, { y: 10, dur: 0.7 });
   all.forEach((c, i) => {
     const r = Math.floor(i / cols), k = i % cols;
-    const n_ = pos(el(`<div class="cu" style="width:${CWc}px;height:${CHc}px"><div class="bar" style="background:${GROUPC[c.gi]}"></div><div class="code" style="color:${GROUPT[c.gi]}">${c.code}</div><div class="tt" style="font-size:${n > 12 ? 22 : 25}px">${esc(c.tt)}</div></div>`, sc), { left: 150 + k * (CWc + GX), top: Y0 + r * (CHc + GY) });
+    const small = rows > 4;
+    const n_ = pos(el(`<div class="cu" style="width:${CWc}px;height:${CHc}px${small ? ';padding:14px 18px' : ''}"><div class="bar" style="background:${GROUPC[c.gi]}"></div><div class="code" style="color:${GROUPT[c.gi]}">${c.code}</div><div class="tt" style="font-size:${small ? 20 : n > 12 ? 22 : 25}px${small ? ';margin-top:7px' : ''}">${esc(c.tt)}</div></div>`, sc), { left: 150 + k * (CWc + GX), top: Y0 + r * (CHc + GY) });
     const at = T0 + 1.2 + (r + k) * 0.09 + i * 0.015;
     enter(n_, at, { y: 26, s: 0.96, dur: 0.8 });
     sfx('pop', at + 0.03, { note: (r + k) % 9, gain: 0.45 });
@@ -520,8 +601,9 @@ B.cases = (T0, s) => {
 };
 
 B.special = (T0, s) => {
-  const n = s.items.length, cols = Math.min(5, n), rows = Math.ceil(n / cols);
-  const GX = 24, CWc = (1620 - GX * (cols - 1)) / cols, CHc = rows > 1 ? 244 : 340, Y0 = rows > 1 ? 320 : 380;
+  // más de 10 casos: 4 columnas y 3 filas más bajas
+  const n = s.items.length, cols = n > 10 ? 4 : Math.min(5, n), rows = Math.ceil(n / cols);
+  const GX = 24, CWc = (1620 - GX * (cols - 1)) / cols, CHc = rows > 2 ? 206 : rows > 1 ? 244 : 340, Y0 = rows > 2 ? 270 : rows > 1 ? 320 : 380;
   const D = Math.max(9, 2.6 + n * 0.25 + s.items.reduce((a, x) => a + wc(x.title + ' ' + x.text), 0) / 6.5);
   const sc = scene(T0, D, 'special');
   header(sc, T0, s.eyebrow, s.title);
@@ -593,7 +675,7 @@ async function preload() {
   PLAN.scenes.forEach((s) => {
     if (s.photo) files.add(IMG(s.photo));
     (s.nodes || []).forEach((n) => { if (n.img) files.add(IMG(n.img)); (n.options || []).forEach((o) => o.img && files.add(IMG(o.img))); });
-    (s.rows || []).forEach((r) => r.items.forEach((it) => it.img && files.add(IMG(it.img))));
+    (s.type === 'chains' ? s.rows : []).forEach((r) => r.items.forEach((it) => it.img && files.add(IMG(it.img))));
     (s.phones || []).forEach((p) => files.add(IMG(p.img)));
   });
   await Promise.all([...files].map((f) => new Promise((res) => { const im = new Image(); im.onload = () => { DIM[f] = [im.naturalWidth, im.naturalHeight]; EDGE[f] = edges(im); res(); }; im.onerror = () => res(); im.src = f; })));

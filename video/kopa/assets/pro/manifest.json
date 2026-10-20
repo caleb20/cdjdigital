@@ -38,21 +38,21 @@
   "i": 5,
   "file": "img-05.jpg",
   "w": 1000,
-  "h": 1383,
+  "h": 1091,
   "alt": "Formulario de finalizar pedido con datos, entrega con zona, pago con tarjeta seleccionado y notas."
  },
  {
   "i": 6,
   "file": "img-06.jpg",
   "w": 1000,
-  "h": 1047,
+  "h": 872,
   "alt": "Pantalla de pago con tarjeta rechazada y opción de reintentar."
  },
  {
   "i": 7,
   "file": "img-07.jpg",
   "w": 1000,
-  "h": 1244,
+  "h": 1114,
   "alt": "Seguimiento de un pedido con Yape: instrucciones de pago y botón para subir el comprobante."
  },
  {
@@ -66,7 +66,7 @@
   "i": 9,
   "file": "img-09.jpg",
   "w": 1000,
-  "h": 979,
+  "h": 874,
   "alt": "Seguimiento del pedido con la línea de estados y el detalle del pedido."
  },
  {
@@ -185,7 +185,7 @@
   "i": 26,
   "file": "img-26.jpg",
   "w": 1000,
-  "h": 494,
+  "h": 424,
   "alt": "Sección de productos destacados con flechas y puntos para recorrerlos."
  },
  {
@@ -206,7 +206,7 @@
   "i": 29,
   "file": "img-05.jpg",
   "w": 1000,
-  "h": 1383,
+  "h": 1091,
   "alt": "Finalizar pedido."
  },
  {
@@ -227,35 +227,35 @@
   "i": 32,
   "file": "img-07.jpg",
   "w": 1000,
-  "h": 1244,
+  "h": 1114,
   "alt": "Pedido con Yape."
  },
  {
   "i": 33,
   "file": "img-09.jpg",
   "w": 1000,
-  "h": 979,
+  "h": 874,
   "alt": "Seguimiento."
  },
  {
   "i": 34,
   "file": "img-34.jpg",
   "w": 1000,
-  "h": 929,
+  "h": 774,
   "alt": "Pedido recién hecho con botón Cancelar."
  },
  {
   "i": 35,
   "file": "img-35.jpg",
   "w": 1000,
-  "h": 778,
+  "h": 770,
   "alt": "Seguimiento de un pedido cancelado con el motivo que escribió el cliente."
  },
  {
   "i": 36,
   "file": "img-36.jpg",
   "w": 1000,
-  "h": 625,
+  "h": 683,
   "alt": "Detalle del pedido cancelado en el panel, con el motivo del cliente."
  },
  {
@@ -283,7 +283,7 @@
   "i": 40,
   "file": "img-40.jpg",
   "w": 1000,
-  "h": 1191,
+  "h": 992,
   "alt": "Calificar el pedido."
  },
  {
@@ -325,7 +325,7 @@
   "i": 46,
   "file": "img-46.jpg",
   "w": 1000,
-  "h": 625,
+  "h": 683,
   "alt": "Historial de pedidos con filtros de estado y fechas, búsqueda y paginación."
  },
  {
@@ -374,7 +374,7 @@
   "i": 53,
   "file": "img-53.jpg",
   "w": 1000,
-  "h": 494,
+  "h": 424,
   "alt": "Segundo producto destacado en el carrusel."
  },
  {
@@ -409,14 +409,14 @@
   "i": 58,
   "file": "img-58.jpg",
   "w": 1000,
-  "h": 625,
+  "h": 629,
   "alt": "Página de error con los botones Volver al inicio y Ver la carta."
  },
  {
   "i": 59,
   "file": "img-06.jpg",
   "w": 1000,
-  "h": 1047,
+  "h": 872,
   "alt": "Pantalla de pago con el aviso de tarjeta rechazada."
  }
 ]

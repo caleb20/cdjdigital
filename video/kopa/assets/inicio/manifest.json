@@ -17,49 +17,49 @@
   "i": 2,
   "file": "img-02.jpg",
   "w": 1000,
-  "h": 358,
+  "h": 501,
   "alt": "Sección Un lugar para todos tus momentos con las categorías y los tres momentos: para tu café, para compartir y para celebrar."
  },
  {
   "i": 3,
   "file": "img-03.jpg",
   "w": 1000,
-  "h": 566,
+  "h": 485,
   "alt": "Sección ¿Tienes algo que celebrar? con los botones Reserva tu mesa y Consulta para eventos."
  },
  {
   "i": 4,
   "file": "img-04.jpg",
   "w": 1000,
-  "h": 493,
+  "h": 411,
   "alt": "Sección Te esperamos con la dirección, el horario, el mapa y el botón Cómo llegar."
  },
  {
   "i": 5,
   "file": "img-05.jpg",
   "w": 1000,
-  "h": 583,
+  "h": 485,
   "alt": "Formulario de contacto con el nombre María Pérez, un teléfono y un mensaje para reservar una mesa."
  },
  {
   "i": 6,
   "file": "img-06.jpg",
   "w": 1000,
-  "h": 626,
+  "h": 521,
   "alt": "Formulario vacío con el aviso Escribe tu nombre en rojo y el campo marcado."
  },
  {
   "i": 7,
   "file": "img-07.jpg",
   "w": 1000,
-  "h": 619,
+  "h": 515,
   "alt": "Formulario con el aviso ¡Listo! Abrimos WhatsApp con tu mensaje."
  },
  {
   "i": 8,
   "file": "img-04.jpg",
   "w": 1000,
-  "h": 493,
+  "h": 411,
   "alt": "Sección Te esperamos con la dirección, el horario y el mapa real de Kopa Caffe."
  },
  {
@@ -101,42 +101,42 @@
   "i": 14,
   "file": "img-02.jpg",
   "w": 1000,
-  "h": 358,
+  "h": 501,
   "alt": "Sección Nosotros."
  },
  {
   "i": 15,
   "file": "img-03.jpg",
   "w": 1000,
-  "h": 566,
+  "h": 485,
   "alt": "Sección de celebraciones."
  },
  {
   "i": 16,
   "file": "img-04.jpg",
   "w": 1000,
-  "h": 493,
+  "h": 411,
   "alt": "Sección de ubicación."
  },
  {
   "i": 17,
   "file": "img-05.jpg",
   "w": 1000,
-  "h": 583,
+  "h": 485,
   "alt": "Formulario completo."
  },
  {
   "i": 18,
   "file": "img-06.jpg",
   "w": 1000,
-  "h": 626,
+  "h": 521,
   "alt": "Formulario con errores."
  },
  {
   "i": 19,
   "file": "img-19.jpg",
   "w": 1000,
-  "h": 361,
+  "h": 301,
   "alt": "Pie de página de la web."
  },
  {
@@ -150,14 +150,14 @@
   "i": 21,
   "file": "img-19.jpg",
   "w": 1000,
-  "h": 361,
+  "h": 301,
   "alt": "Pie con la nota del Plan Inicio."
  },
  {
   "i": 22,
   "file": "img-06.jpg",
   "w": 1000,
-  "h": 626,
+  "h": 521,
   "alt": "Formulario con el aviso Escribe tu nombre."
  }
 ]

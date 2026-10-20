@@ -72,12 +72,14 @@ node kopa/inspect.mjs            # escenas, duración, efectos y textos que no c
 
 Para ver la animación en el navegador: `npm run preview` y abre `/kopa/index.html?plan=inicio` (o `negocio`, `pro`).
 
-- **Textos y escenas**: `kopa/plans.js`. Cada plan es una lista de escenas (`intro`, `why`, `actors`, `flow`, `chains`,
-  `phones`, `cases`, `special`, `roadmap`, `outro`). `*palabra*` marca la palabra destacada del título. Las duraciones
+- **Textos y escenas**: `kopa/plans.js`. Cada plan es una lista de escenas (`intro`, `why`, `actors`, `roles`, `flow`,
+  `chains`, `phones`, `cases`, `special`, `roadmap`, `outro`). `roles` es la matriz de permisos: cada fila es una acción
+  y cada celda `'y'` (✓), `'n'` (—) o un texto corto («Solo los que toma»); `focus` es la columna que se ilumina al final. `*palabra*` marca la palabra destacada del título. Las duraciones
   se calculan solas según la cantidad de texto.
 - **Diseño y animación**: `kopa/index.html`, con la paleta, las tipografías (Playfair Display, Inter, Caveat) y las curvas de
   movimiento de la marca Kopa.
-- **Capturas**: `kopa/assets/<plan>/` (capturas reales de cada web) y `kopa/assets/shared/` (logo, fotos del local, fuentes).
+- **Capturas**: `kopa/assets/<plan>/` (capturas reales de cada web, las mismas de su `public/casos-de-uso.html`) y
+  `kopa/assets/shared/` (logo, fotos del local, fuentes). En el Pro, `mr-*.jpg` son las pantallas del motorizado.
 - **Sonido**: `kopa/sound.mjs`, sin dependencias. Cada animación registra su efecto en `window.__cues`: entra una tarjeta
   (pop afinado), escribe una palabra (tic), se pinta una etiqueta (brochazo) o cambia de escena (whoosh). La música
   (piano eléctrico, pad, bajo y percusión suave en Fa mayor, 84 BPM) se calma en la portada y el cierre. El render
