@@ -8,17 +8,21 @@ const steps = [
   { title: 'Publicamos', text: 'Tu web queda en línea, lista para recibir clientes.' },
 ]
 
+/**
+ * Donde el navegador lo permite, los pasos se encienden uno a uno al bajar: en escritorio la sección
+ * se queda fija mientras tanto; en celular cada paso se enciende al llegar. Ver `process-*` en index.css.
+ */
 export default function Process() {
   return (
-    <section id="proceso" aria-labelledby="proceso-title" className="section-y border-t border-linea">
-      <div className="container-x">
+    <section id="proceso" aria-labelledby="proceso-title" className="process section-y border-t border-linea">
+      <div className="process-pin container-x">
         <SectionHeading id="proceso-title" title="¿Cómo trabajamos?" />
 
         <ol className="mt-10 grid grid-cols-1 gap-x-6 sm:grid-cols-2 lg:mt-14 lg:grid-cols-4">
           {steps.map((step, index) => (
             <li
               key={step.title}
-              className="relative border-l-2 border-tinta pb-8 pl-5 last:pb-0 sm:pb-10 lg:border-t-2 lg:border-l-0 lg:pt-5 lg:pb-0 lg:pl-0"
+              className="process-step relative border-l-2 border-tinta pb-8 pl-5 last:pb-0 sm:pb-10 lg:border-t-2 lg:border-l-0 lg:pt-5 lg:pb-0 lg:pl-0"
             >
               <span className="display block text-[3rem] text-azul tabular-nums lg:text-[3.5rem]">{index + 1}</span>
               <h3 className="mt-3 text-lg font-semibold">{step.title}</h3>

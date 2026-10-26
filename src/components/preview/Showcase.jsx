@@ -149,6 +149,7 @@ function Phone({ children, className = '' }) {
 /**
  * La web de ejemplo del visitante: en escritorio, una ventana de navegador (se puede recorrer con la rueda)
  * y un celular encima; en celular y tablet, solo el celular. Cada rubro tiene su propia plantilla.
+ * En escritorio, al bajar la página, los dos aparatos se separan un poco (`showcase-*` en index.css).
  */
 export default function Showcase({ rubro, name, domain }) {
   const desktop = useMediaQuery('(min-width: 1024px)')
@@ -163,7 +164,7 @@ export default function Showcase({ rubro, name, domain }) {
   return (
     <figure role="img" aria-label={label} className={desktop ? 'relative pr-8 pb-10' : 'relative'}>
       {desktop && (
-        <div aria-hidden="true" className="overflow-hidden rounded-xl bg-papel shadow-[0_40px_80px_-50px_rgb(15_23_42/0.6)] ring-1 ring-linea">
+        <div aria-hidden="true" className="showcase-browser overflow-hidden rounded-xl bg-papel shadow-[0_40px_80px_-50px_rgb(15_23_42/0.6)] ring-1 ring-linea">
           <BrowserBar domain={domain} />
           <div className="relative aspect-[16/10.5]">
             <ScaledViewport designWidth={1280} scrollable viewportRef={browserRef}>
@@ -175,7 +176,7 @@ export default function Showcase({ rubro, name, domain }) {
         </div>
       )}
 
-      <div aria-hidden="true" className={desktop ? 'absolute right-0 bottom-0 w-[27%]' : 'mx-auto w-[11.5rem] sm:w-[13rem]'}>
+      <div aria-hidden="true" className={desktop ? 'showcase-phone absolute right-0 bottom-0 w-[27%]' : 'mx-auto w-[11.5rem] sm:w-[13rem]'}>
         <Phone>
           <ScaledViewport designWidth={390} viewportRef={phoneRef}>
             <div key={rubro.id} className="preview-in">
