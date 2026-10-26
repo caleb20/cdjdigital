@@ -37,6 +37,11 @@ export const faqs = [
       'Sí. Podemos desarrollar funcionalidades adicionales como reservas, sistemas internos, catálogos avanzados, integraciones y automatizaciones. Estas se cotizan aparte.',
   },
   {
+    question: '¿Hay temáticas que no trabajan?',
+    answer:
+      'Sí. En CDJ Digital no desarrollamos webs, campañas ni cambios con temática de Halloween, ocultismo o similares. Si quieres algo especial para esas fechas, te proponemos una alternativa de temporada, como una promoción de octubre o por el Día de la Canción Criolla.',
+  },
+  {
     question: '¿Trabajan solo con negocios en Lima?',
     answer: 'Podemos trabajar con negocios de todo Perú de manera remota.',
   },
