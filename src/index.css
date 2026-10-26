@@ -216,7 +216,8 @@
     }
 
     /* 2. Proceso. La línea de cada paso pasa de filete a tinta (es una barra de progreso: lineal)
-          y luego el paso se enciende. Al final queda igual que sin animación. */
+          y luego se enciende el número. El título y el texto no se apagan nunca, para que se lean
+          siempre con buen contraste. Al final queda igual que sin animación. */
     .process-step {
       border-color: var(--color-linea);
     }
@@ -227,7 +228,7 @@
       animation-timing-function: linear;
       animation-fill-mode: both;
     }
-    .process-step > * {
+    .process-num {
       animation-name: step-on;
       animation-timing-function: var(--ease-signature);
       animation-fill-mode: both;
@@ -247,7 +248,7 @@
         animation-name: step-line-y;
       }
       .process-step::after,
-      .process-step > * {
+      .process-num {
         animation-timeline: --paso;
         animation-range: entry 50% contain 25%;
       }
@@ -283,23 +284,23 @@
         animation-name: step-line-x;
       }
       .process-step::after,
-      .process-step > * {
+      .process-num {
         animation-timeline: --proceso;
       }
       /* El primero se enciende mientras la sección sube; los otros tres, ya fija. */
-      .process-step:nth-child(1) > *,
+      .process-step:nth-child(1) .process-num,
       .process-step:nth-child(1)::after {
         animation-range: entry 55% contain 0%;
       }
-      .process-step:nth-child(2) > *,
+      .process-step:nth-child(2) .process-num,
       .process-step:nth-child(2)::after {
         animation-range: contain 5% contain 30%;
       }
-      .process-step:nth-child(3) > *,
+      .process-step:nth-child(3) .process-num,
       .process-step:nth-child(3)::after {
         animation-range: contain 32% contain 57%;
       }
-      .process-step:nth-child(4) > *,
+      .process-step:nth-child(4) .process-num,
       .process-step:nth-child(4)::after {
         animation-range: contain 59% contain 84%;
       }
@@ -313,7 +314,7 @@
       .process-step::after {
         content: none;
       }
-      .process-step > * {
+      .process-num {
         animation: none;
       }
     }

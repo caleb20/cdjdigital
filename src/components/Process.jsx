@@ -9,8 +9,9 @@ const steps = [
 ]
 
 /**
- * Donde el navegador lo permite, los pasos se encienden uno a uno al bajar: en escritorio la sección
- * se queda fija mientras tanto; en celular cada paso se enciende al llegar. Ver `process-*` en index.css.
+ * Donde el navegador lo permite, la línea y el número de cada paso se encienden al bajar: en escritorio
+ * la sección se queda fija mientras tanto; en celular cada paso se enciende al llegar. El texto siempre
+ * se ve completo. Ver `process-*` en index.css.
  */
 export default function Process() {
   return (
@@ -24,7 +25,7 @@ export default function Process() {
               key={step.title}
               className="process-step relative border-l-2 border-tinta pb-8 pl-5 last:pb-0 sm:pb-10 lg:border-t-2 lg:border-l-0 lg:pt-5 lg:pb-0 lg:pl-0"
             >
-              <span className="display block text-[3rem] text-azul tabular-nums lg:text-[3.5rem]">{index + 1}</span>
+              <span className="process-num display block text-[3rem] text-azul tabular-nums lg:text-[3.5rem]">{index + 1}</span>
               <h3 className="mt-3 text-lg font-semibold">{step.title}</h3>
               <p className="mt-1 max-w-[30ch] leading-relaxed text-pizarra">{step.text}</p>
             </li>
